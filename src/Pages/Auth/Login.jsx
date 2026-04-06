@@ -1,7 +1,9 @@
 import { NavLink } from "react-router";
-import { BlueButton, SocialButton } from "../../Components/Atoms/Button";
-import { BlueLogo } from "../../Components/Atoms/EwalletLogo";
-import { InputEmail, InputPassword } from "../../Components/Atoms/Input";
+import { Button } from "../../Components/Atoms/Button";
+import { SocialButton } from "../../Components/Atoms/SocialButton";
+import { Logo } from "../../Components/Atoms/Logo";
+import { InputEmail } from "../../Components/Form/InputEmail";
+import { InputPassword } from "../../Components/Form/InputPassword";
 import { useState } from "react";
 
 
@@ -26,7 +28,7 @@ function Login() {
             <section className="flex min-h-screen overflow-hidden bg-blue-600">
 
             <section className="left-side w-full bg-white md:rounded-r-4xl px-6 py-30 md:w-1/2 md:px-10">
-                <BlueLogo className="text-xl" />
+                <Logo className="text-xl" />
                 <p className="text-xl font-medium py-3">Hello Welcome Back 👋</p>
                 <p className="text-gray-500 text-sm">Fill out the form correctly or you can login with several option.</p>
                 <section className="flex flex-row gap-5 py-5  md:flex-col">
@@ -52,7 +54,9 @@ function Login() {
                     to={"/forgot-password"} >
                         Click here
                     </NavLink></p>
-                    <BlueButton onClick={handleLogin} className="w-full h-12 py-2 mt-4">Login</BlueButton>
+                    <Button onClick={handleLogin} className="w-full h-12 py-2 mt-4" color="blue">
+                        Login
+                    </Button>
                     <p className="text-center mt-2 text-gray-600">Have An Account? 
                         <NavLink 
                             className="text-blue-600" to={"/signup"}> Register

@@ -4,7 +4,8 @@ import Login from "./Pages/Auth/Login"
 import { ForgotPassword } from "./Pages/Auth/ForgotPassword"
 import { EnterPin } from "./Pages/Auth/EnterPin"
 import SignUp from "./Pages/Auth/SignUp"
-import { Dashboard } from "./Pages/Dashboard/Dashboard"
+import { Dashboard } from "./Pages/Features/Dashboard"
+import { History } from "./Pages/Features/History"
 
 function AppRouter() {
   return (
@@ -15,6 +16,7 @@ function AppRouter() {
     <Route path="/forgot-password" element={<ForgotPassword/>}></Route>
     <Route path="/enter-pin" element={<EnterPin/>}></Route>
     <Route path="/dashboard" element={<Dashboard/>}></Route>
+    <Route path="/history" element={<History/>}></Route>
     </Routes>
   )
 }

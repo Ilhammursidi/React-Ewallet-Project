@@ -1,11 +1,10 @@
 
-// import { Navbar } from "../../Components/Organisms/Navbar";
-import { BlueButton } from "../../Components/Atoms/Button";
+import { Button } from "../../Components/Atoms/Button";
 import { Chart, scales } from "chart.js";
 import 'chart.js/auto'
 import { NavLink } from "react-router";
 import { Bar } from "react-chartjs-2";
-import { AppHeader, Header } from "../../Components/Organisms/Header";
+import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
 
 
@@ -41,6 +40,7 @@ export function Dashboard() {
             }
         },
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: { display: false },
         },
@@ -100,23 +100,23 @@ export function Dashboard() {
             </section>
             
 
-            <section className="flex gap-5 w-full justify-between mt-15 px-5 md:px-10 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5 md:w-170 md:mx-auto">
+            <section className="flex gap-5 w-full justify-between mt-15 px-5 md:px-5 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5 md:w-170 md:mx-auto">
                 <p className="hidden md:flex font-semibold">Fast Service</p>
-                <section className="md:flex md:gap-5">
-                <BlueButton className="w-1/2 flex items-center gap-2 justify-center">
+                <section className="flex flex-row justify-between w-full md:w-60 gap-5 md:flex md:gap-5">
+                <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
                     <img src="/src/assets/icons/u_money-insert.svg" alt="top-up" />
                     <p>Top Up</p>
-                </BlueButton>
-                <BlueButton className="w-1/2 flex items-center gap-2 justify-center">
+                </Button>
+                <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
                     <img src="/src/assets/icons/whiteSend.svg" alt="transfer" />
                     <p>Transfer</p>
-                </BlueButton>
+                </Button>
                 </section>
             </section>
-            <section className="chart-container md:border md:border-gray-300 md:px-2 md:w-170 md:mx-auto md:rounded-md md:py-5 md:mt-5">
+            <section className="chart-container md:border md:border-gray-300 md:px-0 md:w-170 md:mx-auto md:rounded-md md:py-0 md:mt-5">
                 <section className="flex items-center justify-between gap-2 px-5 mt-10 md:mt-0 md:py-5">
                     <p className="font-medium text-sm md:text-base md:font-semibold">Income Chart</p>
-                    <section className="md:flex md:gap-2">
+                    <section className="flex gap-5 md:flex md:gap-2">
                     <select name="" id="" className="bg-gray-200 rounded-md text-sm p-2 px-5">
                         <option value="">Income</option>
                         <option value="">Expense</option>
@@ -127,13 +127,13 @@ export function Dashboard() {
                     </select>
                     </section>
                 </section>
-                <section className="w-90 m-auto py-5 md:w-full">
+                <section className="w-90 h-80 m-auto py-5 md:w-full md:h-120 md:px-5">
                     <BarChart />
                 </section>
             </section>
             </section>
 
-            <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:w-120 md:mx-auto mt-4">
+            <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:w-120 md:mx-auto mt-4">
                 <section className="flex justify-between items-center">
                 <p className="font-medium text-sm">Transaction History</p>
                 <p className="text-blue-600 text-sm">See All</p>

@@ -1,7 +1,11 @@
 import { NavLink } from "react-router";
-import { BlueButton, SocialButton } from "../../Components/Atoms/Button";
-import { BlueLogo } from "../../Components/Atoms/EwalletLogo";
-import { InputEmail, InputPassword, ConfirmPassword, saveAccount } from "../../Components/Atoms/Input";
+import { Button } from "../../Components/Atoms/Button";
+import { SocialButton } from "../../Components/Atoms/SocialButton";
+import { Logo } from "../../Components/Atoms/Logo";
+import { InputEmail } from "../../Components/Form/InputEmail";
+import { InputPassword } from "../../Components/Form/InputPassword";
+import { ConfirmPassword } from "../../Components/Form/ConfirmPassword";
+import { saveAccount } from "../../Components/Atoms/SaveAccount";
 import { useState } from "react";
 
 
@@ -26,7 +30,7 @@ function SignUp
             <section className="flex min-h-screen overflow-hidden bg-blue-600">
 
             <section className="left-side bg-white md:rounded-r-4xl px-6 py-10 md:w-1/2 md:px-10">
-                <BlueLogo className="text-xl" />
+                <Logo className="text-xl" color="blue" />
                 <p className="text-xl font-medium py-3">Start Accessing Banking Needs
                     With All Devices and All Platforms
                     With 30.000+ Users</p>
@@ -50,7 +54,9 @@ function SignUp
                     <InputEmail value={email} onChange={e => setEmail(e.target.value)}></InputEmail>
                     <InputPassword value={password} onChange={e => setPassword(e.target.value)}></InputPassword>
                     <ConfirmPassword value={confirm} onChange={e => setConfirm(e.target.value)}password={password}></ConfirmPassword>
-                    <BlueButton onClick={handleRegister}   className="w-full h-12 py-2 mt-4">Register</BlueButton>
+                    <Button onClick={handleRegister}   className="w-full h-12 py-2 mt-4" color="blue">
+                        Register
+                    </Button>
                     <p className="text-center mt-2 text-gray-600">Have An Account? 
                         <NavLink
                             className="text-blue-600" to={"/login"}> Login

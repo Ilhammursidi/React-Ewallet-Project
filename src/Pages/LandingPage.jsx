@@ -1,7 +1,8 @@
 import { NavLink } from "react-router"
-import { BlueButton,WhiteButton,HamburgerButton } from "../Components/Atoms/Button"
+import { Button } from "../Components/Atoms/Button"
 import { useState } from "react"
-import { Logo } from "../Components/Atoms/EwalletLogo"
+import { Logo } from "../Components/Atoms/Logo"
+import { HamburgerButton } from "../Components/Atoms/HamburgerButton"
 
 function LandingPage(){
 const [open,setOpen] = useState(false);
@@ -12,14 +13,14 @@ const [open,setOpen] = useState(false);
             <Logo/>
             <section className="hidden sm:flex md:flex flex-row gap-5 items-center">
                 {/* belum disambung */}
-            <BlueButton><NavLink to={"/login"}>
+            <Button color="blue"><NavLink to={"/login"}>
                 Sign In
             </NavLink>
-                </BlueButton>
-            <WhiteButton><NavLink to={"/signup"}>
+                </Button>
+            <Button color="white"><NavLink to={"/signup"}>
                     Sign Up
                     </NavLink>
-                </WhiteButton>
+                </Button>
             </section>
             <HamburgerButton onClick={()=> setOpen(!open)}>
                 <img src="/src/assets/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
@@ -28,14 +29,14 @@ const [open,setOpen] = useState(false);
             {open && (
                 <section className="absolute left-0 bg-white justify-center rounded-b-4xl shadow-lg top-15 w-full flex flex-col items-center sm:hidden md:hidden p-4 gap-2">
                     {/* belum disambungkan */}
-                    <BlueButton className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"/login"}>
+                    <Button color="blue" className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"/login"}>
                 Sign In
             </NavLink>
-                </BlueButton>
-            <WhiteButton onClick={()=> setOpen(false)} className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/signup"}>
+                </Button>
+            <Button color="white" onClick={()=> setOpen(false)} className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/signup"}>
                     Sign Up
                     </NavLink>
-                </WhiteButton>
+                </Button>
                 </section>
             )}
             
@@ -47,18 +48,18 @@ const [open,setOpen] = useState(false);
                     <section className="text-part md:px-10 sm:text-center">
                 <p className="text-white text-xl md:text-md md:text-left">Simplify Your Life with Secure and Convenient Mobile Payments</p>
                 <section className="flex flex-row justify-between sm:px-20 md:px-0 gap-3 py-5">
-                    <WhiteButton className="flex flex-row items-center justify-center w-full p-2 px-6 gap-2">
+                    <Button color="white" className="flex flex-row items-center justify-center w-full p-2 px-6 gap-2">
                         <img src="/src/assets/icons/gplay.svg" alt="google-play icon" />
                         <a href="https://play.google.com" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                             Play Store
                         </a>
-                    </WhiteButton>
-                    <BlueButton className="flex flex-row justify-center items-center w-full p-2 px-6 gap-2">
+                    </Button>
+                    <Button color="blue" className="flex flex-row justify-center items-center w-full p-2 px-6 gap-2">
                         <img src="/src/assets/icons/appstore.svg" alt="appstore icon" />
                         <a href="https://apps.apple.com/app/id123456789" target="_blank" rel="noopener noreferrer" className="text-white">
                             App Store
                         </a>
-                    </BlueButton>
+                    </Button>
                 </section>
                 <section className="flex flex-row items-center sm:justify-center gap-5 py-2 md:justify-start">
                 <p className="text-4xl text-white">4.6 M</p>
@@ -106,11 +107,11 @@ const [open,setOpen] = useState(false);
                     <p className="font-bold text-blue-600">WELCOME TO E-WALLET</p>
                     <p className="text-4xl">Your All-in-One Digital Payment Solution</p>
                     <p className="text-gray-500 px-4 md:px-0">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you're shopping, dining out, or sending money to loved ones, we've got you covered.</p>
-                    <BlueButton className="text-white md:w-40">
+                    <Button color="blue" className="text-white md:w-40">
                         <NavLink to={"/login"}>
                             Get Started
                         </NavLink>
-                    </BlueButton>
+                    </Button>
                 </section>
             </section>
             <section className="bg-gray-100/50 md:flex md:flex-row md:py-10 md:px-20">
@@ -135,11 +136,11 @@ Zwallet Features.</p>
                             <p>User Friendly</p>
                         </div>
                     </section>
-                    <BlueButton className="text-white md:w-45 md:h-10">
+                    <Button color="blue" className="text-white md:w-45 md:h-10">
                         <NavLink to={"/login"}>
                             Get Started
                         </NavLink>
-                    </BlueButton>
+                    </Button>
                 </section>
             </section>
 
@@ -190,18 +191,18 @@ brand partners around the globe.</p>
                 <p className="text-4xl">Download The App</p>
                 <p className="text-gray-600 text-lg">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
                 <section className="flex justify-between gap-2">
-                    <BlueButton className="text-white w-full flex px-3 cursor-pointer justify-center">
+                    <Button color="blue" className="text-white w-full flex px-3 cursor-pointer justify-center">
                         <img src="/src/assets/icons/gplay.svg" alt="google play" />
                         <a href="https://play.google.com" target="_blank" rel="noopener noreferrer" className="text-white">
                             Play Store
                         </a>
-                    </BlueButton>
-                    <WhiteButton  className="text-blue-600 border-blue-600 w-full justify-center flex">
+                    </Button>
+                    <Button color="white"  className="text-blue-600 border-blue-600 w-full justify-center flex">
                         <img src="/src/assets/icons/blueAppstore.svg" alt="app store" />
                         <a href="https://apps.apple.com/app/id123456789" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                             App Store
                         </a>
-                    </WhiteButton>
+                    </Button>
             </section>
                 </section>
                 <img src="/src/assets/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
@@ -249,7 +250,7 @@ brand partners around the globe.</p>
                     <img className="md:p-2" src="/src/assets/icons/blackMail.svg" alt="mail" />
                     <input type="text" className="text-black md:text-sm focus:outline-0" placeholder="Enter Your Email"/>
                 </section>
-                <WhiteButton className="text-blue-600 p-3 md:p-1">Subscribe</WhiteButton>
+                <Button color="white" className="text-blue-600 p-3 md:p-1">Subscribe</Button>
             </section>
             </section>
             <section className="px-2 text-white text-center flex flex-col gap-5">

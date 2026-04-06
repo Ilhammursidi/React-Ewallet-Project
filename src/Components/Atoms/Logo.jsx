@@ -6,13 +6,14 @@
  * @returns {JSX.Element} The Logo component
  */
 
-export const Logo = ({className}) => {
+export const Logo = ({className,color}) => {
     const defaultClass = "flex flex-row text-white font-semibold gap-2 items-center"
     const finalClass = `${defaultClass} ${className}`
+    const colorClass = color === "blue" ? "text-blue-600" : ""; color === "white" ? "text-white" : ""
     return (
         <section className={finalClass}>
             <img src="/src/assets/icons/Money Wallet.svg" alt="Ewallet-logo" />
-            <p className={finalClass}>E-Wallet</p>
+            <p className={colorClass}>E-Wallet</p>
         </section>
     )
 }

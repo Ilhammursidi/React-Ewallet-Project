@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { BlueButton } from "../../Components/Atoms/Button";
-import { BlueLogo } from "../../Components/Atoms/EwalletLogo";
+import { Button } from "../../Components/Atoms/Button";
+import { Logo } from "../../Components/Atoms/Logo";
 
 export function EnterPin() {
     const PIN_LENGTH = 6;
@@ -36,7 +36,7 @@ export function EnterPin() {
     return (
         <section className="min-h-screen flex items-center justify-center bg-blue-500 p-4">
             <section className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg">
-                <BlueLogo className="text-xl"></BlueLogo>
+                <Logo className="text-xl"></Logo>
                 <section className="mb-4">
                     <h1 className="text-lg font-medium py-5">Enter Your Pin 👋</h1>
                     <p className="text-gray-500 text-sm">
@@ -59,9 +59,9 @@ export function EnterPin() {
                     ))}
                 </section>
 
-                <BlueButton onClick={handleSubmit} className="w-full py-3">
+                <Button onClick={handleSubmit} className="w-full py-3" color="blue">
                     Submit
-                </BlueButton>
+                </Button>
 
                 <p className="mt-2 text-center text-gray-500 text-sm">
                     Forgot Your Pin?{" "}
