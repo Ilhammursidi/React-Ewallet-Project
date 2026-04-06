@@ -1,3 +1,4 @@
+import { Transfer } from "./Pages/Features/Transfer"
 import { Route, Routes } from "react-router"
 import LandingPage from "../src/Pages/LandingPage"
 import Login from "./Pages/Auth/Login"
@@ -17,6 +18,9 @@ function AppRouter() {
     <Route path="/enter-pin" element={<EnterPin/>}></Route>
     <Route path="/dashboard" element={<Dashboard/>}></Route>
     <Route path="/history" element={<History/>}></Route>
+    <Route path="/transfer" element={<Transfer/>}>
+        
+    </Route>
     </Routes>
   )
 }
