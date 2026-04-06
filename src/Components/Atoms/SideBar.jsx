@@ -1,4 +1,3 @@
-
 /**
  * a sidebar component for the dashboard
  * @typedef {Object} SideBarProps
@@ -9,7 +8,7 @@
 import { NavLink } from "react-router";
 
 export const SideBar = ({className}) => {
-    const defaultClass = "hidden md:flex flex-col justify-start w-1/6 p-10 gap-5 border-r border-gray-400";
+    const defaultClass = "hidden md:flex flex-col bg-white z-40 justify-start w-1/6 p-10 gap-5 border-r border-gray-400";
 
     return (
         <aside className={`${defaultClass} ${className}`}>
