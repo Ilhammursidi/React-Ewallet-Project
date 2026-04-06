@@ -1,29 +1,21 @@
-export const BlueButton = ({children,onClick,className=""})=>{
-    const defaultClass = "text-white rounded-md bg-blue-600 p-2 border border-white"
+/**
+ * A button component
+ * @typedef {Object} ButtonProps
+ * @param {Object} props - The properties for the button
+ * @param {React.ReactNode} props.children - The content of the button
+ * @param {function} props.onClick - The function to call when the button is clicked
+ * @param {string} props.className - class name for styling the button 
+ * @returns {JSX.Element} The Button component
+ */
+
+
+export const Button = ({children,onClick,className=""})=>{
+    const defaultClass = "rounded-md p-2"
     const finalClass =`${defaultClass} ${className}`
     return (
         <button className={finalClass} onClick={onClick}>{children}</button>
     )
 }
 
-export const WhiteButton = ({children,onClick,className=""})=>{
-    const defaultClass = "text-blue-600 rounded-md border bg-white p-2"
-    const finalClass =`${defaultClass} ${className}`
-    return (
-        <button className={finalClass} onClick={onClick}>{children}</button>
-    )
-}
 
-export const HamburgerButton = ({children,onClick,className="sm:hidden md:hidden "}) => {
-    return (
-        <button className={className} onClick={onClick}>{children}</button>
-    )
-}
 
-export const SocialButton = ({children,onClick,className=""})=>{
-    const defaultClass = "text-gray-500 rounded-full border bg-white p-2"
-    const finalClass =`${defaultClass} ${className}`
-    return (
-        <button className={finalClass} onClick={onClick}>{children}</button>
-    )
-}
