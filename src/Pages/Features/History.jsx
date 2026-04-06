@@ -1,9 +1,20 @@
+import { Button } from "../../Components/Atoms/Button";
 import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
 import { useState } from "react";
+import { Modal } from "../../Components/Atoms/Modal";
+
+/**
+ * a component that shows the history of transactions, with a search bar to filter the transactions by name or phone number. The data is hardcoded for now, but it can be replaced with real data from an API in the future.
+ * @typedef {Object} HistoryProps
+ * @param {Object} props - The properties for the History component 
+ * @returns {JSX.Element} The History component
+ */
 
 export const History = () => {
     const [query, setQuery] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectData, setSelectData] = useState({});
     const data = [
         {
             id: 1,
@@ -59,12 +70,40 @@ export const History = () => {
     const filteredData = data.filter((row) => {
         return row.name.toLowerCase().includes(query.toLowerCase()) || row.phone.includes(query);
     });
+
+    const handleRowClick = (row) => {
+        setIsOpen(true);
+        setSelectData(row);
+    }
     
     return (
         <section>
             <AppHeader className="md:bg-white"/>
+                <Modal isOpen={isOpen} value="Back" onClose={() => setIsOpen(false)}>
+                    {selectData && (
+                        <section className="flex flex-col w-80 md:h-95 h-fit">
+                            <p className="text-sm" key={selectData.id}>DETAIL TRANSACTION {selectData.name}</p>
+                            <hr className=" border border-gray-200" />
+                            <img className="w-30" src={selectData.img} alt={selectData.name} />
+                            <p className="font-semibold">Name :</p>
+                            <p>{selectData.name}</p>
+                            <p className="font-semibold">Phone :</p>
+                            <p>{selectData.phone}</p>
+                            <p className="font-semibold">Status :</p>
+                            <p {...(selectData.id % 2 !== 0 ? { className: "text-green-500" } : { className: "text-red-500" })}>
+                                        {selectData.id % 2 !== 0 ? "Top Up Success" : "Transfer Success"}</p>
+                            <p className="font-semibold">Amount :</p>
+                            <p {...(selectData.id % 2 !== 0 ? { className: "text-green-500" } : { className: "text-red-500" })}>
+                                        {selectData.amount}</p>
+                            <Button className="flex flex-row items-center justify-center w-full border p-2 mt-2 border-red-600">
+                                <img src="/src/assets/icons/Trash.svg" alt="delete" />
+                                <p className="font-semibold text-red-600">Delete</p>
+                                </Button>
+                        </section>
+                    )}
+                    </Modal>
                 <section className="md:flex md:justify-between w-full">
-                <SideBar></SideBar>
+            <SideBar></SideBar>
                 
                 <section className="md:flex flex-col md:w-5/6 md:px-5">
                     <section className="hidden md:flex md:h-5 md:mr-auto md:gap-2 items-center font-medium md:m-5 ">
@@ -90,15 +129,17 @@ export const History = () => {
                     
 
                     <section className=" py-5">
-                    <table className="w-full">
+                    <table className="w-full [&_tr:nth-child(2n+1)]:bg-gray-100">
                         <tbody>
 
                             {filteredData.map((row) => (
-                                <tr key={row.id} className="table-layout w-full text-xs">
+                                <tr onClick={() => handleRowClick(row)} key={row.id} className="table-layout w-full text-xs">
                                     <td><img src={row.img} alt={row.name} /></td>
                                     <td>{row.name}</td>
                                     <td>{row.phone}</td>
-                                    <td className="text-green-600">{row.amount}</td>
+                                    <td {...(row.id % 2 !== 0 ? { className: "text-green-500" } : { className: "text-red-500" })}>
+                                        {row.amount}
+                                    </td>
                                     <td><img src="/src/assets/icons/Trash.svg" alt="trash" /></td>
                                 </tr>
                             ))}
