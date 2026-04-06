@@ -4,6 +4,12 @@ import { useState,useEffect } from "react";
 import { Logo } from "../Atoms/Logo";
 import { HamburgerButton } from "../Atoms/HamburgerButton";
 
+/**
+ * @typedef {Object} AppHeaderProps
+ * @param {string} param0.className - The class name for styling the header
+ * @returns {JSX.Element} The AppHeader component
+ */
+
 export function AppHeader({className}) {
     const [open, setOpen] = useState(false);
     const [username, setUsername] = useState("");
