@@ -14,7 +14,7 @@ export const InputNominal = ({value,onChange,className=""}) => {
     const finalClass = `${defaultClass} ${className}`
     return (
         <section className={finalClass}>
-        <img  src="/src/assets/icons/u_money-bill.svg" alt="money" />
+        <img  src="/icons/u_money-bill.svg" alt="money" />
         <input 
         className="focus:outline-none w-full" 
         type="text"

@@ -63,7 +63,7 @@ export function Dashboard() {
                     <section className="flex px-5 flex-row justify-around md:gap-2 md:justify-between items-center h-full">
                         <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:w-full md:gap-5 md:border md:border-gray-300 md:rounded-md md:p-8">
                             <section className="hidden md:flex md:items-center gap-2">
-                                <img src="/src/assets/icons/balance.svg" alt="balance" />
+                                <img src="/icons/balance.svg" alt="balance" />
                             <p className="text-xs md:text-base">Balance</p>
                             </section>
                             <p className="md:text-xl md:font-normal">Rp. <b>500.000</b></p>
@@ -74,28 +74,28 @@ export function Dashboard() {
                         </section>
                         <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:gap-5 md:border md:w-full md:border-gray-300 md:rounded-md md:p-8">
                             <section className="hidden md:flex md:items-center gap-2">
-                                <img src="/src/assets/icons/income.svg" alt="income" />
+                                <img src="/icons/income.svg" alt="income" />
                             <p className="text-xs md:text-base">Income</p>
                             </section>
                             <p className="md:text-xl md:font-normal">Rp. <b>500.000</b></p>
                             <section className="flex gap-1 items-center">
                                 <p className="text-green-700 text-xs">+11,01%</p>
-                                <img className="w-4" src="/src/assets/icons/ArrowRise-s.svg" alt="arrow rise" />
+                                <img className="w-4" src="/icons/ArrowRise-s.svg" alt="arrow rise" />
                             </section>
                         </section>
                         <section className="text-sm flex flex-col gap-1 md:h-33 md:gap-5 md:py-2 md:border md:w-full md:border-gray-300 md:rounded-md md:p-8">
                             <section className="hidden md:flex md:items-center gap-2">
-                                <img src="/src/assets/icons/expense.svg" alt="expense" />
+                                <img src="/icons/expense.svg" alt="expense" />
                             <p className="text-xs md:text-base">Expense</p>
                             </section>
                             <p className="md:text-xl md:font-normal">Rp. <b>500.000</b></p>
                             <section className="flex gap-1 items-center">
                                 <p className="text-red-700 text-xs">-5,06%</p>
-                                <img className="w-4" src="/src/assets/icons/Arrowdown.svg" alt="arrow fall" />
+                                <img className="w-4" src="/icons/Arrowdown.svg" alt="arrow fall" />
                             </section>
                         </section>
                     </section>
-                    <img className="md:hidden absolute top-37 rounded-b-2xl w-90 sm:w-5/6 sm:top-27 sm:flex" src="/src/assets/icons/grayBg.svg" alt="gray background" />
+                    <img className="md:hidden absolute top-37 rounded-b-2xl w-90 sm:w-5/6 sm:top-27 sm:flex" src="/icons/grayBg.svg" alt="gray background" />
                 </section>
             </section>
             
@@ -104,11 +104,11 @@ export function Dashboard() {
                 <p className="hidden md:flex font-semibold">Fast Service</p>
                 <section className="flex flex-row justify-between w-full md:w-60 gap-5 md:flex md:gap-5">
                 <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
-                    <img src="/src/assets/icons/u_money-insert.svg" alt="top-up" />
+                    <img src="/icons/u_money-insert.svg" alt="top-up" />
                     <p>Top Up</p>
                 </Button>
                 <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
-                    <img src="/src/assets/icons/whiteSend.svg" alt="transfer" />
+                    <img src="/icons/whiteSend.svg" alt="transfer" />
                     <p>Transfer</p>
                 </Button>
                 </section>
@@ -139,7 +139,7 @@ export function Dashboard() {
                 <p className="text-blue-600 text-sm">See All</p>
                 </section>
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Send</p>
@@ -147,7 +147,7 @@ export function Dashboard() {
                 <p className="font-semibold text-green-600">+Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Transfer</p>
@@ -155,7 +155,7 @@ export function Dashboard() {
                 <p className="font-semibold text-red-600">-Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Transfer</p>
@@ -163,7 +163,7 @@ export function Dashboard() {
                 <p className="font-semibold text-red-600">-Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Send</p>
@@ -171,7 +171,7 @@ export function Dashboard() {
                 <p className="font-semibold text-green-600">+Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Transfer</p>
@@ -179,7 +179,7 @@ export function Dashboard() {
                 <p className="font-semibold text-red-600">-Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Send</p>
@@ -187,7 +187,7 @@ export function Dashboard() {
                 <p className="font-semibold text-green-600">+Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Transfer</p>
@@ -195,7 +195,7 @@ export function Dashboard() {
                 <p className="font-semibold text-red-600">-Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Send</p>
@@ -203,7 +203,7 @@ export function Dashboard() {
                 <p className="font-semibold text-green-600">+Rp50.000</p>
                 </section>                
                 <section className="py-4 flex gap-5 justify-between">
-                <img src="/src/assets/icons/floyd.svg" alt="floyd" />
+                <img src="/icons/floyd.svg" alt="floyd" />
                 <section className="mr-auto flex flex-col justify-between">
                     <p className="font-semibold">Floyd Miles</p>
                     <p>Send</p>

@@ -8,43 +8,43 @@ export function FindPeople () {
             id: 1,
             name: "Ghaluh 1",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell.svg",
+            img: "/icons/Table cell.svg",
         },
         {
             id: 2,
             name: "Jhon Cena",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-1.svg",
+            img: "/icons/Table cell-1.svg",
         },
         {
             id: 3,
             name: "Young Lex",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-2.svg",
+            img: "/icons/Table cell-2.svg",
         },
         {
             id: 4,
             name: "Bruno Mars",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-3.svg",
+            img: "/icons/Table cell-3.svg",
         },
         {
             id: 5,
             name: "Bruno Pluto",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-4.svg",
+            img: "/icons/Table cell-4.svg",
         },
         {
             id: 6,
             name: "Bruno Bogor",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-5.svg",
+            img: "/icons/Table cell-5.svg",
         },
         {
             id: 7,
             name: "Bruno G Putri",
             phone: "(239) 555-0108",
-            img: "/src/assets/icons/Table cell-6.svg",
+            img: "/icons/Table cell-6.svg",
         }
     ];
 
@@ -90,7 +90,7 @@ export function FindPeople () {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Enter Number Or Fullname" 
                     className="focus:outline-none "/>                    
-                        <img src="/src/assets/icons/Search.svg" alt="search" />
+                        <img src="/icons/Search.svg" alt="search" />
                     </section>
 
                 </section>
@@ -106,7 +106,7 @@ export function FindPeople () {
                                     <td>{row.name}</td>
                                     <td>{row.phone}</td>
                                     
-                                    <td><img src="/src/assets/icons/Star.svg" alt="star" /></td>
+                                    <td><img src="/icons/Star.svg" alt="star" /></td>
                                 </tr>
                             ))}
 

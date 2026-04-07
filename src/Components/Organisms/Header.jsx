@@ -14,7 +14,7 @@ export function Header() {
                 {/* belum disambung */}
             </section>
             <HamburgerButton onClick={()=> setOpen(!open)}>
-                <img src="/src/assets/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
+                <img src="/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
             </HamburgerButton>
 
             {open && (

@@ -16,7 +16,7 @@ export const InputEmail = ({value,onChange,className=""}) => {
         <section className="flex py-2 flex-col gap-3 font-medium">
             <label htmlFor="email">Email</label>
         <section className={finalClass}>
-        <img  src="/src/assets/icons/blackMail.svg" alt="mail" />
+        <img  src="/icons/blackMail.svg" alt="mail" />
         <input 
         className="focus:outline-none w-full" 
         type="email" 

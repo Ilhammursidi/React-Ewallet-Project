@@ -28,7 +28,7 @@ export function AppHeader({className}) {
                     <Logo color="blue" className="hidden sm:hidden md:flex"></Logo>
             <section className="flex gap-2 py-2 items-center md:flex-row-reverse md:ml-auto">
                 <UserNavbar></UserNavbar>
-                <img className="w-10" src="/src/assets/icons/ghaluh.svg" alt="gahluh" />
+                <img className="w-10" src="/icons/ghaluh.svg" alt="gahluh" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
                     <p className="font-medium text-sm md:text-gray-500">{username || "User"}</p>
@@ -37,7 +37,7 @@ export function AppHeader({className}) {
             
 
             <HamburgerButton className="sm:block md:hidden" onClick={()=> setOpen(!open)}>
-                <img src="/src/assets/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
+                <img src="/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
             </HamburgerButton>
 
             </section>

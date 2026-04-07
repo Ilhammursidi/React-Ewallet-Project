@@ -1,6 +1,7 @@
 import { useLocation, useParams } from "react-router";
 import { Button } from "../Atoms/Button";
 import { InputNominal } from "../Form/InputNominal";
+import { useState } from "react";
 
 /**
  * a user transfer component
@@ -12,9 +13,13 @@ export const UserTransfer = () => {
 const { id } = useParams();
 const location = useLocation();
 const user = location.state?.userData;
+const [isOpen, clickOpen] = useState(false)
 
     return (
         <section>
+            <Modal isOpen={isOpen}>
+
+            </Modal>
 
     <section className="hidden md:flex flex-row gap-5 p-5">
                             <section className="flex flex-row gap-2">
@@ -42,10 +47,10 @@ const user = location.state?.userData;
                     <section className="grid p-2">
                         <p className="text-xs font-medium">{user.name}</p>
                         <p className="text-xs">{user.phone}</p>
-                        <img className="w-20" src="/src/assets/icons/verified.svg" alt="verified" />
+                        <img className="w-20" src="/icons/verified.svg" alt="verified" />
                     </section>
                 </section>
-                <img className="w-6" src="/src/assets/icons/Star.svg" alt="star" />
+                <img className="w-6" src="/icons/Star.svg" alt="star" />
             </section>
 
             <p className="font-medium">Amount</p>

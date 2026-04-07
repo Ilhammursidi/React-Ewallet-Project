@@ -15,14 +15,14 @@ export const InputPassword = ({value,onChange,className=""})=>{
     const finalClass = `${defaultClass} ${className}`
 
     const icon = !show 
-    ? "/src/assets/icons/EyeSlash.svg"
-    : "/src/assets/icons/fi_eye.svg"
+    ? "/icons/EyeSlash.svg"
+    : "/icons/fi_eye.svg"
 
     return (
         <section className="flex py-2 flex-col gap-3 font-medium">
             <label htmlFor="password">Password</label>
         <section className={finalClass}>
-        <img  src="/src/assets/icons/Password.svg" alt="password" />
+        <img  src="/icons/Password.svg" alt="password" />
         <input 
         className="focus:outline-none w-full" 
         type={show ? "text" : "password"} 

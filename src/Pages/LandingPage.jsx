@@ -23,7 +23,7 @@ const [open,setOpen] = useState(false);
                 </Button>
             </section>
             <HamburgerButton onClick={()=> setOpen(!open)}>
-                <img src="/src/assets/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
+                <img src="/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
             </HamburgerButton>
 
             {open && (
@@ -49,13 +49,13 @@ const [open,setOpen] = useState(false);
                 <p className="text-white text-xl md:text-md md:text-left">Simplify Your Life with Secure and Convenient Mobile Payments</p>
                 <section className="flex flex-row justify-between sm:px-20 md:px-0 gap-3 py-5">
                     <Button color="white" className="flex flex-row items-center justify-center w-full p-2 px-6 gap-2">
-                        <img src="/src/assets/icons/gplay.svg" alt="google-play icon" />
+                        <img src="/icons/gplay.svg" alt="google-play icon" />
                         <a href="https://play.google.com" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                             Play Store
                         </a>
                     </Button>
                     <Button color="blue" className="flex flex-row justify-center items-center w-full p-2 px-6 gap-2">
-                        <img src="/src/assets/icons/appstore.svg" alt="appstore icon" />
+                        <img src="/icons/appstore.svg" alt="appstore icon" />
                         <a href="https://apps.apple.com/app/id123456789" target="_blank" rel="noopener noreferrer" className="text-white">
                             App Store
                         </a>
@@ -63,12 +63,12 @@ const [open,setOpen] = useState(false);
                 </section>
                 <section className="flex flex-row items-center sm:justify-center gap-5 py-2 md:justify-start">
                 <p className="text-4xl text-white">4.6 M</p>
-                <img src="/src/assets/icons/user.svg" alt="users" />
+                <img src="/icons/user.svg" alt="users" />
                 </section>
                 <p className="text-white text-xl md:text-left">Around the world, we already have over 4.6 happy user</p>
                     </section>
                     <section className="image-part">
-                        <img className="sm:m-auto md:relative top-5" src="/src/assets/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
+                        <img className="sm:m-auto md:relative top-5" src="/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
                     </section>
                 </section>
             </section>
@@ -76,21 +76,21 @@ const [open,setOpen] = useState(false);
             <section className="bg-white px-5 py-10 sm:px-15 md:px-30 flex flex-col gap-8 md:flex-row">
     
                 <section className="flex flex-col md:flex-row gap-2 justify-center items-center text-center">
-                    <img className="w-12" src="/src/assets/icons/blueHeadphone.svg" alt="headphone-icon" />
+                    <img className="w-12" src="/icons/blueHeadphone.svg" alt="headphone-icon" />
                     <section className="md:text-left">
                         <p className="font-bold md:px-2">24/7 Support</p>
                         <p className="px-2 text-gray-600">We have 24/7 contact support so you can contact us whenever you want and we will respond it.</p>
                     </section>
                 </section>
                 <section className="flex flex-col md:flex-row gap-2 justify-center items-center text-center">
-                    <img className="w-12" src="/src/assets/icons/blueShield.svg" alt="shield-icon" />
+                    <img className="w-12" src="/icons/blueShield.svg" alt="shield-icon" />
                     <section className="md:text-left">
                         <p className="font-bold md:px-2">Data Privacy</p>
                         <p className="px-2 text-gray-600">We make sure your data is safe in our database and we will encrypt any data you submitted to us.</p>
                     </section>
                 </section>
                 <section className="flex flex-col md:flex-row gap-2 justify-center items-center text-center">
-                    <img className="w-12" src="/src/assets/icons/blueDownload.svg" alt="download-icon" />
+                    <img className="w-12" src="/icons/blueDownload.svg" alt="download-icon" />
                     <section className="md:text-left">
                         <p className="font-bold md:px-2">Easy Download</p>
                         <p className="px-2 text-gray-600">Zwallet is 100% totally free to use it’s now available on Google Play Store and App Store.</p>
@@ -101,7 +101,7 @@ const [open,setOpen] = useState(false);
 
             <section className="md:flex md:flex-row-reverse md:gap-2 md:px-30 md:items-center">
                 <section className="image-part px-6 md:px-0 md:w-600">
-                    <img src="/src/assets/icons/mobilewithlayout.png" alt="mobile-dashboard" />
+                    <img src="/icons/mobilewithlayout.png" alt="mobile-dashboard" />
                 </section>
                 <section className="text-part md:px-0 px-6 flex flex-col text-center gap-5 py-10 md:text-left">
                     <p className="font-bold text-blue-600">WELCOME TO E-WALLET</p>
@@ -116,7 +116,7 @@ const [open,setOpen] = useState(false);
             </section>
             <section className="bg-gray-100/50 md:flex md:flex-row md:py-10 md:px-20">
                 <section className="image-part p-6 md:w-200">
-                    <img className="sm:m-auto" src="/src/assets/icons/online-payment-security-concept-3d-phone-bill 1.svg" alt="mobile-dasboard" />
+                    <img className="sm:m-auto" src="/icons/online-payment-security-concept-3d-phone-bill 1.svg" alt="mobile-dasboard" />
                 </section>
                 <section className="text-part grid gap-5 p-5">
                     <p className="text-4xl">All The Great
@@ -124,15 +124,15 @@ Zwallet Features.</p>
                     <p className="text-xl text-gray-500">We have some great features from the application and it’s totally free to use by all users around the world.</p>
                     <section className="grid gap-5">
                         <div className="flex gap-3 text-xl font-bold text-green-600">
-                            <img src="/src/assets/icons/greencheck.svg" alt="green-tick" />
+                            <img src="/icons/greencheck.svg" alt="green-tick" />
                             <p>Small Fee</p>
                         </div >
                         <div className="flex gap-3 text-xl font-bold text-green-600">
-                            <img src="/src/assets/icons/greencheck.svg" alt="green-tick" />
+                            <img src="/icons/greencheck.svg" alt="green-tick" />
                             <p>Data Secured</p>
                         </div>
                         <div className="flex gap-3 text-xl font-bold text-green-600">
-                            <img src="/src/assets/icons/greencheck.svg" alt="green-tick" />
+                            <img src="/icons/greencheck.svg" alt="green-tick" />
                             <p>User Friendly</p>
                         </div>
                     </section>
@@ -153,12 +153,12 @@ Zwallet Features.</p>
 brand partners around the globe.</p>
                 </section>
                 <section className="partners sm:px-70 flex flex-col py-10 px-30 justify-center md:flex md:flex-row md:px-20">
-                    <img src="/src/assets/icons/microsoft.svg" alt="microsoft-icon" />
-                    <img src="/src/assets/icons/dropbox.svg" alt="dropbox-icon" />
-                    <img src="/src/assets/icons/h&m.svg" alt="h&m-icon" />
-                    <img src="/src/assets/icons/AirBnb.svg" alt="airbnb-icon" />
-                    <img src="/src/assets/icons/canon.svg" alt="canon-icon" />
-                    <img src="/src/assets/icons/Dell.svg" alt="dell-icon" />
+                    <img src="/icons/microsoft.svg" alt="microsoft-icon" />
+                    <img src="/icons/dropbox.svg" alt="dropbox-icon" />
+                    <img src="/icons/h&m.svg" alt="h&m-icon" />
+                    <img src="/icons/AirBnb.svg" alt="airbnb-icon" />
+                    <img src="/icons/canon.svg" alt="canon-icon" />
+                    <img src="/icons/Dell.svg" alt="dell-icon" />
                 </section>
                 </section>
                 <section className="md:py-10">
@@ -167,20 +167,20 @@ brand partners around the globe.</p>
                 </section>
                 <section className="md:items-center md:flex md:flex-row md:py-10">
                     <section className="hidden md:flex">
-                        <img src="/src/assets/icons/leftArrow.svg" alt="previous-button" />
+                        <img src="/icons/leftArrow.svg" alt="previous-button" />
                     </section>
                     <section className="bg-blue-600 text-white h-80 md:w-150 md:m-auto rounded-xl flex flex-col text-center p-5">
-                        <img className="w-15 m-auto" src="/src/assets/icons/james-bond.svg" alt="james-bond" />
+                        <img className="w-15 m-auto" src="/icons/james-bond.svg" alt="james-bond" />
                         <p className="font-bold">James Bond</p>
-                        <img className="h-5" src="/src/assets/icons/rating.svg" alt="rating" />
+                        <img className="h-5" src="/icons/rating.svg" alt="rating" />
                         <p className="text-5xl items-center" >“</p>
                         <p>I've been using the e-wallet for over two years now, and I'm very satisfied with the ease of use. This has completely changed the way I shop and conduct financial transactions.</p>
                     </section>
                     <section>
-                        <img className="m-auto md:hidden py-10" src="/src/assets/icons/swipe-icon.svg" alt="swipe-icon" />
+                        <img className="m-auto md:hidden py-10" src="/icons/swipe-icon.svg" alt="swipe-icon" />
                     </section>
                     <section className="hidden md:flex">
-                        <img src="/src/assets/icons/rightArrow.svg" alt="next-button" />
+                        <img src="/icons/rightArrow.svg" alt="next-button" />
                     </section>
                 </section>
             </section>
@@ -192,20 +192,20 @@ brand partners around the globe.</p>
                 <p className="text-gray-600 text-lg">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
                 <section className="flex justify-between gap-2">
                     <Button color="blue" className="text-white w-full flex px-3 cursor-pointer justify-center">
-                        <img src="/src/assets/icons/gplay.svg" alt="google play" />
+                        <img src="/icons/gplay.svg" alt="google play" />
                         <a href="https://play.google.com" target="_blank" rel="noopener noreferrer" className="text-white">
                             Play Store
                         </a>
                     </Button>
                     <Button color="white"  className="text-blue-600 border-blue-600 w-full justify-center flex">
-                        <img src="/src/assets/icons/blueAppstore.svg" alt="app store" />
+                        <img src="/icons/blueAppstore.svg" alt="app store" />
                         <a href="https://apps.apple.com/app/id123456789" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                             App Store
                         </a>
                     </Button>
             </section>
                 </section>
-                <img src="/src/assets/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
+                <img src="/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
             </section>
         </main>
         <footer className="bg-blue-600 text-white flex flex-col md:py-15 gap-5 p-5 md:px-30">
@@ -219,11 +219,11 @@ brand partners around the globe.</p>
             <section className="flex flex-col gap-5">
                 <p className="font-semibold text-xl">GET IN TOUCH</p>
                 <section className="flex items-center font-semibold gap-1">
-                    <img src="/src/assets/icons/u_phone.svg" alt="phone" />
+                    <img src="/icons/u_phone.svg" alt="phone" />
                     <p>+62 5637 8882 9901</p>
                 </section>
                 <section className="flex items-center font-semibold gap-2">
-                    <img src="/src/assets/icons/mail.svg" alt="mail" />
+                    <img src="/icons/mail.svg" alt="mail" />
                     <p>contact@zwallet.com</p>
                 </section>
             </section>
@@ -231,23 +231,23 @@ brand partners around the globe.</p>
                 <p className="font-semibold text-xl">SOCIAL MEDIA</p>
                 <section className="flex flex-row gap-3">
                     <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/src/assets/icons/twitter.svg" alt="twitter-icon" />
+                        <img src="/icons/twitter.svg" alt="twitter-icon" />
                     </a>
                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/src/assets/icons/fb.svg" alt="facebook-icon" />
+                        <img src="/icons/fb.svg" alt="facebook-icon" />
                     </a>
                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/src/assets/icons/ig.svg" alt="instagram-icon" />
+                        <img src="/icons/ig.svg" alt="instagram-icon" />
                     </a>
                     <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-                        <img src="/src/assets/icons/github.svg" alt="github-icon" />
+                        <img src="/icons/github.svg" alt="github-icon" />
                     </a>
                 </section>
             </section>
             <section className="flex flex-col gap-5">
                 <p className="font-semibold text-xl">NEWSLETTER</p>
                 <section className="rounded-md bg-white flex flex-row gap-2 p-4 md:p-2">
-                    <img className="md:p-2" src="/src/assets/icons/blackMail.svg" alt="mail" />
+                    <img className="md:p-2" src="/icons/blackMail.svg" alt="mail" />
                     <input type="text" className="text-black md:text-sm focus:outline-0" placeholder="Enter Your Email"/>
                 </section>
                 <Button color="white" className="text-blue-600 p-3 md:p-1">Subscribe</Button>

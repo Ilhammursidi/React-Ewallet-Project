@@ -12,7 +12,7 @@ export const Logo = ({className,color}) => {
     const colorClass = color === "blue" ? "text-blue-600" : ""; color === "white" ? "text-white" : ""
     return (
         <section className={finalClass}>
-            <img src="/src/assets/icons/Money Wallet.svg" alt="Ewallet-logo" />
+            <img src="/icons/Money Wallet.svg" alt="Ewallet-logo" />
             <p className={colorClass}>E-Wallet</p>
         </section>
     )
