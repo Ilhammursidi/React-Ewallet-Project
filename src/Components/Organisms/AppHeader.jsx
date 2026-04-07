@@ -12,15 +12,14 @@ import { HamburgerButton } from "../Atoms/HamburgerButton";
 
 export function AppHeader({className}) {
     const [open, setOpen] = useState(false);
-    const [username, setUsername] = useState("");
+    const [username, setUsername] = useState(null);
 
     useEffect(() => {
-    const email = localStorage.getItem("email"); 
-    if (email) {
-      const name = email.split("@")[0];
-      setUsername(name);
-    }
-  }, []);
+        const data = JSON.parse(localStorage.getItem("currentUser"));
+        const name = data?.email.split("@")[0];
+        setUsername(name)
+      }, []);
+
 
   
     return (
