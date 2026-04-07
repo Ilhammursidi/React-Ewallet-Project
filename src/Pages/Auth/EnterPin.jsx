@@ -1,11 +1,13 @@
 import { useState, useRef } from "react";
 import { Button } from "../../Components/Atoms/Button";
 import { Logo } from "../../Components/Atoms/Logo";
+import { useNavigate } from "react-router";
 
 export function EnterPin() {
     const PIN_LENGTH = 6;
     const [pin, setPin] = useState(Array(PIN_LENGTH).fill(""));
     const inputsRef = useRef([]);
+    const navigate = useNavigate()
 
     const handleChange = (value, index) => {
         if (!/^[0-9]?$/.test(value)) return;
@@ -24,25 +26,76 @@ export function EnterPin() {
         }
     };
 
-    const handleSubmit = () => {
-        const pinStr = pin.join("");
-        if (pinStr.length !== PIN_LENGTH) return alert("Lengkapi PIN!");
+    const handleSubmit = (e) => {
+    e.preventDefault();
 
-        localStorage.setItem("userPin", pinStr);
-        alert("PIN berhasil disimpan!");
-        setPin(Array(PIN_LENGTH).fill(""));
-    };
+    const pinStr = pin.join("");
+    if (pinStr.length !== PIN_LENGTH) {
+        return alert("Lengkapi PIN!");
+    }
+
+    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const updatedAccounts = accounts.map(acc => {
+        if (acc.email === currentUser.email) {
+            return {
+                ...acc,
+                userPin: pinStr
+            };
+        }
+        return acc;
+    });
+
+    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+
+    localStorage.setItem("currentUser", JSON.stringify({
+        ...currentUser,
+        userPin: pinStr
+    }));
+
+    alert("Save PIN Success!");
+    setPin(Array(PIN_LENGTH).fill(""));
+    navigate("/Dashboard")
+};
+
+    const handleResetPin = () => {
+    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    const updatedAccounts = accounts.map(acc => {
+        if (acc.email === currentUser.email) {
+            return {
+                ...acc,
+                userPin: null
+            };
+        }
+        return acc;
+    });
+
+    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+
+    localStorage.setItem("currentUser", JSON.stringify({
+        ...currentUser,
+        userPin: null
+    }));
+
+    setPin(Array(PIN_LENGTH).fill(""));
+    alert("PIN reset!");
+};
 
     return (
         <section className="min-h-screen flex items-center justify-center bg-blue-500 p-4">
             <section className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg">
-                <Logo className="text-xl"></Logo>
+                <Logo color="blue" className="text-xl"></Logo>
                 <section className="mb-4">
                     <h1 className="text-lg font-medium py-5">Enter Your Pin 👋</h1>
                     <p className="text-gray-500 text-sm">
                         Please save your pin because this so important.
                     </p>
                 </section>
+
+                <form onSubmit={handleSubmit}>
 
                 <section className="flex justify-between mb-4 px-2 py-20">
                     {pin.map((digit, i) => (
@@ -55,22 +108,19 @@ export function EnterPin() {
                             onKeyDown={e => handleKeyDown(e, i)}
                             ref={el => (inputsRef.current[i] = el)}
                             className="w-10 h-12 text-center border-b-2 border-gray-300 focus:border-b-blue-600 focus:outline-none text-3xl"
-                        />
+                            />
                     ))}
                 </section>
 
-                <Button onClick={handleSubmit} className="w-full py-3" color="blue">
+                <Button type="submit" className="w-full py-3" color="blue">
                     Submit
                 </Button>
+                            </form>
 
                 <p className="mt-2 text-center text-gray-500 text-sm">
                     Forgot Your Pin?{" "}
                     <span
-                        onClick={() => {
-                            localStorage.removeItem("userPin");
-                            setPin(Array(PIN_LENGTH).fill(""));
-                            alert("PIN direset!");
-                        }}
+                        onClick={handleResetPin}
                         className="text-blue-600 cursor-pointer"
                     >
                         Reset

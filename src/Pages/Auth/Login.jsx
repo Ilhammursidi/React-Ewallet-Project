@@ -33,12 +33,20 @@ function Login() {
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
+        e.preventDefault();
         const account = JSON.parse(localStorage.getItem("accounts") || "[]")
         const user = account.find(acc => acc.email === email && acc.password === password)
         if(user) {
             alert("Login Successful")
             setEmail(""); setPassword("");
-            navigate("/enter-pin")
+            
+            localStorage.setItem("currentUser", JSON.stringify(user))
+            
+            if (user.userPin) {
+                navigate("/dashboard")
+            } else {
+                navigate("/enter-pin")
+            }
         } else {
             alert("Invalid Email or Password")
         }
