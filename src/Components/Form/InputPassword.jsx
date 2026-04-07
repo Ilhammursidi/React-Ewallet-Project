@@ -20,7 +20,7 @@ export const InputPassword = ({value,onChange,className=""})=>{
         <section className={finalClass}>
         <img  src="/src/assets/icons/Password.svg" alt="password" />
         <input 
-        className="focus:outline-none" 
+        className="focus:outline-none w-full" 
         type={show ? "text" : "password"} 
         id="password"
         value={value}
