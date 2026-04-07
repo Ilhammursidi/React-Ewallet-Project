@@ -7,7 +7,7 @@ export function FindPeople () {
         {
             id: 1,
             name: "Ghaluh 1",
-            phone: "(239) 555-0108",
+            phone: "082134348877",
             img: "/icons/Table cell.svg",
         },
         {
@@ -19,25 +19,25 @@ export function FindPeople () {
         {
             id: 3,
             name: "Young Lex",
-            phone: "(239) 555-0108",
+            phone: "(239) 453-7432",
             img: "/icons/Table cell-2.svg",
         },
         {
             id: 4,
             name: "Bruno Mars",
-            phone: "(239) 555-0108",
+            phone: "(239) 009-9231",
             img: "/icons/Table cell-3.svg",
         },
         {
             id: 5,
             name: "Bruno Pluto",
-            phone: "(239) 555-0108",
+            phone: "(239) 555-2000",
             img: "/icons/Table cell-4.svg",
         },
         {
             id: 6,
             name: "Bruno Bogor",
-            phone: "(239) 555-0108",
+            phone: "081524249988",
             img: "/icons/Table cell-5.svg",
         },
         {
