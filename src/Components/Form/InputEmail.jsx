@@ -18,7 +18,7 @@ export const InputEmail = ({value,onChange,className=""}) => {
         <section className={finalClass}>
         <img  src="/src/assets/icons/blackMail.svg" alt="mail" />
         <input 
-        className="focus:outline-none" 
+        className="focus:outline-none w-full" 
         type="email" 
         id="email"
         value={value}
