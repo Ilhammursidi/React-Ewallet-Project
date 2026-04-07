@@ -14,6 +14,10 @@ export const InputPassword = ({value,onChange,className=""})=>{
     const defaultClass = "rounded-md bg-gray-100/30 p-3 px-5 text-sm border border-gray-400 flex flex-row gap-3 focus-within:border-blue-500 focus-within:border-2 " 
     const finalClass = `${defaultClass} ${className}`
 
+    const icon = !show 
+    ? "/src/assets/icons/EyeSlash.svg"
+    : "/src/assets/icons/fi_eye.svg"
+
     return (
         <section className="flex py-2 flex-col gap-3 font-medium">
             <label htmlFor="password">Password</label>
@@ -27,9 +31,9 @@ export const InputPassword = ({value,onChange,className=""})=>{
         onChange={onChange}
         placeholder="Enter Your Password"/>
         <img
-        className="ml-auto"
+        className="ml-auto w-5"
         onClick={() => setShow(!show)} 
-        src="/src/assets/icons/EyeSlash.svg" alt="eye-slash" />
+        src={icon} alt="toggle visibility" />
         </section>
         </section>
     )
