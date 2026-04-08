@@ -34,7 +34,8 @@ export const InputEmail = ({value,onChange,className=""}) => {
         id="email"
         value={value}
         onChange={onChange}
-        placeholder="Enter Your Email"/>
+        placeholder="Enter Your Email"
+        required/>
         </section>
         {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </section>

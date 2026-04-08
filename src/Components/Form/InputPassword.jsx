@@ -39,7 +39,8 @@ export const InputPassword = ({value,onChange,className=""})=>{
         id="password"
         value={value}
         onChange={onChange}
-        placeholder="Enter Your Password"/>
+        placeholder="Enter Your Password"
+        required/>
         <img
         className="ml-auto w-5"
         onClick={(e) => setShow(!show)} 

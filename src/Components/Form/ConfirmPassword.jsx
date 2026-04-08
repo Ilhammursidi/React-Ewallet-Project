@@ -38,7 +38,8 @@ export const ConfirmPassword = ({password,value,onChange,className=""})=>{
         id="confirmPassword"
         value={value}
         onChange={onChange}
-        placeholder="Enter Your Password Again"/>
+        placeholder="Enter Your Password Again"
+        required/>
         <img
         className="ml-auto w-5"
         onClick={() => setShow(!show)} 

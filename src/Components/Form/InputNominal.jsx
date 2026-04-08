@@ -23,7 +23,8 @@ export const InputNominal = ({value,onChange,className=""}) => {
         id="text"
         value={value}
         onChange={onChange}
-        placeholder="Enter Nominal Transfer"/>
+        placeholder="Enter Nominal Transfer"
+        required/>
         </section>
     )
 }
