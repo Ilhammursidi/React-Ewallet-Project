@@ -2,7 +2,7 @@ import { useLocation, useParams } from "react-router";
 import { Button } from "../Atoms/Button";
 import { InputNominal } from "../Form/InputNominal";
 import { useState } from "react";
-
+import { Modal } from "../Atoms/Modal";
 /**
  * a user transfer component
  * @typedef UserTransfer

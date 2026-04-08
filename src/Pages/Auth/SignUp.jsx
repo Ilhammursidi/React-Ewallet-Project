@@ -49,7 +49,7 @@ function SignUp() {
 
         toast.success("Account Saved Successfully");
 
-        navigate("/login");
+        navigate("/auth/login");
     };
 
 
@@ -87,7 +87,7 @@ function SignUp() {
                         </Button>
                         <p className="text-center mt-2 text-gray-600">Have An Account?
                             <NavLink
-                                className="text-blue-600" to={"/login"}> Login
+                                className="text-blue-600" to={"/auth/login"}> Login
                             </NavLink>
                         </p>
                     </form>

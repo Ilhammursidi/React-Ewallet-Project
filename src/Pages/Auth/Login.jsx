@@ -81,7 +81,7 @@ function Login() {
                     <InputPassword value={password} onChange={e => setPassword(e.target.value)}></InputPassword>
                     <p className="text-gray-600">Forgot Your Password? <NavLink
                         className="text-blue-600"
-                    to={"/forgot-password"} >
+                    to={"/auth/forgot-password"} >
                         Click here
                     </NavLink></p>
                     <Button onClick={handleLogin} className="w-full h-12 py-2 mt-4" color="blue">
@@ -89,7 +89,7 @@ function Login() {
                     </Button>
                     <p className="text-center mt-2 text-gray-600">Have An Account? 
                         <NavLink 
-                            className="text-blue-600" to={"/signup"}> Register
+                            className="text-blue-600" to={"/auth/signup"}> Register
                         </NavLink>
                     </p>
                 </form>

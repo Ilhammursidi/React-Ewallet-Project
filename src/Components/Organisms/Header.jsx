@@ -20,11 +20,11 @@ export function Header() {
             {open && (
                 <section className="absolute left-0 bg-white justify-center rounded-b-4xl shadow-lg top-15 w-full flex flex-col items-center sm:hidden md:hidden p-4 gap-2">
                     {/* belum disambungkan */}
-                    <Button className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"/login"}>
+                    <Button className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"auth/auth/login"}>
                 Sign In
             </NavLink>
                 </Button>
-            <Button onClick={()=> setOpen(false)} color="white" className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/signup"}>
+            <Button onClick={()=> setOpen(false)} color="white" className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/auth/signup"}>
                     Sign Up
                     </NavLink>
                 </Button>

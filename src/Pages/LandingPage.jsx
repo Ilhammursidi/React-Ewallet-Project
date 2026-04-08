@@ -12,11 +12,11 @@ const [open,setOpen] = useState(false);
         <header className="h-15 px-5 sm:px-10 md:px-30 border-b border-white  bg-blue-600 flex justify-between w-full md:border-none items-center">
             <Logo/>
             <section className="hidden sm:flex md:flex flex-row gap-5 items-center">
-            <Button color="blue"><NavLink to={"/login"}>
+            <Button color="blue"><NavLink to={"/auth/login"}>
                 Sign In
             </NavLink>
                 </Button>
-            <Button color="white"><NavLink to={"/signup"}>
+            <Button color="white"><NavLink to={"/auth/signup"}>
                     Sign Up
                     </NavLink>
                 </Button>
@@ -28,11 +28,11 @@ const [open,setOpen] = useState(false);
             {open && (
                 <section className="absolute left-0 bg-white justify-center rounded-b-4xl shadow-lg top-15 w-full flex flex-col items-center sm:hidden md:hidden p-4 gap-2">
                     {/* belum disambungkan */}
-                    <Button color="blue" className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"/login"}>
+                    <Button color="blue" className="border h-10 w-95 text-blue-600 rounded-md" onClick={()=> setOpen(false)}><NavLink to={"/auth/login"}>
                 Sign In
             </NavLink>
                 </Button>
-            <Button color="white" onClick={()=> setOpen(false)} className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/signup"}>
+            <Button color="white" onClick={()=> setOpen(false)} className="border h-10 w-95 text-blue-600 rounded-md"><NavLink to={"/auth/signup"}>
                     Sign Up
                     </NavLink>
                 </Button>
@@ -107,7 +107,7 @@ const [open,setOpen] = useState(false);
                     <p className="text-4xl">Your All-in-One Digital Payment Solution</p>
                     <p className="text-gray-500 px-4 md:px-0">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you're shopping, dining out, or sending money to loved ones, we've got you covered.</p>
                     <Button color="blue" className="text-white md:w-40">
-                        <NavLink to={"/login"}>
+                        <NavLink to={"/auth/login"}>
                             Get Started
                         </NavLink>
                     </Button>
@@ -136,7 +136,7 @@ Zwallet Features.</p>
                         </div>
                     </section>
                     <Button color="blue" className="text-white md:w-45 md:h-10">
-                        <NavLink to={"/login"}>
+                        <NavLink to={"/auth/login"}>
                             Get Started
                         </NavLink>
                     </Button>
