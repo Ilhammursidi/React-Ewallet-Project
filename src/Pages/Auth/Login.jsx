@@ -6,7 +6,7 @@ import { InputEmail } from "../../Components/Form/InputEmail";
 import { InputPassword } from "../../Components/Form/InputPassword";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-
+import toast from "react-hot-toast";
 /**
  * Login Page Component
  * @typedef {Object} LoginProps
@@ -37,7 +37,7 @@ function Login() {
         const account = JSON.parse(localStorage.getItem("accounts") || "[]")
         const user = account.find(acc => acc.email === email && acc.password === password)
         if(user) {
-            alert("Login Successful")
+            toast.success("Login Successful")
             setEmail(""); setPassword("");
             
             localStorage.setItem("currentUser", JSON.stringify(user))
@@ -48,7 +48,7 @@ function Login() {
                 navigate("/enter-pin")
             }
         } else {
-            alert("Invalid Email or Password")
+            toast.error("Invalid Email or Password",{duration:2000})
         }
     }
 
@@ -59,7 +59,7 @@ function Login() {
 
             <section className="left-side w-full bg-white md:rounded-r-4xl px-6 py-30 md:w-1/2 md:px-10">
                 <Logo color="blue" className="text-xl" />
-                <p className="text-xl font-medium py-3">Hello Welcome Back 👋</p>
+                <h1 className="text-xl font-medium py-3">Hello Welcome Back 👋</h1>
                 <p className="text-gray-500 text-sm">Fill out the form correctly or you can login with several option.</p>
                 <section className="flex flex-row gap-5 py-5  md:flex-col">
                     <SocialButton className="w-full p-2 md:flex md:flex-row md:gap-2">
