@@ -8,6 +8,7 @@ import { ConfirmPassword } from "../../Components/Form/ConfirmPassword";
 import { saveAccount } from "../../Components/Atoms/SaveAccount";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 function SignUp() {
     const [email, setEmail] = useState("")
@@ -19,11 +20,11 @@ function SignUp() {
         e.preventDefault();
 
         if (!email || !password || !confirm) {
-            return alert("All fields are required");
+            toast.error("All fields are required");
         }
 
         if (password !== confirm) {
-            return alert("Check Your Input");
+            toast.error("Check Your Input");
         }
 
         const account = JSON.parse(localStorage.getItem("accounts") || "[]");
@@ -33,7 +34,7 @@ function SignUp() {
         );
 
         if (isEmailExist) {
-            return alert("Account Already Exists");
+            toast.error("Account Already Exists");
         }
 
         saveAccount({
@@ -41,12 +42,12 @@ function SignUp() {
             password,
             userPin: null
         });
-
+        
         setEmail("");
         setPassword("");
         setConfirm("");
 
-        alert("Account Saved Successfully");
+        toast.success("Account Saved Successfully");
 
         navigate("/login");
     };
