@@ -1,8 +1,5 @@
-
 import { Button } from "../../Components/Atoms/Button";
-import { Chart, scales } from "chart.js";
 import 'chart.js/auto'
-import { NavLink } from "react-router";
 import { Bar } from "react-chartjs-2";
 import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
