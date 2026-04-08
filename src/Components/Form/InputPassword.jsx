@@ -16,7 +16,7 @@ export const InputPassword = ({value,onChange,className=""})=>{
         useEffect(()=>{
             if(value.length === 0) {
                 setError("")
-            }else if( value.length < 5) {
+            }else if( value.length < 6) {
                 setError("password must be more than 5 characters")
             }else setError("");
             }, [value]);
