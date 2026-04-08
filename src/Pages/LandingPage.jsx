@@ -12,7 +12,6 @@ const [open,setOpen] = useState(false);
         <header className="h-15 px-5 sm:px-10 md:px-30 border-b border-white  bg-blue-600 flex justify-between w-full md:border-none items-center">
             <Logo/>
             <section className="hidden sm:flex md:flex flex-row gap-5 items-center">
-                {/* belum disambung */}
             <Button color="blue"><NavLink to={"/login"}>
                 Sign In
             </NavLink>
@@ -73,7 +72,7 @@ const [open,setOpen] = useState(false);
                 </section>
             </section>
 
-            <section className="bg-white px-5 py-10 sm:px-15 md:px-30 flex flex-col gap-8 md:flex-row">
+            <section className="bg-white px-5 py-10 sm:px-15 md:px-30 grid gap-8 md:grid-cols-3">
     
                 <section className="flex flex-col md:flex-row gap-2 justify-center items-center text-center">
                     <img className="w-12" src="/icons/blueHeadphone.svg" alt="headphone-icon" />
@@ -152,7 +151,7 @@ Zwallet Features.</p>
                     <p className="text-gray-500 text-xl p-1 py-5">We have reached global level and have 100+
 brand partners around the globe.</p>
                 </section>
-                <section className="partners sm:px-70 flex flex-col py-10 px-30 justify-center md:flex md:flex-row md:px-20">
+                <section className="partners sm:px-70 grid py-10 px-30 justify-center md:flex md:px-20 ">
                     <img src="/icons/microsoft.svg" alt="microsoft-icon" />
                     <img src="/icons/dropbox.svg" alt="dropbox-icon" />
                     <img src="/icons/h&m.svg" alt="h&m-icon" />
@@ -208,8 +207,8 @@ brand partners around the globe.</p>
                 <img src="/icons/Mobile Dashboard.svg" alt="mobile-dashboard" />
             </section>
         </main>
-        <footer className="bg-blue-600 text-white flex flex-col md:py-15 gap-5 p-5 md:px-30">
-            <section className="md:flex md:flex-row md:justify-between">
+        <footer className="bg-blue-600 text-white md:py-15 gap-5 p-5 md:px-30">
+            <section className="grid gap-2 md:grid-cols-4 md:justify-between">
             <section className="flex flex-col gap-5 md:w-60">
                 <section className="text-3xl items-center">
                     <Logo/>
@@ -253,7 +252,7 @@ brand partners around the globe.</p>
                 <Button color="white" className="text-blue-600 p-3 md:p-1">Subscribe</Button>
             </section>
             </section>
-            <section className="px-2 text-white text-center flex flex-col gap-5">
+            <section className="px-2 text-white text-center py-5 flex flex-col gap-5">
                 <hr className="border-white" />
                 <p>© Copyright 2022, All Rights Reserved by ClarityUI</p>
             </section>
