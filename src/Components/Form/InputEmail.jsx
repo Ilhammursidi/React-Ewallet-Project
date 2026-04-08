@@ -1,3 +1,5 @@
+import { useEffect,useState } from "react"
+
 /**
  * An email input component
  * @typedef {Object} InputEmailProps
@@ -10,6 +12,15 @@
 
 
 export const InputEmail = ({value,onChange,className=""}) => {
+    const [error,setError] = useState("");
+    useEffect(()=>{
+            if(value.length === 0) {
+                setError("")
+            }else if( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ) {
+                setError("Invalid Email Format")
+            }else setError("");
+            }, [value]);
+
     const defaultClass = "rounded-md bg-gray-100/30 px-5 p-3 text-sm border border-gray-400 flex flex-row gap-3 focus-within:border-blue-500 focus-within:border-2" 
     const finalClass = `${defaultClass} ${className}`
     return (
@@ -25,6 +36,7 @@ export const InputEmail = ({value,onChange,className=""}) => {
         onChange={onChange}
         placeholder="Enter Your Email"/>
         </section>
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </section>
     )
 }

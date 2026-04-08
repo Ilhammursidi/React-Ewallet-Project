@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 /**
  * A password input component
  * @typedef {Object} InputPasswordProps
@@ -10,7 +10,17 @@ import { useState } from "react";
  */
 
 export const InputPassword = ({value,onChange,className=""})=>{
-    const [show, setShow] = useState(false); 
+    const [show, setShow] = useState(false);
+    const [error,setError] = useState("");
+        
+        useEffect(()=>{
+            if(value.length === 0) {
+                setError("")
+            }else if( value.length < 5) {
+                setError("password must be more than 5 characters")
+            }else setError("");
+            }, [value]);
+    
     const defaultClass = "rounded-md bg-gray-100/30 p-3 px-5 text-sm border border-gray-400 flex flex-row gap-3 focus-within:border-blue-500 focus-within:border-2 " 
     const finalClass = `${defaultClass} ${className}`
 
@@ -32,9 +42,10 @@ export const InputPassword = ({value,onChange,className=""})=>{
         placeholder="Enter Your Password"/>
         <img
         className="ml-auto w-5"
-        onClick={() => setShow(!show)} 
+        onClick={(e) => setShow(!show)} 
         src={icon} alt="toggle visibility" />
         </section>
+        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
         </section>
     )
 }
