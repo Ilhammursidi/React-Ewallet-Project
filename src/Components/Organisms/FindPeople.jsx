@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export function FindPeople () {
+    const navigate = useNavigate();
     const [query, setQuery] = useState("");
     const data = [
         {
@@ -55,10 +56,7 @@ export function FindPeople () {
     const handleRowClick = (row) => {
         navigate(`user/${row.id}`,{ state: { userData : row }});
     }
-
-    const navigate = useNavigate();
-
-
+    
     return (
         <section>
             <section className="hidden md:flex flex-row gap-5 p-5">
