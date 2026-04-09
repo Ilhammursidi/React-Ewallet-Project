@@ -15,42 +15,41 @@ function SignUp() {
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
     const navigate = useNavigate();
-
+    const [error,setError] = useState("")
+    
     const handleRegister = (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        if (!email || !password || !confirm) {
-            toast.error("All fields are required");
-        }
+    const account = JSON.parse(localStorage.getItem("accounts") || "[]");
+    const isEmailExist = account.some(
+        (acc) => acc.email === email.trim().toLowerCase()
+    );
 
-        if (password !== confirm) {
-            toast.error("Check Your Input");
-        }
+    if (!email || !password || !confirm) {
+        toast.error("All fields are required");
+        return;
+    }
 
-        const account = JSON.parse(localStorage.getItem("accounts") || "[]");
+    if (isEmailExist) {
+        toast.error("email already exist");
+        return;
+    }
 
-        const isEmailExist = account.some(acc =>
-            acc.email === email.trim().toLowerCase()
-        );
 
-        if (isEmailExist) {
-            toast.error("Account Already Exists");
-        }
+    saveAccount({
+        email: email.trim().toLowerCase(),
+        password,
+        userPin: null
+    });
 
-        saveAccount({
-            email: email.trim().toLowerCase(),
-            password,
-            userPin: null
-        });
-        
-        setEmail("");
-        setPassword("");
-        setConfirm("");
+    setEmail("");
+    setPassword("");
+    setConfirm("");
 
-        toast.success("Account Saved Successfully");
+    toast.success("Account Saved Successfully");
 
-        navigate("/auth/login");
-    };
+    navigate("/auth/login");
+};
 
 
     return (
@@ -78,8 +77,10 @@ function SignUp() {
                         <p className="text-gray-400" >Or</p>
                         <hr className="border border-gray-300 w-[40%]" />
                     </section>
-                    <form onSubmit={handleRegister}>
-                        <InputEmail value={email} onChange={e => setEmail(e.target.value)}></InputEmail>
+                    <form noValidate onSubmit={handleRegister}>
+                        <InputEmail 
+                        onError={setError} 
+                        value={email} onChange={e => setEmail(e.target.value)}></InputEmail>
                         <InputPassword value={password} onChange={e => setPassword(e.target.value)}></InputPassword>
                         <ConfirmPassword value={confirm} onChange={e => setConfirm(e.target.value)} password={password}></ConfirmPassword>
                         <Button type="submit" className="w-full h-12 py-2 mt-4" color="blue">
@@ -101,4 +102,4 @@ function SignUp() {
 }
 
 export default SignUp
-    ;
+;

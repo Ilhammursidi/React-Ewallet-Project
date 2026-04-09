@@ -10,16 +10,22 @@ import { useEffect,useState } from "react"
  * @returns {JSX.Element} The InputEmail component
  */
 
+export const InputEmail = ({ value, onChange, className="", onError }) => {
+    const [error, setError] = useState("");
 
-export const InputEmail = ({value,onChange,className=""}) => {
-    const [error,setError] = useState("");
-    useEffect(()=>{
-            if(value.length === 0) {
-                setError("")
-            }else if( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ) {
-                setError("Invalid Email Format")
-            }else setError("");
-            }, [value]);
+    useEffect(() => {
+        let err = "";
+
+        if (value.length === 0) {
+            err = "";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+            err = "Invalid Email Format";
+        }
+
+        setError(err);
+
+        if (onError) onError(err);
+    }, [value]);
 
     const defaultClass = "rounded-md bg-gray-100/30 px-5 p-3 text-sm border border-gray-400 flex flex-row gap-3 focus-within:border-blue-500 focus-within:border-2" 
     const finalClass = `${defaultClass} ${className}`
@@ -28,7 +34,7 @@ export const InputEmail = ({value,onChange,className=""}) => {
             <label htmlFor="email">Email</label>
         <section className={finalClass}>
         <img  src="/icons/blackMail.svg" alt="mail" />
-        <input 
+        <input
         className="focus:outline-none w-full" 
         type="email" 
         id="email"

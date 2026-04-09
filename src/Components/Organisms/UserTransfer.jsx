@@ -65,7 +65,7 @@ const [isOpen, clickOpen] = useState(false)
             </section>
             <textarea className="border border-gray-300 p-2 mt-2 w-full h-60 rounded" name="" id="" placeholder="Enter Some Notes"></textarea>
 
-            <Button className="w-full h-10 text-white bg-blue-600 mt-5">
+            <Button onClick={clickOpen} className="w-full h-10 text-white bg-blue-600 mt-5">
                 Submit & Transfer
             </Button>
 
