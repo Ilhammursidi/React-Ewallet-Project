@@ -12,42 +12,47 @@ export const SideBar = ({className}) => {
 
     return (
         <aside className={`${defaultClass} ${className}`}>
-            <NavLink to="/dashboard" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-            <section className="flex justify-center gap-2">
-                <img src="/icons/dashboard-two.svg" alt="dashboard" />
-                <p>Dasboard</p>
-            </section>
+            <NavLink to="/dashboard" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-gray-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+                {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/dashboard-two.svg" alt="dashboard" /><span>Dasboard</span>
+                </>
+                }
             </NavLink>
-            <NavLink to="/transfer" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-            <section className="justify-center flex gap-2">
-                <img src="/icons/Send.svg" alt="transfer" />
-                <p>Transfer</p>
-            </section>
+            <NavLink to="/transfer" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-gray-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+                {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/Send.svg" alt="transfer" /><span>Transfer</span>
+                </>
+                }
             </NavLink>
-            <NavLink to="/history" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-            <section className="justify-center flex gap-2">
-                <img src="/icons/history.svg" alt="history" />
-                <p>History</p>
-                </section>
+            <NavLink to="/history" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-gray-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+               {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/history.svg" alt="history" /><span>History</span>
+                </>
+                }
             </NavLink>
-            <NavLink to="/topup" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-            <section className="flex justify-center gap-2">
-                <img src="/icons/Upload.svg" alt="topup" />
-                <p>Top Up</p>
-            </section>
+            <NavLink to="/topup" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-gray-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+            {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/Upload.svg" alt="topup" /><span>Top Up</span>
+                </>
+                }
             </NavLink>
-            <NavLink to="/profile" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-                <section className="flex justify-center gap-2">
-                <img src="/icons/2 User.svg" alt="profile" />
-                <p>Profile</p>
-                </section>
+            <NavLink to="/profile" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-gray-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+                {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/2 User.svg" alt="profile" /><span>Profile</span>
+                </>
+                }
             </NavLink>
-            <NavLink to="/" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-5 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-                <section className="flex justify-center gap-2">
-                <img src="/icons/Log Out.svg" alt="logout" />
-                <p>Logout</p>
-
-                </section>
+            <NavLink to="/" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-red-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
+                {({ isActive }) =>
+                <>
+                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/Log Out.svg" alt="logout" /><span>Log Out</span>
+                </>
+                }
             </NavLink>
         </aside>
             )}
