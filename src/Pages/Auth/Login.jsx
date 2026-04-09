@@ -45,7 +45,7 @@ function Login() {
             if (user.userPin) {
                 navigate("/dashboard")
             } else {
-                navigate("/enter-pin")
+                navigate("auth/enter-pin")
             }
         } else {
             toast.error("Invalid Email or Password",{duration:2000})
