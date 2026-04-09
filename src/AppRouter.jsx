@@ -10,6 +10,7 @@ import { History } from "./Pages/Features/History"
 import { UserTransfer } from "./Components/Organisms/UserTransfer"
 import { FindPeople } from "./Components/Organisms/FindPeople"
 import { TopUp } from "./Pages/Features/TopUp"
+import { Profile } from "./Pages/Features/Profile"
 
 function AppRouter() {
   return (
@@ -30,6 +31,7 @@ function AppRouter() {
         <Route path="user/:id" element={<UserTransfer/>}></Route>
     </Route>
     <Route path="topup" element={<TopUp/>}></Route>
+    <Route path="profile" element={<Profile/>}></Route>
     </Routes>
   )
 }
