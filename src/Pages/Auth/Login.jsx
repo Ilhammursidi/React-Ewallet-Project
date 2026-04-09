@@ -42,11 +42,13 @@ function Login() {
             
             localStorage.setItem("currentUser", JSON.stringify(user))
             
-            if (user.userPin) {
+            if(user) {
                 navigate("/dashboard")
-            } else {
-                navigate("auth/enter-pin")
+                return
             }
+            navigate("/auth/enter-pin") 
+            
+            
         } else {
             toast.error("Invalid Email or Password",{duration:2000})
         }
