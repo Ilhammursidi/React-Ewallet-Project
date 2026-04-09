@@ -130,7 +130,7 @@ export function Dashboard() {
             </section>
             </section>
 
-            <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:w-120 md:mx-auto mt-4">
+            <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:w-80 md:mx-auto mt-4">
                 <section className="flex justify-between items-center">
                 <p className="font-medium text-sm">Transaction History</p>
                 <p className="text-blue-600 text-sm">See All</p>
