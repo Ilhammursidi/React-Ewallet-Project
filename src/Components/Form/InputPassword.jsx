@@ -9,7 +9,7 @@ import { useState,useEffect } from "react";
  * @returns {JSX.Element} The InputPassword component
  */
 
-export const InputPassword = ({value,onChange,className=""})=>{
+export const InputPassword = ({value="",onChange,className=""})=>{
     const [show, setShow] = useState(false);
     const [error,setError] = useState("");
         
