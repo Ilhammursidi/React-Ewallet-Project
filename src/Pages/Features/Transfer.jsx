@@ -12,7 +12,7 @@ import { Outlet } from "react-router";
 export const Transfer = () => {
         
     return (
-        <section className="min-h-screen">
+        <section>
             <AppHeader className="md:bg-white"/>
                 <section className="md:flex md:justify-between w-full">
             <SideBar></SideBar>
