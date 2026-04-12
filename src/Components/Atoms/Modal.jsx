@@ -9,14 +9,13 @@
  * @returns {JSX.Element} The Modal component
  */
 
-export const Modal = ({isOpen,value, onClose, children}) => {
+export const Modal = ({isOpen, onClose, children}) => {
     if(!isOpen) return null;
     return (
-        <section>
-            <section className="fixed top-10 inset-0 bg-black/60 flex items-center justify-center">
-                <section className="bg-white p-5 rounded-lg">
+        <section >
+            <section onClick={onClose} className="fixed top-10 inset-0 bg-black/60 flex items-center justify-center">
+                <section onClick={(e) => e.stopPropagation() } className="bg-white p-5 rounded-lg">
                     {children}
-                    <button onClick={onClose} className="mt-5 bg-blue-600 text-white w-full px-4 py-2 rounded-md">{value}</button>
                 </section>
             </section>
         </section>
