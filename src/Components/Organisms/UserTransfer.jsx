@@ -12,7 +12,6 @@ import toast from "react-hot-toast";
  */
 
 export const UserTransfer = () => {
-const { id } = useParams();
 const location = useLocation();
 const user = location.state?.userData;
 const [isOpen, setIsOpen] = useState(false)
@@ -48,32 +47,15 @@ const [isOpen3, setIsOpen3] = useState(false)
         return toast("Lengkapi PIN!");
     }
 
-    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(currentUser.userPin === pinStr){
 
-    const updatedAccounts = accounts.map(acc => {
-        if (acc.email === currentUser.email) {
-            return {
-                ...acc,
-                userPin: pinStr
-            };
-        }
-        return acc;
-    });
-
-    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
-
-    localStorage.setItem("currentUser", JSON.stringify({
-        ...currentUser,
-        userPin: pinStr
-    }));
-
-    toast("Save PIN Success!");
-
-    setIsOpen(false);
-    setIsOpen2(true)
-
-    setPin(Array(PIN_LENGTH).fill(""));
+        setIsOpen(false);
+        setIsOpen2(true)
+        setPin(Array(PIN_LENGTH).fill(""));
+        return toast("Success")
+    }
+    return toast("wrong PIN")
 };
 
 
@@ -90,7 +72,7 @@ const [isOpen3, setIsOpen3] = useState(false)
                     {pin.map((digit, i) => (
                         <input
                             key={i}
-                            type="text"
+                            type="password"
                             maxLength={1}
                             value={digit}
                             onChange={e => handleChange(e.target.value, i)}
@@ -101,7 +83,7 @@ const [isOpen3, setIsOpen3] = useState(false)
                     ))}
 
                 </section>
-                    <Button className="justify-center w-full bg-blue-600 p-2 rounded-md text-white" onClick={() => setIsOpen2(true)}>Next</Button>
+                    <Button className="justify-center w-full bg-blue-600 p-2 rounded-md text-white" type="submit">Next</Button>
                         </form>
                             </section>              
                                 </Modal>
