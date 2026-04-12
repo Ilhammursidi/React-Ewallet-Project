@@ -1,7 +1,7 @@
+import { NavLink } from "react-router"
 import { AppHeader } from "../../Components/Organisms/AppHeader"
 import { SideBar } from "../../Components/Atoms/SideBar"
 import { Button } from "../../Components/Atoms/Button"
-import { NavLink } from "react-router"
 
 export const Profile = () => {
     return ( 
@@ -53,11 +53,11 @@ export const Profile = () => {
 
                 <section className="flex flex-col gap-2 mb-2 mt-2">
                 <p>Password</p>
-                <NavLink className="font-normal text-blue-600">
-                    Change Password
+                <NavLink to="change-password" className="font-normal text-blue-600">
+                    <p>Change Password</p>
                 </NavLink>
                 <p>Pin</p>
-                <NavLink className="font-normal text-blue-600">
+                <NavLink to="change-pin" className="font-normal text-blue-600">
                     Change Pin
                 </NavLink>
                 </section>
