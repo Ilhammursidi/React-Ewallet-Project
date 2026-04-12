@@ -11,6 +11,8 @@ import { UserTransfer } from "./Components/Organisms/UserTransfer"
 import { FindPeople } from "./Components/Organisms/FindPeople"
 import { TopUp } from "./Pages/Features/TopUp"
 import { Profile } from "./Pages/Features/Profile"
+import { ChangePassword } from "./Components/Organisms/ChangePassword"
+import { ChangePin } from "./Components/Organisms/ChangePin"
 
 function AppRouter() {
   return (
@@ -30,8 +32,14 @@ function AppRouter() {
         <Route index element={<FindPeople/>}></Route>
         <Route path="user/:id" element={<UserTransfer/>}></Route>
     </Route>
+
     <Route path="topup" element={<TopUp/>}></Route>
-    <Route path="profile" element={<Profile/>}></Route>
+    <Route path="profile">
+        <Route index element={<Profile/>}></Route>
+        <Route path="change-password" element={<ChangePassword/>}></Route>
+        <Route path="change-pin" element={<ChangePin/>}></Route>
+    </Route>
+    
     </Routes>
   )
 }
