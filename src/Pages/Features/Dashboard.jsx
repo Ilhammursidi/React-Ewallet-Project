@@ -3,6 +3,7 @@ import 'chart.js/auto'
 import { Bar } from "react-chartjs-2";
 import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
+import { NavLink } from "react-router";
 
 
 export function Dashboard() {
@@ -100,13 +101,15 @@ export function Dashboard() {
             <section className="flex gap-5 w-full justify-between mt-15 px-5 md:px-5 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5 md:w-170 md:mx-auto">
                 <p className="hidden md:flex font-semibold">Fast Service</p>
                 <section className="flex flex-row justify-between w-full md:w-60 gap-5 md:flex md:gap-5">
-                <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
+                <Button color="blue" className="w-1/2"><NavLink className="flex items-center gap-2 justify-center" to={"/topup"}>
                     <img src="/icons/u_money-insert.svg" alt="top-up" />
                     <p>Top Up</p>
+                </NavLink>
                 </Button>
-                <Button color="blue" className="w-1/2 flex items-center gap-2 justify-center">
+                <Button color="blue" className="w-1/2"><NavLink className="flex items-center gap-2 justify-center" to={"/transfer"}>
                     <img src="/icons/whiteSend.svg" alt="transfer" />
                     <p>Transfer</p>
+                </NavLink>
                 </Button>
                 </section>
             </section>
