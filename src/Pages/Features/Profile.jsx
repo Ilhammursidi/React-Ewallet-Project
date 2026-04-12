@@ -7,6 +7,8 @@ export const Profile = () => {
             <AppHeader className="md:bg-white"/>
             <section className="md:flex md:justify-between w-full">
                 <SideBar></SideBar>
+            <section className="hidden md:block w-50"></section>
+
             </section>
 
             <section className="p-5">

@@ -16,6 +16,8 @@ export const Transfer = () => {
             <AppHeader className="md:bg-white"/>
                 <section className="md:flex md:justify-between w-full">
             <SideBar></SideBar>
+            <section className="hidden md:block w-50"></section>
+
                 
                 <section className="md:flex flex-col md:w-5/6 md:px-5">
                     <section className="hidden md:flex md:h-5 md:mr-auto md:gap-2 items-center font-medium md:m-5 ">
