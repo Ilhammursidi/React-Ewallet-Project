@@ -5,23 +5,25 @@ import { Logo } from "../../Components/Atoms/Logo";
 import { InputEmail } from "../../Components/Form/InputEmail";
 import { InputPassword } from "../../Components/Form/InputPassword";
 import { ConfirmPassword } from "../../Components/Form/ConfirmPassword";
-import { saveAccount } from "../../Components/Atoms/SaveAccount";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../Redux/slice/register";
 
 function SignUp() {
+    const { allUsers } = useSelector((state) => state.registration) || [];
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
     const navigate = useNavigate();
-    const [error,setError] = useState("")
+    const dispatch = useDispatch();
     
+
     const handleRegister = (e) => {
     e.preventDefault();
 
-    const account = JSON.parse(localStorage.getItem("accounts") || "[]");
-    const isEmailExist = account.some(
+    const isEmailExist = allUsers?.some(
         (acc) => acc.email === email.trim().toLowerCase()
     );
 
@@ -35,12 +37,11 @@ function SignUp() {
         return;
     }
 
-
-    saveAccount({
+    dispatch(addUser({
         email: email.trim().toLowerCase(),
         password,
         userPin: null
-    });
+    }));
 
     setEmail("");
     setPassword("");
@@ -79,7 +80,6 @@ function SignUp() {
                     </section>
                     <form noValidate onSubmit={handleRegister}>
                         <InputEmail 
-                        onError={setError} 
                         value={email} onChange={e => setEmail(e.target.value)}></InputEmail>
                         <InputPassword value={password} onChange={e => setPassword(e.target.value)}></InputPassword>
                         <ConfirmPassword value={confirm} onChange={e => setConfirm(e.target.value)} password={password}></ConfirmPassword>
