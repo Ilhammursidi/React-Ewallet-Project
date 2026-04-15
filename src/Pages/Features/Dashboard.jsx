@@ -54,8 +54,6 @@ export function Dashboard() {
             <SideBar></SideBar>
             <section className="hidden md:block w-50"></section>
             
-
-            
             {/* moneyflow */}
             <section className="md:flex md:flex-col ">
             <section className="bg-blue-600 md:bg-white h-25 pt-5">

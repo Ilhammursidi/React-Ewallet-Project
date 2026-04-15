@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { NavLink } from "react-router";
 
 export const Navbar = ({className, mobile = false }) => {
     return (
-        <nav className={`${className} ${mobile ? "bg-blue-600 text-white p-4" : "p-4 flex flex-col space-y-2"}`}>
+        <nav>
+        <section className={`${className} ${mobile ? "bg-blue-600 text-white p-4" : "p-4 flex flex-col space-y-2"}`}>
             <NavLink to="/dashboard" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-3 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
             <section className="flex justify-center gap-2">
                 <img src="/icons/dashboard-two.svg" alt="dashboard" />
@@ -41,6 +41,7 @@ export const Navbar = ({className, mobile = false }) => {
 
                 </section>
             </NavLink>
+        </section>
         </nav>
     )
 }

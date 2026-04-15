@@ -18,10 +18,10 @@ export function AppHeader({className}) {
         const data = JSON.parse(localStorage.getItem("currentUser"));
         const name = data?.email.split("@")[0];
         setUsername(name)
-      }, []);
+    }, []);
 
 
-  
+
     return (
         <header className={`w-full sticky top-0 z-50 bg-blue-600 border-b border-white md:border-gray-400 ${className}`}>
                 <section className="header-with-button flex px-5 md:px-10 justify-between">
@@ -42,7 +42,8 @@ export function AppHeader({className}) {
 
             </section>
             {open && (
-                <Navbar className="bg-white w-full border-b shadow border-gray-200 absolute top-full z-10"></Navbar>
+                    <Navbar className="bg-white right-0 border-b shadow border-gray-200 absolute top-full z-10"></Navbar>
+            
             )}
         </header>       
     )

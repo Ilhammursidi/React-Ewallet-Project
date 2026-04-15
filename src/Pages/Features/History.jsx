@@ -106,7 +106,7 @@ export const History = () => {
                     )}
                     </Modal>
                 <section className="md:flex md:justify-between w-full">
-            <SideBar className ></SideBar>
+            <SideBar></SideBar>
             <section className="hidden md:block w-50"></section>
             
 
