@@ -1,6 +1,16 @@
-import { NavLink } from "react-router";
+import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router";
+import { logoutUser } from "../../Redux/slice/authslice";
 
-export const Navbar = ({className, mobile = false }) => {
+export const Navbar = ({className,isActive, mobile = false }) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate("");
+    
+    const handleLogout = () => {
+        dispatch(logoutUser());
+        navigate("/")
+    }
+
     return (
         <nav>
         <section className={`${className} ${mobile ? "bg-blue-600 text-white p-4" : "p-4 flex flex-col space-y-2"}`}>
@@ -34,12 +44,11 @@ export const Navbar = ({className, mobile = false }) => {
                 <p>Profile</p>
                 </section>
             </NavLink>
-            <NavLink to="/" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-3 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
-                <section className="flex justify-center gap-2">
+            <NavLink onClick={handleLogout} className=" text-gray-600 px-3 py-2 rounded hover:bg-gray-200">
+                <section  className="flex flex-row justify-center gap-2">
                 <img src="/icons/Log Out.svg" alt="logout" />
                 <p>Logout</p>
-
-                </section>
+                </section>                
             </NavLink>
         </section>
         </nav>
