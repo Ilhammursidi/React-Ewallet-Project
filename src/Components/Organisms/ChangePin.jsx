@@ -4,6 +4,7 @@ import { Logo } from "../../Components/Atoms/Logo";
 import { useNavigate } from "react-router";
 import { AppHeader } from "./AppHeader";
 import { SideBar } from "../Atoms/SideBar";
+import toast from "react-hot-toast";
 
 export function ChangePin() {
     const PIN_LENGTH = 6;
@@ -33,7 +34,7 @@ export function ChangePin() {
 
     const pinStr = pin.join("");
     if (pinStr.length !== PIN_LENGTH) {
-        return alert("Lengkapi PIN!");
+        return toast.error("Lengkapi PIN!");
     }
 
     const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
@@ -56,7 +57,7 @@ export function ChangePin() {
         userPin: pinStr
     }));
 
-    alert("Save PIN Success!");
+    toast.success("Save PIN Success!");
     setPin(Array(PIN_LENGTH).fill(""));
     navigate("/Dashboard")
 };
@@ -83,7 +84,7 @@ export function ChangePin() {
     }));
 
     setPin(Array(PIN_LENGTH).fill(""));
-    alert("PIN reset!");
+    toast.success("PIN reset!");
 };
 
     return (
