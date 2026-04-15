@@ -7,6 +7,9 @@ import { InputPassword } from "../../Components/Form/InputPassword";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../Redux/slice/authslice";
+import { useSelector } from "react-redux";
 /**
  * Login Page Component
  * @typedef {Object} LoginProps
@@ -28,37 +31,33 @@ import toast from "react-hot-toast";
  */
 
 function Login() {
+    const allUsers = useSelector((state) => state.addUser?.allUsers || [])
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const account = JSON.parse(localStorage.getItem("accounts") || "[]")
-        const user = account.find(acc => acc.email === email && acc.password === password)
-        if(user) {
-            toast.success("Login Successful")
-            setEmail(""); setPassword("");
-            
-            localStorage.setItem("currentUser", JSON.stringify(user))
-            
-            if(user) {
-                navigate("/dashboard")
-                return
-            }
-            navigate("/auth/enter-pin") 
-            
-            
+        
+        const userFound = allUsers?.find((u) => u.email === email.trim().toLowerCase() && u.password === password
+    );
+    
+        if(userFound) {
+            dispatch(loginUser({
+                user: userFound
+            }))
+            toast.success("success login")
+            navigate("/dashboard")
         } else {
-            toast.error("Invalid Email or Password",{duration:2000})
+            toast.error("email atau password salah");
         }
+        
     }
-
-
+    
     return (
         <main>
             <section className="flex min-h-screen overflow-hidden bg-blue-600">
-
             <section className="left-side w-full bg-white md:rounded-r-4xl px-6 py-30 md:w-1/2 md:px-10">
                 <Logo color="blue" className="text-xl" />
                 <h1 className="text-xl font-medium py-3">Hello Welcome Back 👋</h1>
@@ -78,15 +77,15 @@ function Login() {
                     <p className="text-gray-400" >Or</p>
                     <hr className="border border-gray-300 w-[40%]" />
                 </section>
-                <form onSubmit={handleLogin}>
+                    <form onSubmit={handleLogin}>
                     <InputEmail value={email} onChange={e => setEmail(e.target.value)}></InputEmail>
                     <InputPassword value={password} onChange={e => setPassword(e.target.value)}></InputPassword>
                     <p className="text-gray-600">Forgot Your Password? <NavLink
                         className="text-blue-600"
-                    to={"/auth/forgot-password"} >
+                        to={"/auth/forgot-password"} >
                         Click here
                     </NavLink></p>
-                    <Button onClick={handleLogin} className="w-full h-12 py-2 mt-4" color="blue">
+                    <Button type="submit" className="w-full h-12 py-2 mt-4" color="blue">
                         Login
                     </Button>
                     <p className="text-center mt-2 text-gray-600">Have An Account? 
