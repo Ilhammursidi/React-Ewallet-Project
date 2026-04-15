@@ -3,6 +3,7 @@ import { UserNavbar } from "../Atoms/UserNavbar";
 import { useState,useEffect } from "react";
 import { Logo } from "../Atoms/Logo";
 import { HamburgerButton } from "../Atoms/HamburgerButton";
+import { useSelector } from "react-redux";
 
 /**
  * @typedef {Object} AppHeaderProps
@@ -11,16 +12,8 @@ import { HamburgerButton } from "../Atoms/HamburgerButton";
  */
 
 export function AppHeader({className}) {
+    const userLogin = useSelector((state) => state.auth?.user || [] )
     const [open, setOpen] = useState(false);
-    const [username, setUsername] = useState(null);
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem("currentUser"));
-        const name = data?.email.split("@")[0];
-        setUsername(name)
-    }, []);
-
-
 
     return (
         <header className={`w-full sticky top-0 z-50 bg-blue-600 border-b border-white md:border-gray-400 ${className}`}>
@@ -31,7 +24,7 @@ export function AppHeader({className}) {
                 <img className="w-10" src="/icons/ghaluh.svg" alt="gahluh" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{username || "User"}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin.email}</p>
                 </section>
             </section>
             
@@ -42,7 +35,7 @@ export function AppHeader({className}) {
 
             </section>
             {open && (
-                    <Navbar className="bg-white right-0 border-b shadow border-gray-200 absolute top-full z-10"></Navbar>
+                    <Navbar className="bg-white right-0 border-b shadow border-gray-200 w-4/6 h-screen absolute top-full z-10"></Navbar>
             
             )}
         </header>       
