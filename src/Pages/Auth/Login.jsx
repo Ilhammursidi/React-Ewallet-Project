@@ -44,7 +44,8 @@ function Login() {
     
         if(userFound) {
             dispatch(loginUser({
-                user: userFound
+                user: userFound.email,
+                isLogin: true
             }))
             toast.success("success login")
             navigate("/dashboard")
