@@ -40,7 +40,7 @@
         dispatch(addUser({
             email: email.trim().toLowerCase(),
             password,
-            userPin: null
+            userPin: null,
         }));
 
         setEmail("");

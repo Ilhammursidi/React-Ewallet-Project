@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Logo } from "../../Components/Atoms/Logo";
 import { InputEmail } from "../../Components/Form/InputEmail";
 import { Button } from "../../Components/Atoms/Button";
+import toast from "react-hot-toast";
 
 export function ForgotPassword(){
     const [email, setEmail] = useState("");
@@ -14,10 +15,10 @@ export function ForgotPassword(){
                 ...acc,password: newPassword} : acc);
                 localStorage.setItem("accounts",JSON.stringify(updateAccounts));
 
-                alert(`New Password Sent Successfully \nNew Password : ${newPassword}`);
+                toast.success(`New Password Sent Successfully \nNew Password : ${newPassword}`);
                 setEmail("") 
             } else {
-                alert("Invalid Email")
+                toast.error("Invalid Email")
             }
         };
     return (

@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { Button } from "../../Components/Atoms/Button";
 import { Logo } from "../../Components/Atoms/Logo";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
 export function EnterPin() {
     const PIN_LENGTH = 6;
@@ -31,7 +32,7 @@ export function EnterPin() {
 
     const pinStr = pin.join("");
     if (pinStr.length !== PIN_LENGTH) {
-        return alert("Lengkapi PIN!");
+        toast.error("Lengkapi PIN!");
     }
 
     const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
@@ -54,7 +55,7 @@ export function EnterPin() {
         userPin: pinStr
     }));
 
-    alert("Save PIN Success!");
+    toast.error("Save PIN Success!");
     setPin(Array(PIN_LENGTH).fill(""));
     navigate("/Dashboard")
 };
@@ -81,7 +82,7 @@ export function EnterPin() {
     }));
 
     setPin(Array(PIN_LENGTH).fill(""));
-    alert("PIN reset!");
+    toast.success("PIN reset!");
 };
 
     return (

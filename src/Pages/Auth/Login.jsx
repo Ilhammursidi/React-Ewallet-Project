@@ -40,8 +40,7 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
         
-        const userFound = allUsers?.find((u) => u.email === email.trim().toLowerCase() && u.password === password
-    );
+        const userFound = allUsers?.find((u) => u.email === email.trim().toLowerCase() && u.password === password);
     
         if(userFound) {
             dispatch(loginUser({

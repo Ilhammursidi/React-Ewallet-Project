@@ -13,6 +13,7 @@ import { TopUp } from "./Pages/Features/TopUp"
 import { Profile } from "./Pages/Features/Profile"
 import { ChangePassword } from "./Components/Organisms/ChangePassword"
 import { ChangePin } from "./Components/Organisms/ChangePin"
+import ProtectedRoute from "./Pages/ProtectRoute"
 
 function AppRouter() {
   return (
@@ -26,18 +27,19 @@ function AppRouter() {
     <Route path="enter-pin" element={<EnterPin/>}></Route>
     </Route>
 
+    <Route element={<ProtectedRoute/>}>
     <Route path="dashboard" element={<Dashboard/>}></Route>
     <Route path="history" element={<History/>}></Route>
     <Route path="transfer" element={<Transfer/>}>
         <Route index element={<FindPeople/>}></Route>
         <Route path="user/:id" element={<UserTransfer/>}></Route>
     </Route>
-
     <Route path="topup" element={<TopUp/>}></Route>
     <Route path="profile">
         <Route index element={<Profile/>}></Route>
         <Route path="change-password" element={<ChangePassword/>}></Route>
         <Route path="change-pin" element={<ChangePin/>}></Route>
+    </Route>
     </Route>
     
     </Routes>
