@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
                 navigate("/auth/login")
             }, 2000);
         return <section className="min-h-screen min-w-screen">
-            <h1 className="font-bold flex justify-center text-9xl">Login Dulu Awokowkowwok</h1>
+            <h1 className="font-bold flex justify-center text-5xl">Konten Rahasia</h1>
             </section>
     }
 
