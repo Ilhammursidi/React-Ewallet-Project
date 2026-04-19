@@ -47,12 +47,5 @@ export const SideBar = ({className}) => {
                 </>
                 }
             </NavLink>
-            <NavLink to="/" className={({ isActive }) => isActive ? "bg-blue-600 flex justify-center gap-2 text-white px-5 py-2 rounded" : "text-red-600 flex justify-center gap-2 hover:bg-gray-200 px-3 py-2 rounded"}>
-                {({ isActive }) =>
-                <>
-                <img className={`w-5 h-5 transition ${ isActive ? "invert brightness-0" : "" }`} src="/icons/Log Out.svg" alt="logout" /><span>Log Out</span>
-                </>
-                }
-            </NavLink>
         </aside>
             )}
