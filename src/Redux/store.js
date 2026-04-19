@@ -12,18 +12,18 @@ import {
 
 import storage from "redux-persist/es/storage";
 import env from "../utils/environment"      
-import authReducer from './slice/authslice'
-import registerReducer from './slice/register'
+import authReducer from '../Redux/slice/authslice'
+import userReducer from './slice/register'
 
 const persistConfig = {
     key: "im28",
     storage,
-    whitelist:["addUser","loginUser"]
 }
 
+
 const persistedReducer = persistCombineReducers(persistConfig,{
-    addUser: registerReducer,
-    auth: authReducer
+    users : userReducer,
+    auth : authReducer
 })
 
 const store = configureStore({

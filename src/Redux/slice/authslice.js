@@ -1,24 +1,49 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
-        user: null,
-        isLogin: false,
-    }
+export const loginUser = createAsyncThunk("auth/login",
+    async (data, thunkAPI) => {
+        const { users } = thunkAPI.getState().users
+
+        const user = users.find(u => u.email === data.email && u.password === data.password)
+
+        if (!user) {
+            return thunkAPI.rejectWithValue("wrong email or password")
+        }
+
+        return user
+    })
 
 const authSlice = createSlice({
-    initialState,
-    name: 'auth',
+    name: "auth",
+    initialState: {
+        currentUser: null,
+        isLoading: false,
+        isLogin: false,
+        error: null
+    },
     reducers: {
-        loginUser:(state,action) => {
-            state.user = action.payload.user;
-            state.isLogin = true
-        },
-        logoutUser:(state) => {
-            state.user = null;
-            state.isLogin = false
-        } 
+        logout: (state) => { state.currentUser = null },
+        setPin: (state, action) => {
+            state.currentUser.userPin = action.payload
+        }
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.currentUser = action.payload
+                state.isLoading = false
+                state.isLogin = true
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.error = action.payload
+                state.isLoading = false
+                state.isLogin = false
+            })
     }
 })
 
-export const { loginUser, logoutUser } = authSlice.actions;
+export const { logout,setPin } = authSlice.actions
 export default authSlice.reducer
