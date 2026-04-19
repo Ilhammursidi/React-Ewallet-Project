@@ -1,17 +1,11 @@
 import { useSelector } from "react-redux";
-import { useNavigate, Outlet } from "react-router";
+import { Navigate, Outlet } from "react-router";
 
 const ProtectedRoute = () => {
-    const navigate = useNavigate()
-    const { isLogin, user } = useSelector((state) => state.auth);
+    const { currentUser } = useSelector((state) => state.auth);
 
-    if (!isLogin || !user) {
-            setTimeout(() => {
-                navigate("/auth/login")
-            }, 2000);
-        return <section className="min-h-screen min-w-screen">
-            <h1 className="font-bold flex justify-center text-5xl">Konten Rahasia</h1>
-            </section>
+    if (!currentUser) {
+        return <Navigate to="/auth/login" replace />;
     }
 
     return <Outlet />;
