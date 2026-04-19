@@ -4,6 +4,8 @@ import { useState,useEffect } from "react";
 import { Logo } from "../Atoms/Logo";
 import { HamburgerButton } from "../Atoms/HamburgerButton";
 import { useSelector } from "react-redux";
+import { Modal } from "../Atoms/Modal";
+import { SideBar } from "../Atoms/SideBar";
 
 /**
  * @typedef {Object} AppHeaderProps
@@ -12,7 +14,7 @@ import { useSelector } from "react-redux";
  */
 
 export function AppHeader({className}) {
-    const userLogin = useSelector((state) => state.auth?.user || [] )
+    const userLogin = useSelector((state) => state.auth||[])
     const [open, setOpen] = useState(false);
 
     return (
@@ -24,7 +26,7 @@ export function AppHeader({className}) {
                 <img className="w-10" src="/icons/ghaluh.svg" alt="gahluh" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin.email}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin.currentUser.email.split("@")[0]}</p>
                 </section>
             </section>
             
@@ -34,10 +36,9 @@ export function AppHeader({className}) {
             </HamburgerButton>
 
             </section>
-            {open && (
-                    <Navbar className="bg-white right-0 border-b shadow border-gray-200 w-4/6 h-screen absolute top-full z-10"></Navbar>
-            
-            )}
+                <Modal className="w-full top-14" isOpen={open} onClose={()=>setOpen(!open)} inner="w-4/6 top-0 right-0 absolute z-20">
+                    <Navbar className="bg-white border-b shadow border-gray-200 w-full h-screen absolute z-10"></Navbar>
+                </Modal>        
         </header>       
     )
 }
