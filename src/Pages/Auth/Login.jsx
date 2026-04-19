@@ -1,15 +1,13 @@
-import { NavLink } from "react-router";
+import { NavLink , useNavigate } from "react-router";
 import { Button } from "../../Components/Atoms/Button";
 import { SocialButton } from "../../Components/Atoms/SocialButton";
 import { Logo } from "../../Components/Atoms/Logo";
 import { InputEmail } from "../../Components/Form/InputEmail";
 import { InputPassword } from "../../Components/Form/InputPassword";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../Redux/slice/authslice";
-import { useSelector } from "react-redux";
 /**
  * Login Page Component
  * @typedef {Object} LoginProps
@@ -31,30 +29,46 @@ import { useSelector } from "react-redux";
  */
 
 function Login() {
-    const allUsers = useSelector((state) => state.addUser?.allUsers || [])
+
     const dispatch = useDispatch();
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    const { isLoading } = useSelector((state) => state.auth);
+
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    
+
+    const handleLogin = async (e) => {
         e.preventDefault();
-        
-        const userFound = allUsers?.find((u) => u.email === email.trim().toLowerCase() && u.password === password);
-    
-        if(userFound) {
-            dispatch(loginUser({
-                user: userFound.email,
-                isLogin: true
-            }))
-            toast.success("success login")
-            navigate("/dashboard")
-        } else {
-            toast.error("email atau password salah");
+
+        if (!email || !password) {
+            toast.error("Email & password wajib diisi")
+            return
         }
-        
+
+        const resultAction = await dispatch(loginUser({
+            email: email.trim().toLowerCase(),
+            password,
+            userPin: null,
+        }))
+
+        if (loginUser.fulfilled.match(resultAction)) {
+            const user = resultAction.payload
+
+            toast.success("Success login")
+
+            if (!user.userPin) {
+                navigate("/auth/enter-pin")
+            } else {
+                navigate("/dashboard")
+            }
+
+        } else {
+            toast.error(resultAction.payload || "Login gagal")
+        }
     }
-    
+
     return (
         <main>
             <section className="flex min-h-screen overflow-hidden bg-blue-600">
