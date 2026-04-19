@@ -186,7 +186,7 @@ export const History = () => {
             <AppHeader className="md:bg-white"/>
                 <Modal isOpen={isOpen} value="Back" onClose={() => setIsOpen(false)}>
                     {selectData && (
-                        <section className="flex bg-white flex-col w-80 p-2 md:h-100 rounded-md h-fit">
+                        <section className="flex bg-white flex-col w-80 p-2 md:h-115 rounded-md h-fit">
                             <p className="text-sm" key={selectData.id}>DETAIL TRANSACTION {selectData.name}</p>
                             <hr className=" border border-gray-200" />
                             <img className="w-30" src={selectData.img} alt={selectData.name} />
@@ -204,6 +204,7 @@ export const History = () => {
                                 <img src="/icons/Trash.svg" alt="delete" />
                                 <p className="font-semibold text-red-600">Delete</p>
                                 </Button>
+                                <Button color="blue" className="mt-2" onClick={()=> setIsOpen(false)}>Back</Button>
                         </section>
                     )}
                     </Modal>
