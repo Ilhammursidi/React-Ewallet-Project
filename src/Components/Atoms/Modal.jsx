@@ -9,12 +9,15 @@
  * @returns {JSX.Element} The Modal component
  */
 
-export const Modal = ({isOpen, onClose, children}) => {
+export const Modal = ({className,isOpen, onClose, children,inner}) => {
     if(!isOpen) return null;
+    const defaultClass = "fixed top-10 inset-0 bg-black/60 flex items-center justify-center"
+    const defaulInner = "bg-white rounded-lg"
+    
     return (
-        <section >
-            <section onClick={onClose} className="fixed top-10 inset-0 bg-black/60 flex items-center justify-center">
-                <section onClick={(e) => e.stopPropagation() } className="bg-white p-5 rounded-lg">
+        <section>
+            <section onClick={onClose} className={`${defaultClass} ${className}`}>
+                <section onClick={(e) => e.stopPropagation()} className={`${inner}${defaulInner}`}>
                     {children}
                 </section>
             </section>
