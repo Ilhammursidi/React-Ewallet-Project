@@ -1,7 +1,7 @@
 import { useNavigate, NavLink, Navigate } from "react-router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../../Redux/slice/authslice";
+import { logout } from "../../Redux/slice/authslice";
 
 // user navbar for user header dropdown menu profile and logout
 export const UserNavbar = ({className}) => {
@@ -11,7 +11,7 @@ export const UserNavbar = ({className}) => {
     
     const handleLogout = (e) => {
         e.preventDefault()
-        dispatch(logoutUser())
+        dispatch(logout())
         navigate("/")
     }
 
