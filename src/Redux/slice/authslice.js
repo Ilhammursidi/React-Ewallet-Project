@@ -25,7 +25,13 @@ const authSlice = createSlice({
         logout: (state) => { state.currentUser = null },
         setPin: (state, action) => {
             state.currentUser.userPin = action.payload
-        }
+        },
+        updateCurrentUser: (state, action) => {
+    state.currentUser = {
+        ...state.currentUser,
+        ...action.payload
+    };
+}
     },
     extraReducers: (builder) => {
         builder
@@ -45,5 +51,5 @@ const authSlice = createSlice({
     }
 })
 
-export const { logout,setPin } = authSlice.actions
+export const { logout,setPin,updateCurrentUser } = authSlice.actions
 export default authSlice.reducer
