@@ -45,6 +45,12 @@ export const Navbar = ({className,isActive, mobile = false }) => {
                 <p>Profile</p>
                 </section>
             </NavLink>
+            <NavLink onClick={handleLogout} className=" text-gray-600 px-3 py-2 rounded hover:bg-gray-200">
+                <section  className="flex flex-row justify-center gap-2">
+                <img src="/icons/Log Out.svg" alt="logout" />
+                <p>Logout</p>
+                </section>                
+            </NavLink>
         </section>
         </nav>
     )
