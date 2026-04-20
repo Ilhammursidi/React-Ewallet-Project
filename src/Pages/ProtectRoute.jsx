@@ -1,13 +1,19 @@
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 
 const ProtectedRoute = () => {
-    const { currentUser } = useSelector((state) => state.auth);
+    const navigate = useNavigate()
+const users = useSelector((state)=> state.auth.currentUser)
 
-    if (!currentUser) {
-        return <Navigate to="/auth/login" replace />;
+    if (!users) {
+    const timeout = setTimeout(() => {
+        navigate("/auth/login")
+    }, 3000);
+    return <section className="fixed top-50 left-50">
+        <h1 className="font-bold text-4xl">DOKUMEN RAHASIA SILAHKAN LOGIN DULU</h1>
+        </section>
     }
-
     return <Outlet />;
 };
 
