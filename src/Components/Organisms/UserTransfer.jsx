@@ -4,6 +4,7 @@ import { InputNominal } from "../Form/InputNominal";
 import { useState,useRef } from "react";
 import { Modal } from "../Atoms/Modal";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 /**
  * a user transfer component
@@ -14,6 +15,7 @@ import toast from "react-hot-toast";
 export const UserTransfer = () => {
 const location = useLocation();
 const user = location.state?.userData;
+const userPin = useSelector((state) => state.auth.currentUser.userPin)
 const [isOpen, setIsOpen] = useState(false)
 const [isOpen2, setIsOpen2] = useState(false)
 const [isOpen3, setIsOpen3] = useState(false)
@@ -47,8 +49,7 @@ const [isOpen3, setIsOpen3] = useState(false)
         return toast("Lengkapi PIN!");
     }
 
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if(currentUser.userPin === pinStr){
+    if(userPin === pinStr){
 
         setIsOpen(false);
         setIsOpen2(true)
@@ -62,7 +63,7 @@ const [isOpen3, setIsOpen3] = useState(false)
     return (
         <section>
             <Modal isOpen={isOpen} value="Next" onAction={handleSubmit} onClose={() => setIsOpen(false)}>
-                <section className="w-80">
+                <section className="w-80 bg-white p-5 rounded-md">
                     <p className="font-medium border-b-2 border-black/10">Transfer to {user.name}</p>
                     <p className="font-semibold text-xl py-10">Enter Your Pin 👋</p>
                     <p>Enter Your Pin For Transaction</p>
@@ -88,7 +89,7 @@ const [isOpen3, setIsOpen3] = useState(false)
                             </section>              
                                 </Modal>
                     <Modal isOpen={isOpen2} onClose={() => setIsOpen2(false)}>
-                        <section className="w-80 flex flex-col gap-2">
+                        <section className="w-80 flex flex-col p-2 rounded-md gap-2 bg-white">
                             <p className="font-medium border-b-2 border-black/10">Transfer to {user.name}</p>
                             <img src="/public/icons/Contact us-pana 1.svg" alt="contact" className="w-50 m-auto" />
                             <p className="text-center font-semibold">Yeay Transfer <span className="text-green-500">Success</span></p>
@@ -98,8 +99,8 @@ const [isOpen3, setIsOpen3] = useState(false)
                         </section>
                     </Modal>
 
-                    <Modal className="w-80" isOpen={isOpen3} onClose={()=> setIsOpen3(false)}>
-                          <section className="w-80 flex flex-col gap-2">
+                    <Modal isOpen={isOpen3} onClose={()=> setIsOpen3(false)}>
+                          <section className="w-80 flex flex-col p-2 rounded-md bg-white gap-2">
                             <p className="font-medium border-b-2 border-black/10">Transfer to {user.name}</p>
                             <img src="/public/icons/Oh no-cuate 1.svg" alt="customer-services" className="w-50 m-auto" />
                             <p className="text-center font-semibold">Oops Transfer <span className="text-red-500">Failed</span></p>
