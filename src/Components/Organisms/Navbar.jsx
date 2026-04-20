@@ -9,12 +9,11 @@ export const Navbar = ({className,isActive, mobile = false }) => {
     
     const handleLogout = () => {
         dispatch(logout());
-        navigate("/")
+        navigate("/auth/login")
     }
 
     return (
         <nav>
-
         <section className={`${className} ${mobile ? "bg-blue-600 text-white p-4" : "p-4 flex flex-col space-y-2"}`}>
             <NavLink to="/dashboard" className={({ isActive }) => isActive ? "bg-blue-600 text-white px-3 py-2 rounded" : "text-gray-600 hover:bg-gray-200 px-3 py-2 rounded"}>
             <section className="flex justify-center gap-2">
@@ -45,12 +44,6 @@ export const Navbar = ({className,isActive, mobile = false }) => {
                 <img src="/icons/2 User.svg" alt="profile" />
                 <p>Profile</p>
                 </section>
-            </NavLink>
-            <NavLink onClick={handleLogout} className=" text-gray-600 px-3 py-2 rounded hover:bg-gray-200">
-                <section  className="flex flex-row justify-center gap-2">
-                <img src="/icons/Log Out.svg" alt="logout" />
-                <p>Logout</p>
-                </section>                
             </NavLink>
         </section>
         </nav>
