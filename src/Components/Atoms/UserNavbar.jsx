@@ -2,17 +2,24 @@ import { useNavigate, NavLink, Navigate } from "react-router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/slice/authslice";
+import { Modal } from "./Modal";
+import { Button } from "./Button";
 
-// user navbar for user header dropdown menu profile and logout
 export const UserNavbar = ({className}) => {
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
     const handleLogout = (e) => {
         e.preventDefault()
+        setOpen2(true)
+        setOpen(false)
+    }
+
+    const toLogout = (e) => {
+        e.preventDefault()
         dispatch(logout())
-        navigate("/")
     }
 
     return (
@@ -20,6 +27,16 @@ export const UserNavbar = ({className}) => {
             <button onClick={() => setOpen(!open)}>
                 <img src="/icons/down.svg" alt="dropdown" />
             </button>
+
+        <Modal isOpen={open2} className="top-14">
+            <section className="w-80 h-30 m-auto rounded-md p-6 bg-white">
+            <p className="text-center font-medium">Anda Ingin Keluar ?</p>
+            <section className="justify-between gap-2 flex">
+            <Button color="blue" onClick={toLogout} className="font-semibold w-full text-white">Ya</Button>
+            <Button color="white" onClick={()=> setOpen2(false)} className="font-semibold w-full  text-blue-600">Tidak</Button>
+            </section>
+            </section>
+        </Modal>
 
             {open && (
                 <section className="absolute border top-12 text-center items-center flex flex-col gap-5 right-10 mt-2 w-40 bg-white rounded-md shadow-lg p-2 z-20">
