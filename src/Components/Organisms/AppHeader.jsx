@@ -36,7 +36,7 @@ export function AppHeader({className}) {
             </HamburgerButton>
 
             </section>
-                <Modal className="w-full top-14" isOpen={open} onClose={()=>setOpen(!open)} inner="w-4/6 top-0 right-0 absolute z-20">
+                <Modal className="w-full top-14 md:hidden" isOpen={open} onClose={()=>setOpen(!open)} inner="w-4/6 top-0 right-0 absolute z-20">
                     <Navbar className="bg-white border-b shadow border-gray-200 w-full h-screen absolute z-10"></Navbar>
                 </Modal>        
         </header>       
