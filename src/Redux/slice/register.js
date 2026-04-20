@@ -28,7 +28,12 @@ const userSlice = createSlice({
                 }
                 return u
             })
-        }
+        },
+        updatePassword: (state, action) => {
+        const { email, newPassword } = action.payload;
+        const user = state.users.find(u => u.email === email);
+        if (user) user.password = newPassword;
+    }
     },
     extraReducers: (builder) => {
         builder
@@ -41,5 +46,5 @@ const userSlice = createSlice({
     }
 })
 
-export const { updatePin } = userSlice.actions
+export const { updatePin,updatePassword } = userSlice.actions
 export default userSlice.reducer
