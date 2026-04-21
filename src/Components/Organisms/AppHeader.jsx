@@ -14,7 +14,7 @@ import { SideBar } from "../Atoms/SideBar";
  */
 
 export function AppHeader({className}) {
-    const userLogin = useSelector((state) => state.auth||[])
+    const userLogin = useSelector((state) => state.auth.currentUser||[])
     const [open, setOpen] = useState(false);
 
     return (
@@ -23,10 +23,10 @@ export function AppHeader({className}) {
                     <Logo color="blue" className="hidden sm:hidden md:flex"></Logo>
             <section className="flex gap-2 py-2 items-center md:flex-row-reverse md:ml-auto">
                 <UserNavbar></UserNavbar>
-                <img className="w-10" src="/icons/ghaluh.svg" alt="gahluh" />
+                <img className="w-10 rounded-full" src={userLogin.photoProfile} alt="photo-profile" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin.currentUser.email.split("@")[0]}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin.email.split("@")[0]}</p>
                 </section>
             </section>
             
