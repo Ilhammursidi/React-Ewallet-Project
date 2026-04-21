@@ -102,7 +102,7 @@ export const Profile = () => {
                     <p className="text-sm font-normal pb-5">The profile picture must be 512 x 512 pixels or less</p>
                     <label>Full Name</label>
                     <div className="border border-gray-400 flex gap-2 p-3 mt-2 mb-2 focus-within:border-blue-600 rounded-md">
-                        <img src="/public/icons/userone.svg" alt="user" />
+                        <img src="/icons/userone.svg" alt="user" />
                         <input
                             className="focus:outline-none text-sm w-full"
                             type="text"
@@ -112,7 +112,7 @@ export const Profile = () => {
                     </div>
                     <label>Phone</label>
                     <div className="border border-gray-400 flex gap-2 p-3 mb-2 mt-2 focus-within:border-blue-600 rounded-md">
-                        <img src="/public/icons/tlePhone (1).svg" alt="phone" />
+                        <img src="/icons/tlePhone (1).svg" alt="phone" />
                         <input className="focus:outline-none text-sm w-full"
                             type="text"
                             value={phone}
@@ -121,7 +121,7 @@ export const Profile = () => {
                     </div>
                     <label>Email</label>
                     <div className="border border-gray-400 flex gap-2 p-3 mt-2 focus-within:border-blue-600 rounded-md">
-                        <img src="/public/icons/blackMail.svg" alt="mail" />
+                        <img src="/icons/blackMail.svg" alt="mail" />
                         <input className="focus:outline-none text-sm w-full" disabled type="text" placeholder={userLogin.email} />
                     </div>
 

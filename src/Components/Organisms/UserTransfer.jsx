@@ -91,7 +91,7 @@ const [isOpen3, setIsOpen3] = useState(false)
                     <Modal isOpen={isOpen2} onClose={() => setIsOpen2(false)}>
                         <section className="w-80 flex flex-col p-2 rounded-md gap-2 bg-white">
                             <p className="font-medium border-b-2 border-black/10">Transfer to {user.name}</p>
-                            <img src="/public/icons/Contact us-pana 1.svg" alt="contact" className="w-50 m-auto" />
+                            <img src="/icons/Contact us-pana 1.svg" alt="contact" className="w-50 m-auto" />
                             <p className="text-center font-semibold">Yeay Transfer <span className="text-green-500">Success</span></p>
                             <p className="text-xs text-gray-500 text-center">Thank you for using this application for your financial</p>
                             <Button onClick={() => setIsOpen2(false)} className="rounded-md bg-blue-600 text-white font-medium">Done</Button>
@@ -102,7 +102,7 @@ const [isOpen3, setIsOpen3] = useState(false)
                     <Modal isOpen={isOpen3} onClose={()=> setIsOpen3(false)}>
                           <section className="w-80 flex flex-col p-2 rounded-md bg-white gap-2">
                             <p className="font-medium border-b-2 border-black/10">Transfer to {user.name}</p>
-                            <img src="/public/icons/Oh no-cuate 1.svg" alt="customer-services" className="w-50 m-auto" />
+                            <img src="/icons/Oh no-cuate 1.svg" alt="customer-services" className="w-50 m-auto" />
                             <p className="text-center font-semibold">Oops Transfer <span className="text-red-500">Failed</span></p>
                             <p className="text-xs text-gray-500 text-center">Sorry Theres is an issue for your transfer, try again later !</p>
                             <Button onClick={()=>setIsOpen3(false)} className="rounded-md bg-blue-600 text-white font-medium">Done</Button>
