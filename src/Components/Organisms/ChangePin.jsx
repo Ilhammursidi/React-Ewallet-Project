@@ -5,12 +5,27 @@ import { useNavigate } from "react-router";
 import { AppHeader } from "./AppHeader";
 import { SideBar } from "../Atoms/SideBar";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCurrentUser } from "../../Redux/slice/authslice";
+import { updatePin } from "../../Redux/slice/register";
+import { Modal } from "../Atoms/Modal";
+import { InputChange } from "../Form/ChangePwd";
+import { PinInput } from "../Form/InputPin";
+
 
 export function ChangePin() {
+    const accounts = useSelector((state)=>state.users.users)
+    const currentUser = useSelector((state)=> state.auth.currentUser);
     const PIN_LENGTH = 6;
     const [pin, setPin] = useState(Array(PIN_LENGTH).fill(""));
     const inputsRef = useRef([]);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [newPin, setNewPin] = useState(Array(PIN_LENGTH).fill(""));
+    const [confirmPin, setConfirmPin] = useState(Array(PIN_LENGTH).fill(""));
+    const [open,setOpen] = useState(false)
+    const [password, setPassword] = useState("");
+    const [step, setStep] = useState("VERIFY_PIN");
 
     const handleChange = (value, index) => {
         if (!/^[0-9]?$/.test(value)) return;
@@ -29,71 +44,82 @@ export function ChangePin() {
         }
     };
 
-    const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
 
     const pinStr = pin.join("");
+
     if (pinStr.length !== PIN_LENGTH) {
         return toast.error("Lengkapi PIN!");
     }
 
-    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser.userPin === pinStr) {
+        setStep("NEW_PIN");
+        setOpen(true);
+        setPin(Array(PIN_LENGTH).fill(""));
+    } else {
+        toast.error("PIN salah!");
+    }
+};
+const handleSetNewPin = () => {
+    const newPinStr = newPin.join("");
+    const confirmPinStr = confirmPin.join("");
 
-    const updatedAccounts = accounts.map(acc => {
-        if (acc.email === currentUser.email) {
-            return {
-                ...acc,
-                userPin: pinStr
-            };
-        }
-        return acc;
-    });
+    if (newPinStr.length !== PIN_LENGTH) {
+        return toast.error("PIN baru belum lengkap!");
+    }
 
-    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+    if (confirmPinStr.length !== PIN_LENGTH) {
+        return toast.error("Konfirmasi PIN belum lengkap!");
+    }
 
-    localStorage.setItem("currentUser", JSON.stringify({
-        ...currentUser,
-        userPin: pinStr
+    if (newPinStr !== confirmPinStr) {
+        return toast.error("PIN tidak sama!");
+    }
+
+    dispatch(updatePin({
+        email: currentUser.email,
+        newPin: newPinStr
     }));
 
-    toast.success("Save PIN Success!");
-    setPin(Array(PIN_LENGTH).fill(""));
-    navigate("/Dashboard")
-};
-
-    const handleResetPin = () => {
-    const accounts = JSON.parse(localStorage.getItem("accounts") || "[]");
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-    const updatedAccounts = accounts.map(acc => {
-        if (acc.email === currentUser.email) {
-            return {
-                ...acc,
-                userPin: null
-            };
-        }
-        return acc;
-    });
-
-    localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
-
-    localStorage.setItem("currentUser", JSON.stringify({
-        ...currentUser,
-        userPin: null
+    dispatch(updateCurrentUser({
+        userPin: newPinStr
     }));
 
-    setPin(Array(PIN_LENGTH).fill(""));
-    toast.success("PIN reset!");
+    toast.success("PIN berhasil diubah!");
+
+    setNewPin(Array(PIN_LENGTH).fill(""));
+    setConfirmPin(Array(PIN_LENGTH).fill(""));
+    setOpen(false);
 };
+
+const handleResetPin = () => {
+    setStep("VERIFY_PASSWORD");
+    setOpen(true);
+};
+
+const handleVerifyPassword = () => {
+    if (!password) {
+        return toast.error("Masukkan password!");
+    }
+
+    if (password !== currentUser.password) {
+        return toast.error("Password salah!");
+    }
+
+    toast.success("Verifikasi berhasil!");
+    setStep("NEW_PIN");
+};
+    
 
     return (
         <section>
             <AppHeader className="md:bg-white"></AppHeader>
             <SideBar></SideBar>
+            <p className="hidden absolute left-60 top-20 font-semibold md:flex">Change Pin</p>
             <section className="p-5 md:w-2/6 md:m-auto">
                 <section className="mb-4">
-                    <h1 className="text-lg font-medium py-5 text-center">Change Pin 👋</h1>
+                    <h1 className="text-lg font-medium py-5 text-center">Enter Your PIN</h1>
                     <p className="text-gray-500 text-sm">
                         Please save your pin because this so important.
                     </p>
@@ -105,7 +131,7 @@ export function ChangePin() {
                     {pin.map((digit, i) => (
                         <input
                             key={i}
-                            type="text"
+                            type="password"
                             maxLength={1}
                             value={digit}
                             onChange={e => handleChange(e.target.value, i)}
@@ -130,6 +156,44 @@ export function ChangePin() {
                         Reset
                     </span>
                 </p>
+
+                <Modal isOpen={open} className="w-full bg-white z-10 p-5 rounded-xl">
+
+    {/* STEP 1: VERIFY PASSWORD */}
+    {step === "VERIFY_PASSWORD" && (
+        <>
+            <h1 className="text-lg font-semibold mb-3">Verify Password</h1>
+
+            <InputChange
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                label="Password"
+            />
+
+            <Button onClick={handleVerifyPassword} className="w-full mt-3" color="blue">
+                Verify
+            </Button>
+        </>
+    )}
+
+    {/* STEP 2: SET NEW PIN */}
+    {step === "NEW_PIN" && (
+        <>
+            <h1 className="text-lg font-semibold mb-3 text-center">Set New PIN</h1>
+
+            <p className="text-sm text-center font-medium">New PIN</p>
+            <PinInput pin={newPin} setPin={setNewPin} />
+
+            <p className="text-sm text-center font-medium">Confirm PIN</p>
+            <PinInput pin={confirmPin} setPin={setConfirmPin} />
+
+            <Button onClick={handleSetNewPin} className="w-full" color="blue">
+                Save PIN
+            </Button>
+        </>
+    )}
+
+</Modal>
             </section>
         </section>
     );
