@@ -27,7 +27,7 @@ export const PinInput = ({
     };
 
     return (
-        <section className="flex justify-between gap-2 w-120 mb-4 px-2 py-10 border-b-2">
+        <section className="flex justify-between gap-1 w-80 md:w-120 mb-4 px-2 py-10 border-b-2 border-gray-300">
             {pin.map((digit, i) => (
                 <input
                     key={i}
