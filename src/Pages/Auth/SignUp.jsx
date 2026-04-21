@@ -119,7 +119,11 @@ function SignUp() {
     fullName: null,
     phone: null,
     userPin: null,
-    photoProfile: null
+    photoProfile: "/icons/userone.svg",
+    balance: 0,
+    income: 0,
+    expense: 0,
+    history: []
   }))
 
   if (registerUser.fulfilled.match(resultAction)) {
