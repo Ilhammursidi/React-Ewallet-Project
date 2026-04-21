@@ -20,14 +20,13 @@ const userSlice = createSlice({
     },
     reducers: {
         updatePin: (state, action) => {
-            const { email, pin } = action.payload
+            const { email, newPin } = action.payload
 
-            state.users = state.users.map((u) => {
-                if (u.email === email) {
-                    return { ...u, userPin: pin }
-                }
-                return u
-            })
+            const user = state.users.find(u => u.email === email)
+
+            if(user) {
+                user.userPin = newPin;
+            }
         },
         updatePassword: (state, action) => {
             const { email, newPassword } = action.payload;
