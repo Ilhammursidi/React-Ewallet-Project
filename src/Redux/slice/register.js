@@ -24,7 +24,7 @@ const userSlice = createSlice({
 
             const user = state.users.find(u => u.email === email)
 
-            if(user) {
+            if (user) {
                 user.userPin = newPin;
             }
         },
@@ -41,6 +41,56 @@ const userSlice = createSlice({
                 user.phone = phone;
                 user.photoProfile = photoProfile;
             }
+        },
+        topUp: (state, action) => {
+            const { email, amount } = action.payload;
+
+            const user = state.users.find(u => u.email === email);
+
+            if (user) {
+                user.balance += amount;
+                user.income += amount;
+
+                user.history.unshift({
+                    id: Date.now(),
+                    type: "TOPUP",
+                    amount,
+                    name: "Top Up",
+                    date: new Date().toISOString()
+                });
+            }
+        },
+        transfer: (state, action) => {
+            const { fromEmail, toEmail, amount } = action.payload;
+
+            const sender = state.users.find(u => u.email === fromEmail);
+            const receiver = state.users.find(u => u.email === toEmail);
+
+            if (!sender || !receiver) return;
+
+            if (sender.balance < amount) return;
+
+            sender.balance -= amount;
+            sender.expense += amount;
+
+            sender.history.unshift({
+                id: Date.now(),
+                type: "TRANSFER",
+                amount,
+                name: receiver.fullName || receiver.email,
+                date: new Date().toISOString()
+            });
+
+            receiver.balance += amount;
+            receiver.income += amount;
+
+            receiver.history.unshift({
+                id: Date.now(),
+                type: "RECEIVE",
+                amount,
+                name: sender.fullName || sender.email,
+                date: new Date().toISOString()
+            });
         }
     },
     extraReducers: (builder) => {
@@ -54,5 +104,5 @@ const userSlice = createSlice({
     }
 })
 
-export const { updatePin, updatePassword,updateProfile } = userSlice.actions
+export const { updatePin, updatePassword, updateProfile, topUp, transfer } = userSlice.actions
 export default userSlice.reducer
