@@ -5,8 +5,10 @@ import { Button } from "../../Components/Atoms/Button"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
 import { topUp } from "../../Redux/slice/register"
-import { updateCurrentUser } from "../../Redux/slice/authslice"
+import { updateBalance } from "../../Redux/slice/authslice"
 import toast from "react-hot-toast"
+import { updateCurrentUser } from "../../Redux/slice/authslice"
+
 
 export const TopUp = () => {
     const user = useSelector((state) => state.auth.currentUser)
@@ -15,8 +17,8 @@ export const TopUp = () => {
     const dispatch = useDispatch();
 
     const handleInput = (e) => {
-        e.preventDefault()
-        setOrder(e.target.value)
+        const clean = e.target.value.replace(/\D/g, '')
+        setOrder(clean)
     }
 
     const rupiah = parseInt(order || 0).toLocaleString('id-ID')
@@ -33,15 +35,26 @@ export const TopUp = () => {
             email: user?.email,
             amount,
         }))
-
-        const updatedUser = accounts.find(
-            u => u.email === user?.email
-        );
-
-        dispatch(updateCurrentUser(updatedUser));
-
+        dispatch(updateBalance({
+            amount
+        }))
+        dispatch(updateCurrentUser({
+            ...user,
+            balance: user.balance + amount,
+            income: user.income + amount,
+            history: [
+                {
+                    id: Date.now(),
+                    type: "Top Up",
+                    amount,
+                    name: user.email.split("@")[0],
+                    date: new Date().toISOString()
+                },
+                ...(user.history || [])
+            ]
+        }));
+        setOrder("");
         toast.success("Top Up berhasil!");
-        window.location.reload();
     }
 
     return (
@@ -128,9 +141,6 @@ export const TopUp = () => {
                     <Button onClick={handleSubmit} color="blue" className="font-medium m-2">Submit</Button>
                     <p className="font-normal text-sm p-2 text-gray-500">*Get Discount if you pay with Bank Central Asia</p>
                 </section>
-
-
-
             </section>
         </section>
     )
