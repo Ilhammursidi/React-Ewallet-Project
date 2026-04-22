@@ -48,14 +48,16 @@ const userSlice = createSlice({
             const user = state.users.find(u => u.email === email);
 
             if (user) {
-                user.balance += amount;
-                user.income += amount;
+                user.balance = (user.balance || 0) + amount;
+                user.income = (user.income || 0) + amount;
+
+                if (!user.history) user.history = [];
 
                 user.history.unshift({
                     id: Date.now(),
-                    type: "TOPUP",
+                    type: "Top Up",
                     amount,
-                    name: "Top Up",
+                    name: user.email.split("@")[0],
                     date: new Date().toISOString()
                 });
             }
@@ -75,7 +77,7 @@ const userSlice = createSlice({
 
             sender.history.unshift({
                 id: Date.now(),
-                type: "TRANSFER",
+                type: "Send",
                 amount,
                 name: receiver.fullName || receiver.email,
                 date: new Date().toISOString()
@@ -86,7 +88,7 @@ const userSlice = createSlice({
 
             receiver.history.unshift({
                 id: Date.now(),
-                type: "RECEIVE",
+                type: "Receive",
                 amount,
                 name: sender.fullName || sender.email,
                 date: new Date().toISOString()
@@ -94,15 +96,20 @@ const userSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder
-            .addCase(registerUser.fulfilled, (state, action) => {
-                state.users.push(action.payload)
+        builder.addCase(registerUser.fulfilled, (state, action) => {
+            state.users.push({
+                ...action.payload,
+                balance: 0,
+                income: 0,
+                expense: 0,
+                history: []
             })
+        })
             .addCase(registerUser.rejected, (state, action) => {
                 state.error = action.payload
             })
     }
 })
 
-export const { updatePin, updatePassword, updateProfile, topUp, transfer } = userSlice.actions
+export const { updatePin, updatePassword, updateProfile, topUp, transfer, } = userSlice.actions
 export default userSlice.reducer
