@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 export function Dashboard() {
     const user = useSelector((state) => state.auth.currentUser);
-    console.log(user)
 
     const BarChart = () => {
         const data = {
@@ -141,96 +140,29 @@ export function Dashboard() {
                         <p className="font-medium text-sm">Transaction History</p>
                         <p className="text-blue-600 text-sm">See All</p>
                     </section>
-                    {user.history?.map((item) => (
-                        <section key={item.id} className="py-4 flex gap-5 justify-between">
 
+                    {user?.history?.length === 0 && (
+                        <p className="text-gray-400 text-center py-5">No transaction yet</p>
+                    )}
+
+                    {user?.history?.map((item) => (
+                        <section key={item.id} className="py-4 flex gap-5 justify-between">
                             <img src="/icons/floyd.svg" alt="user" />
 
-                            <section className="mr-auto flex flex-col">
+                            <section className="mr-auto flex flex-col justify-between">
                                 <p className="font-semibold">{item.name}</p>
                                 <p>{item.type}</p>
                             </section>
 
-                            <p className={`font-semibold ${item.type === "TRANSFER" ? "text-red-600" : "text-green-600"
+                            <p className={`font-semibold ${item.type === "Top Up" || item.type === "Receive"
+                                    ? "text-green-600"
+                                    : "text-red-600"
                                 }`}>
-                                {item.type === "TRANSFER" ? "-" : "+"}Rp{item.amount}
+                                {item.type === "Top Up" || item.type === "Receive" ? "+" : "-"}
+                                Rp{item.amount.toLocaleString("id-ID")}
                             </p>
-
                         </section>
                     ))}
-                    {/* <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Send</p>
-                </section>
-                <p className="font-semibold text-green-600">+Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Transfer</p>
-                </section>
-                <p className="font-semibold text-red-600">-Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Transfer</p>
-                </section>
-                <p className="font-semibold text-red-600">-Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Send</p>
-                </section>
-                <p className="font-semibold text-green-600">+Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Transfer</p>
-                </section>
-                <p className="font-semibold text-red-600">-Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Send</p>
-                </section>
-                <p className="font-semibold text-green-600">+Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Transfer</p>
-                </section>
-                <p className="font-semibold text-red-600">-Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Send</p>
-                </section>
-                <p className="font-semibold text-green-600">+Rp50.000</p>
-                </section>                
-                <section className="py-4 flex gap-5 justify-between">
-                <img src="/icons/floyd.svg" alt="floyd" />
-                <section className="mr-auto flex flex-col justify-between">
-                    <p className="font-semibold">Floyd Miles</p>
-                    <p>Send</p>
-                </section>
-                <p className="font-semibold text-green-600">+Rp50.000</p>
-                </section>                
-            </section> */}
                 </section>
             </section>
         </section>
