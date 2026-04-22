@@ -5,7 +5,6 @@ import { Button } from "../../Components/Atoms/Button";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "../../Components/Atoms/Modal";
-import { updatePin } from "../../Redux/slice/register";
 import { setPin } from "../../Redux/slice/authslice";
 import { InputPassword } from "../../Components/Form/InputPassword";
 import { InputChange } from "../../Components/Form/ChangePwd";
