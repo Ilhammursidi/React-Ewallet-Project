@@ -18,7 +18,7 @@ export const InputNominal = ({value,onChange,className=""}) => {
         <input 
         className="focus:outline-none w-full" 
         type="text"
-        inputmode="numeric"
+        inputMode="numeric"
         pattern="[0-9]*" 
         id="text"
         value={value}
