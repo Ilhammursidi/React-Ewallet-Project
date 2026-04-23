@@ -52,21 +52,21 @@ export function Dashboard() {
     return (
         <section>
             <AppHeader className="md:bg-white" />
-            <section className="md:flex md:justify-between w-full">
+            <section className="md:flex w-full">
                 <SideBar></SideBar>
                 <section className="hidden md:block w-50"></section>
 
                 {/* moneyflow */}
-                <section className="md:flex md:flex-col ">
+                <section className="md:grid md:col-span-2 md:px-2 md:pl-15">
                     <section className="bg-blue-600 md:bg-white h-25 pt-5">
-                        <section className="bg-white rounded-2xl h-30 w-90 m-auto md:w-180 md:border-none md:shadow-none sm:w-5/6 shadow ">
-                            <section className="flex px-5 flex-row justify-around md:gap-2 md:justify-between items-center h-full">
+                        <section className="bg-white rounded-2xl h-30 w-90 m-auto md:w-180 md:border-none md:shadow-none sm:w-4/6 shadow ">
+                            <section className="cashflow flex px-5 flex-row justify-around md:gap-2 md:justify-between items-center h-full">
                                 <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:w-full md:gap-5 md:border md:border-gray-300 md:rounded-md md:p-8">
                                     <section className="hidden md:flex md:items-center gap-2">
                                         <img src="/icons/balance.svg" alt="balance" />
                                         <p className="text-xs md:text-base">Balance</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.balance || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.balance.toLocaleString("id-ID") || 0}</b></p>
                                     <section>
                                         <p className="text-gray-50/55">0%</p>
                                         <p></p>
@@ -77,7 +77,7 @@ export function Dashboard() {
                                         <img src="/icons/income.svg" alt="income" />
                                         <p className="text-xs md:text-base">Income</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.income || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.income.toLocaleString("id-ID") || 0}</b></p>
                                     <section className="flex gap-1 items-center">
                                         <p className="text-green-700 text-xs">+11,01%</p>
                                         <img className="w-4" src="/icons/ArrowRise-s.svg" alt="arrow rise" />
@@ -88,7 +88,7 @@ export function Dashboard() {
                                         <img src="/icons/expense.svg" alt="expense" />
                                         <p className="text-xs md:text-base">Expense</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.expense || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.expense.toLocaleString("id-ID") || 0}</b></p>
                                     <section className="flex gap-1 items-center">
                                         <p className="text-red-700 text-xs">-5,06%</p>
                                         <img className="w-4" src="/icons/Arrowdown.svg" alt="arrow fall" />
@@ -135,7 +135,7 @@ export function Dashboard() {
                     </section>
                 </section>
 
-                <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:w-80 md:mx-auto mt-4">
+                <section className="transaction px-5 md:border md:w-1/3 md:ml-auto md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:mr-5  mt-4">
                     <section className="flex justify-between items-center">
                         <p className="font-medium text-sm">Transaction History</p>
                         <p className="text-blue-600 text-sm">See All</p>
@@ -147,7 +147,7 @@ export function Dashboard() {
 
                     {user?.history?.map((item) => (
                         <section key={item.id} className="py-4 flex gap-5 justify-between">
-                            <img src="/icons/floyd.svg" alt="user" />
+                            <img src={user?.photoProfile} className="w-12" alt="user" />
 
                             <section className="mr-auto flex flex-col justify-between">
                                 <p className="font-semibold">{item.name}</p>
