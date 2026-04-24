@@ -11,7 +11,7 @@
 
 
 export const Button = ({children,onClick,type,className="",color=""})=>{
-    const defaultClass = "rounded-md p-2"
+    const defaultClass = "rounded-md p-2 cursor-pointer"
     const colorClass = color === "blue" ? "bg-blue-600 border border-white text-white" : color === "white" ? "bg-white border border-blue-600 text-blue-600" : "";
     const finalClass =`${defaultClass} ${className} ${colorClass}`
     return (
