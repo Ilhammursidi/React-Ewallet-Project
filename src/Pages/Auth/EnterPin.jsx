@@ -29,7 +29,7 @@ export function EnterPin() {
     };
 
     const handleKeyDown = (e, index) => {
-        if (e.key === "Backspace" && !pin[index] && index > 0) {
+        if (e.key === "Backspace" && !pinInput[index] && index > 0) {
             inputsRef.current[index - 1].focus();
         }
     };
@@ -44,9 +44,8 @@ export function EnterPin() {
             return;
         }
 
-        dispatch(updatePin({
-            email: currentUser.email,
-            pin: pinStr
+        dispatch(updatePin({email: currentUser.email,
+            newPin: pinStr,
         }));
 
         dispatch(setPin(pinStr));
