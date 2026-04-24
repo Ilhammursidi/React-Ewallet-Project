@@ -66,7 +66,7 @@ export function Dashboard() {
                                         <img src="/icons/balance.svg" alt="balance" />
                                         <p className="text-xs md:text-base">Balance</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.balance.toLocaleString("id-ID") || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.balance.toLocaleString("id-ID") || 0}</b></p>
                                     <section>
                                         <p className="text-gray-50/55">0%</p>
                                         <p></p>
@@ -77,7 +77,7 @@ export function Dashboard() {
                                         <img src="/icons/income.svg" alt="income" />
                                         <p className="text-xs md:text-base">Income</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.income.toLocaleString("id-ID") || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.income.toLocaleString("id-ID") || 0}</b></p>
                                     <section className="flex gap-1 items-center">
                                         <p className="text-green-700 text-xs">+11,01%</p>
                                         <img className="w-4" src="/icons/ArrowRise-s.svg" alt="arrow rise" />
@@ -88,7 +88,7 @@ export function Dashboard() {
                                         <img src="/icons/expense.svg" alt="expense" />
                                         <p className="text-xs md:text-base">Expense</p>
                                     </section>
-                                    <p className="md:text-xl md:font-normal">Rp. <b>{user?.expense.toLocaleString("id-ID") || 0}</b></p>
+                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.expense.toLocaleString("id-ID") || 0}</b></p>
                                     <section className="flex gap-1 items-center">
                                         <p className="text-red-700 text-xs">-5,06%</p>
                                         <img className="w-4" src="/icons/Arrowdown.svg" alt="arrow fall" />
@@ -135,7 +135,7 @@ export function Dashboard() {
                     </section>
                 </section>
 
-                <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:mr-5 mt-4">
+                <section className="transaction px-5 md:border md:w-1/5 md:border-gray-300 md:rounded-md md:py-5 md:mr-5 mt-4">
                     <section className="flex justify-between items-center">
                         <p className="font-medium text-sm">Transaction History</p>
                         <p className="text-blue-600 text-sm">See All</p>
