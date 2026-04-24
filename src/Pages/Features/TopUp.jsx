@@ -16,6 +16,34 @@ export const TopUp = () => {
     const [order, setOrder] = useState(0);
     const dispatch = useDispatch();
 
+    const payment = [
+        {
+            for:"bri",
+            method:"Bank Rakyat Indonesia",
+            img:"/icons/Bank BRI (Bank Rakyat Indonesia) Logo (SVG-240p) - FileVector69 1.svg"
+        },
+        {   
+            for:"dana",
+            method:"Dana",
+            img:"/icons/Logo DANA (PNG-240p) - FileVector69 1.svg"
+        },
+        {
+            for:"bca",
+            method:"Bank Central Asia",
+            img:"/icons/Bank BCA Logo (SVG-240p) - FileVector69 1.svg"
+        },
+        {
+            for:"gopay",
+            method:"Gopay",
+            img:"/icons/Logo GoPay (SVG-240p) - FileVector69 1.svg"
+        },
+        {
+            for:"ovo",
+            method:"Ovo",
+            img:"/icons/OVO.svg"
+        }
+    ]
+
     const handleInput = (e) => {
         const clean = e.target.value.replace(/\D/g, '')
         setOrder(clean)
@@ -89,31 +117,14 @@ export const TopUp = () => {
                                     onChange={handleInput}></InputNominal>
                                 <p className="font-medium">Payment Method</p>
                                 <p className="text-xs text-gray-600">Choose your payment method for top up account</p>
-                                <article className="flex text-sm items-center bg-gray-100 h-15 p-2 flex-row gap-2">
-                                    <input type="radio" id="bri" name="payment" />
-                                    <img className="w-8" src="/icons/Bank BRI (Bank Rakyat Indonesia) Logo (SVG-240p) - FileVector69 1.svg" alt="bri" />
-                                    <label htmlFor="bri">Bank Rakyat Indonesia</label>
+                                {payment.map((p) =>
+                                    <article className="flex text-sm items-center rounded-xl focus-within:border-blue-600 focus-within:border-2 cursor-pointer bg-gray-100 h-15 p-2 px-5 flex-row gap-2">
+                                    <input type="radio" id={p.for} name="payment" />
+                                    <img className="w-8" src={p.img} alt={p.method} />
+                                    <label htmlFor={p.for} className="w-full">{p.method}</label>
                                 </article>
-                                <article className="flex text-sm items-center flex-row gap-2 h-15 bg-gray-100 p-2">
-                                    <input type="radio" id="dana" name="payment" />
-                                    <img src="/icons/Logo DANA (PNG-240p) - FileVector69 1.svg" alt="dana" />
-                                    <label htmlFor="dana">Dana</label>
-                                </article>
-                                <article className="flex h-15 text-sm items-center flex-row gap-2  bg-gray-100 p-2">
-                                    <input type="radio" id="bca" name="payment" />
-                                    <img src="/icons/Bank BCA Logo (SVG-240p) - FileVector69 1.svg" alt="bca" />
-                                    <label htmlFor="bca">Bank Central Asia</label>
-                                </article>
-                                <article className="h-15 flex text-sm items-center flex-row gap-2  bg-gray-100 p-2">
-                                    <input type="radio" id="gopay" name="payment" />
-                                    <img src="/icons/Logo GoPay (SVG-240p) - FileVector69 1.svg" alt="gopay" />
-                                    <label htmlFor="gopay">Gopay</label>
-                                </article>
-                                <article className="flex text-sm h-15 items-center flex-row gap-2  bg-gray-100 p-2">
-                                    <input type="radio" id="ovo" name="payment" />
-                                    <img src="/icons/OVO.svg" alt="ovo" />
-                                    <label htmlFor="ovo">OVO</label>
-                                </article>
+                                )}
+                                
                             </form>
                         </section>
                     </section>
