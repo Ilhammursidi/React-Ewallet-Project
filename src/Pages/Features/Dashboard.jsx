@@ -52,15 +52,15 @@ export function Dashboard() {
     return (
         <section>
             <AppHeader className="md:bg-white" />
-            <section className="md:flex w-full">
-                <SideBar></SideBar>
-                <section className="hidden md:block w-50"></section>
+            <section className=" w-full md:flex md:flex-row md:justify-between">
+                <SideBar className="fixed"></SideBar>
+                {/* <section className="hidden md:block"></section> */}
 
                 {/* moneyflow */}
-                <section className="md:grid md:col-span-2 md:px-2 md:pl-15">
+                <section className="md:grid md:ml-auto md:px-2">
                     <section className="bg-blue-600 md:bg-white h-25 pt-5">
-                        <section className="bg-white rounded-2xl h-30 w-90 m-auto md:w-180 md:border-none md:shadow-none sm:w-4/6 shadow ">
-                            <section className="cashflow flex px-5 flex-row justify-around md:gap-2 md:justify-between items-center h-full">
+                        <section className="bg-white rounded-2xl h-30 w-90 m-auto md:w-full md:border-none md:shadow-none sm:w-4/6 shadow ">
+                            <section className="cashflow flex flex-row justify-around md:w-full md:gap-2 md:justify-between items-center h-full">
                                 <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:w-full md:gap-5 md:border md:border-gray-300 md:rounded-md md:p-8">
                                     <section className="hidden md:flex md:items-center gap-2">
                                         <img src="/icons/balance.svg" alt="balance" />
@@ -100,7 +100,7 @@ export function Dashboard() {
                     </section>
 
 
-                    <section className="flex gap-5 w-full justify-between mt-15 px-5 md:px-5 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5 md:w-170 md:mx-auto">
+                    <section className="flex gap-5 w-full justify-between mt-15 px-5 md:w-200 md:px-5 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5  md:mx-auto">
                         <p className="hidden md:flex font-semibold">Fast Service</p>
                         <section className="flex flex-row justify-between w-full md:w-60 gap-5 md:flex md:gap-5">
                             <Button color="blue" className="w-1/2"><NavLink className="flex items-center gap-2 justify-center" to={"/topup"}>
@@ -115,7 +115,7 @@ export function Dashboard() {
                             </Button>
                         </section>
                     </section>
-                    <section className="chart-container md:border md:border-gray-300 md:px-0 md:w-170 md:mx-auto md:rounded-md md:py-0 md:mt-5">
+                    <section className="chart-container md:border md:border-gray-300 md:px-0 md:w-full md:mx-auto md:rounded-md md:py-0 md:mt-5">
                         <section className="flex items-center justify-between gap-2 px-5 mt-10 md:mt-0 md:py-5">
                             <p className="font-medium text-sm md:text-base md:font-semibold">Income Chart</p>
                             <section className="flex gap-5 md:flex md:gap-2">
@@ -135,7 +135,7 @@ export function Dashboard() {
                     </section>
                 </section>
 
-                <section className="transaction px-5 md:border md:w-1/3 md:ml-auto md:border-gray-300 md:rounded-md md:py-5 md:h-210 md:mr-5  mt-4">
+                <section className="transaction px-5 md:border md:border-gray-300 md:rounded-md md:py-5 md:mr-5 mt-4">
                     <section className="flex justify-between items-center">
                         <p className="font-medium text-sm">Transaction History</p>
                         <p className="text-blue-600 text-sm">See All</p>
