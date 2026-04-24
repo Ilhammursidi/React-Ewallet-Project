@@ -57,11 +57,13 @@ export function EnterPin() {
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center bg-blue-500 p-4">
-            <section className="bg-white rounded-xl p-6 w-full max-w-sm shadow-lg">
+        <section className="min-h-screen md:justify-between md:flex bg-white items-center justify-center md:bg-blue-500 p-4 md:p-0">
+
+            <section className="bg-white rounded-xl md:flex md:flex-col h-screen flex flex-col justify-center md:h-screen md:justify-center p-6 md:w-3/6 md:px-20 md:rounded-r-4xl shadow-lg">
+
                 <Logo color="blue" className="text-xl"></Logo>
                 <section className="mb-4">
-                    <h1 className="text-lg font-medium py-5">Enter Your Pin 👋</h1>
+                    <h1 className="text-lg font-medium py-5 md:text-2xl">Enter Your Pin 👋</h1>
                     <p className="text-gray-500 text-sm">
                         Please save your pin because this so important.
                     </p>
@@ -78,7 +80,7 @@ export function EnterPin() {
                                 onChange={e => handleChange(e.target.value, i)}
                                 onKeyDown={e => handleKeyDown(e, i)}
                                 ref={el => (inputsRef.current[i] = el)}
-                                className="w-10 h-12 text-center border-b-2 border-gray-300 focus:border-b-blue-600 focus:outline-none text-3xl"
+                                className="w-10 h-12 text-center border-b-2 md:w-15 border-gray-300 focus:border-b-blue-600 focus:outline-none text-3xl"
                             />
                         ))}
                     </section>
@@ -86,6 +88,9 @@ export function EnterPin() {
                         Submit
                     </Button>
                 </form>
+            </section>
+            <section className="hidden right md:flex md:h-screen md:w-3/6">
+                <img src="/manWithLaptop.png" alt="" />
             </section>
         </section>
     );
