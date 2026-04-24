@@ -26,7 +26,7 @@ export function AppHeader({className}) {
                 <img className="w-10 rounded-full" src={userLogin.photoProfile} alt="photo-profile" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin.email.split("@")[0]}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin.fullName || userLogin.email.split("@")[0]}</p>
                 </section>
             </section>
             
