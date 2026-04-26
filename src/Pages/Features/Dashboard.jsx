@@ -48,7 +48,7 @@ export function Dashboard() {
                 <main className="flex-1 min-w-0 p-4 md:p-6 space-y-4">
 
                     <div className="grid sm:grid-cols-2 md:grid-cols-3  gap-3">
-                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                        <div className="bg-white sm:col-span-2 md:col-span-1 rounded-xl border border-gray-400 p-4 space-y-1">
                             <div className="flex items-center gap-2">
                             <img src="/icons/balance.svg" alt="balance" />
                             <p className="text-md font-medium text-black">Balance</p>
@@ -58,7 +58,7 @@ export function Dashboard() {
                             </p>
                             <p className="text-xs text-gray-400">0%</p>
                         </div>
-                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                        <div className="bg-white md:col-span-1 rounded-xl border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
                             <img src="/icons/income.svg" alt="income" />
                             <p className="text-md text-black ">Income</p>
@@ -68,7 +68,7 @@ export function Dashboard() {
                             </p>
                             <p className="text-xs text-green-700 font-medium">+11,01%</p>
                         </div>
-                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                        <div className="bg-white rounded-xl md:col-span-1 border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
                             <img src="/icons/expense.svg" alt="expense" />
                             <p className="text-md text-black">Expense</p>
