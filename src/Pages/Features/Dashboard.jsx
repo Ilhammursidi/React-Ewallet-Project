@@ -5,6 +5,7 @@ import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
 import { NavLink } from "react-router";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 const barData = {
     labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
@@ -34,6 +35,7 @@ const barOptions = {
 
 export function Dashboard() {
     const user = useSelector((state) => state.auth.currentUser);
+    const target = location.state?.userData
 
     return (
         <div className="min-h-screen bg-white   ">
@@ -50,8 +52,8 @@ export function Dashboard() {
                     <div className="grid sm:grid-cols-2 md:grid-cols-3  gap-3">
                         <div className="bg-white sm:col-span-2 md:col-span-1 rounded-xl border border-gray-400 p-4 space-y-1">
                             <div className="flex items-center gap-2">
-                            <img src="/icons/balance.svg" alt="balance" />
-                            <p className="text-md font-medium text-black">Balance</p>
+                                <img src="/icons/balance.svg" alt="balance" />
+                                <p className="text-md font-medium text-black">Balance</p>
                             </div>
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.balance?.toLocaleString("id-ID") ?? 0}</span>
@@ -60,8 +62,8 @@ export function Dashboard() {
                         </div>
                         <div className="bg-white md:col-span-1 rounded-xl border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
-                            <img src="/icons/income.svg" alt="income" />
-                            <p className="text-md text-black ">Income</p>
+                                <img src="/icons/income.svg" alt="income" />
+                                <p className="text-md text-black ">Income</p>
                             </div>
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.income?.toLocaleString("id-ID") ?? 0}</span>
@@ -70,8 +72,8 @@ export function Dashboard() {
                         </div>
                         <div className="bg-white rounded-xl md:col-span-1 border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
-                            <img src="/icons/expense.svg" alt="expense" />
-                            <p className="text-md text-black">Expense</p>
+                                <img src="/icons/expense.svg" alt="expense" />
+                                <p className="text-md text-black">Expense</p>
                             </div>
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.expense?.toLocaleString("id-ID") ?? 0}</span>
@@ -81,7 +83,7 @@ export function Dashboard() {
                     </div>
 
                     <div className="grid grid-cols-2 md:border md:border-gray-400 md:p-4 md:rounded-xl md:grid-cols-3 md:items-center gap-3">
-                        
+
                         <p className="hidden sm:hidden md:block font-semibold">Fast Service</p>
                         <Button color="blue">
                             <NavLink className="flex items-center justify-center gap-2" to="/topup">
@@ -121,7 +123,7 @@ export function Dashboard() {
                     </div>
                 </main>
 
-                
+
                 <div className="hidden md:block w-2/8 shrink-0 border-l border-gray-400 bg-white p-4">
                     <TransactionList user={user} />
                 </div>
@@ -134,7 +136,7 @@ export function Dashboard() {
 function TransactionList({ user }) {
     return (
         <>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex max-h-screen items-center justify-between mb-4">
                 <p className="text-sm font-medium">Transaction History</p>
                 <p className="text-sm text-blue-600 cursor-pointer">See All</p>
             </div>
@@ -145,17 +147,14 @@ function TransactionList({ user }) {
 
             {user?.history?.map((item) => (
                 <div key={item.id} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
-                    <img src={user?.photoProfile} alt="user" className="w-9 h-9 rounded-full shrink-0 object-cover" />
+                    <img src={item.type === "Top Up" ? user?.photoProfile : item.img} alt="user" className="w-9 h-9 rounded-full shrink-0 object-cover" />
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium truncate">{item.name}</p>
                         <p className="text-xs text-gray-500">{item.type}</p>
                     </div>
-                    <p className={`text-sm font-medium shrink-0 ${
-                        item.type === "Top Up" || item.type === "Receive"
-                            ? "text-green-600"
-                            : "text-red-600"
-                    }`}>
-                        {item.type === "Top Up" || item.type === "Receive" ? "+" : "-"}
+                    <p className={`text-sm font-medium shrink-0 ${item.type === "Top Up" ? "text-green-600" : "text-red-600"
+                        }`}>
+                        {item.type === "Top Up" ? "+" : "-"}
                         Rp{item.amount.toLocaleString("id-ID")}
                     </p>
                 </div>
