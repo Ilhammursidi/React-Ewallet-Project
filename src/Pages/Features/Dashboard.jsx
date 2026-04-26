@@ -1,170 +1,165 @@
 import { Button } from "../../Components/Atoms/Button";
-import 'chart.js/auto'
+import 'chart.js/auto';
 import { Bar } from "react-chartjs-2";
 import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
 import { NavLink } from "react-router";
 import { useSelector } from "react-redux";
 
+const barData = {
+    labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
+    datasets: [{
+        data: [12000, 2000, 95000, 28000, 42000, 21000, 14000],
+        backgroundColor: "oklch(54.6% 0.245 262.881)",
+        borderColor: "oklch(54.6% 0.245 262.881)",
+        borderWidth: 1,
+        borderRadius: 4,
+    }]
+};
+
+const barOptions = {
+    scales: {
+        x: { display: true, grid: { display: false } },
+        y: {
+            beginAtZero: true,
+            min: 0,
+            max: 100000,
+            ticks: { stepSize: 25000, autoSkip: false }
+        }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+};
 
 export function Dashboard() {
     const user = useSelector((state) => state.auth.currentUser);
 
-    const BarChart = () => {
-        const data = {
-            labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
-            datasets: [{
-                data: [12000, 2000, 95000, 28000, 42000, 21000, 14000],
-                backgroundColor: "blue-500",
-                borderColor: "blue",
-                borderWidth: 1
-            }]
-        };
-
-        const options = {
-            scales: {
-                x: {
-                    display: true,
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    min: 0,
-                    max: 100000,
-                    ticks: {
-                        stepSize: 25000,
-                        autoSkip: false
-                    }
-                }
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false },
-            },
-        };
-
-        return <Bar data={data} options={options} />;
-    }
-
     return (
-        <section>
-            <AppHeader className="md:bg-white" />
-            <section className=" w-full md:flex md:flex-row md:justify-between">
-                <SideBar className="fixed"></SideBar>
-                {/* <section className="hidden md:block"></section> */}
+        <div className="min-h-screen bg-white   ">
+            <AppHeader className=" md:bg-white border-b border-gray-400 sticky top-0 z-10" />
 
-                {/* moneyflow */}
-                <section className="md:grid md:ml-auto md:px-2">
-                    <section className="bg-blue-600 md:bg-white h-25 pt-5">
-                        <section className="bg-white rounded-2xl h-30 w-90 m-auto md:w-full md:border-none md:shadow-none sm:w-4/6 shadow ">
-                            <section className="cashflow flex flex-row justify-around md:w-full md:gap-2 md:justify-between items-center h-full">
-                                <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:w-full md:gap-5 md:border md:border-gray-300 md:rounded-md md:p-8">
-                                    <section className="hidden md:flex md:items-center gap-2">
-                                        <img src="/icons/balance.svg" alt="balance" />
-                                        <p className="text-xs md:text-base">Balance</p>
-                                    </section>
-                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.balance.toLocaleString("id-ID") || 0}</b></p>
-                                    <section>
-                                        <p className="text-gray-50/55">0%</p>
-                                        <p></p>
-                                    </section>
-                                </section>
-                                <section className="text-sm flex flex-col gap-1 md:h-33 md:py-2 md:gap-5 md:border md:w-full md:border-gray-300 md:rounded-md md:p-8">
-                                    <section className="hidden md:flex md:items-center gap-2">
-                                        <img src="/icons/income.svg" alt="income" />
-                                        <p className="text-xs md:text-base">Income</p>
-                                    </section>
-                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.income.toLocaleString("id-ID") || 0}</b></p>
-                                    <section className="flex gap-1 items-center">
-                                        <p className="text-green-700 text-xs">+11,01%</p>
-                                        <img className="w-4" src="/icons/ArrowRise-s.svg" alt="arrow rise" />
-                                    </section>
-                                </section>
-                                <section className="text-sm flex flex-col gap-1 md:h-33 md:gap-5 md:py-2 md:border md:w-full md:border-gray-300 md:rounded-md md:p-8">
-                                    <section className="hidden md:flex md:items-center gap-2">
-                                        <img src="/icons/expense.svg" alt="expense" />
-                                        <p className="text-xs md:text-base">Expense</p>
-                                    </section>
-                                    <p className="md:text-xl md:font-normal">Rp <b>{user?.expense.toLocaleString("id-ID") || 0}</b></p>
-                                    <section className="flex gap-1 items-center">
-                                        <p className="text-red-700 text-xs">-5,06%</p>
-                                        <img className="w-4" src="/icons/Arrowdown.svg" alt="arrow fall" />
-                                    </section>
-                                </section>
-                            </section>
-                            <img className="md:hidden absolute top-37 rounded-b-2xl w-90 sm:w-5/6 sm:top-27 sm:flex" src="/icons/grayBg.svg" alt="gray background" />
-                        </section>
-                    </section>
+            <div className="flex">
 
+                <aside className="hidden md:block w-1/6 shrink-0">
+                    <SideBar />
+                </aside>
 
-                    <section className="flex gap-5 w-full justify-between mt-15 px-5 md:w-200 md:px-5 md:items-center md:border md:border-gray-300 md:rounded-md md:py-5  md:mx-auto">
-                        <p className="hidden md:flex font-semibold">Fast Service</p>
-                        <section className="flex flex-row justify-between w-full md:w-60 gap-5 md:flex md:gap-5">
-                            <Button color="blue" className="w-1/2"><NavLink className="flex items-center gap-2 justify-center" to={"/topup"}>
-                                <img src="/icons/u_money-insert.svg" alt="top-up" />
-                                <p>Top Up</p>
-                            </NavLink>
-                            </Button>
-                            <Button color="blue" className="w-1/2"><NavLink className="flex items-center gap-2 justify-center" to={"/transfer"}>
-                                <img src="/icons/whiteSend.svg" alt="transfer" />
-                                <p>Transfer</p>
-                            </NavLink>
-                            </Button>
-                        </section>
-                    </section>
-                    <section className="chart-container md:border md:border-gray-300 md:px-0 md:w-full md:mx-auto md:rounded-md md:py-0 md:mt-5">
-                        <section className="flex items-center justify-between gap-2 px-5 mt-10 md:mt-0 md:py-5">
-                            <p className="font-medium text-sm md:text-base md:font-semibold">Income Chart</p>
-                            <section className="flex gap-5 md:flex md:gap-2">
-                                <select name="" id="" className="bg-gray-200 rounded-md text-sm p-2 px-5">
-                                    <option value="">Income</option>
-                                    <option value="">Expense</option>
-                                </select>
-                                <select name="" id="" className="bg-gray-200 rounded-md text-sm p-2 px-5">
-                                    <option value="">7 Days</option>
-                                    <option value="">30 Days</option>
-                                </select>
-                            </section>
-                        </section>
-                        <section className="w-90 h-80 m-auto py-5 md:w-full md:h-120 md:px-5">
-                            <BarChart />
-                        </section>
-                    </section>
-                </section>
+                <main className="flex-1 min-w-0 p-4 md:p-6 space-y-4">
 
-                <section className="transaction px-5 md:border md:w-1/5 md:border-gray-300 md:rounded-md md:py-5 md:mr-5 mt-4">
-                    <section className="flex justify-between items-center">
-                        <p className="font-medium text-sm">Transaction History</p>
-                        <p className="text-blue-600 text-sm">See All</p>
-                    </section>
-
-                    {user?.history?.length === 0 && (
-                        <p className="text-gray-400 text-center py-5">No transaction yet</p>
-                    )}
-
-                    {user?.history?.map((item) => (
-                        <section key={item.id} className="py-4 flex gap-5 justify-between">
-                            <img src={user?.photoProfile} className="w-12" alt="user" />
-
-                            <section className="mr-auto flex flex-col justify-between">
-                                <p className="font-semibold">{item.name}</p>
-                                <p>{item.type}</p>
-                            </section>
-
-                            <p className={`font-semibold ${item.type === "Top Up" || item.type === "Receive"
-                                    ? "text-green-600"
-                                    : "text-red-600"
-                                }`}>
-                                {item.type === "Top Up" || item.type === "Receive" ? "+" : "-"}
-                                Rp{item.amount.toLocaleString("id-ID")}
+                    <div className="grid sm:grid-cols-2 md:grid-cols-3  gap-3">
+                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                            <div className="flex items-center gap-2">
+                            <img src="/icons/balance.svg" alt="balance" />
+                            <p className="text-md font-medium text-black">Balance</p>
+                            </div>
+                            <p className="text-base sm:text-lg font-medium">
+                                Rp <span>{user?.balance?.toLocaleString("id-ID") ?? 0}</span>
                             </p>
-                        </section>
-                    ))}
-                </section>
-            </section>
-        </section>
-    )
+                            <p className="text-xs text-gray-400">0%</p>
+                        </div>
+                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                            <div className="flex gap-2 items-center">
+                            <img src="/icons/income.svg" alt="income" />
+                            <p className="text-md text-black ">Income</p>
+                            </div>
+                            <p className="text-base sm:text-lg font-medium">
+                                Rp <span>{user?.income?.toLocaleString("id-ID") ?? 0}</span>
+                            </p>
+                            <p className="text-xs text-green-700 font-medium">+11,01%</p>
+                        </div>
+                        <div className="bg-white rounded-xl border border-gray-400 p-4 space-y-1">
+                            <div className="flex gap-2 items-center">
+                            <img src="/icons/expense.svg" alt="expense" />
+                            <p className="text-md text-black">Expense</p>
+                            </div>
+                            <p className="text-base sm:text-lg font-medium">
+                                Rp <span>{user?.expense?.toLocaleString("id-ID") ?? 0}</span>
+                            </p>
+                            <p className="text-xs text-red-600 font-medium">-5,06%</p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:border md:border-gray-400 md:p-4 md:rounded-xl md:grid-cols-3 md:items-center gap-3">
+                        
+                        <p className="hidden sm:hidden md:block font-semibold">Fast Service</p>
+                        <Button color="blue">
+                            <NavLink className="flex items-center justify-center gap-2" to="/topup">
+                                <img src="/icons/u_money-insert.svg" alt="" className="w-4 h-4" />
+                                Top Up
+                            </NavLink>
+                        </Button>
+                        <Button color="blue">
+                            <NavLink className="flex items-center justify-center gap-2" to="/transfer">
+                                <img src="/icons/whiteSend.svg" alt="" className="w-4 h-4" />
+                                Transfer
+                            </NavLink>
+                        </Button>
+                    </div>
+
+                    <div className="bg-white rounded-xl border border-gray-400 p-4">
+                        <div className="flex items-center justify-between mb-4">
+                            <p className="text-sm font-medium">Income Chart</p>
+                            <div className="flex gap-2">
+                                <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
+                                    <option>Income</option>
+                                    <option>Expense</option>
+                                </select>
+                                <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
+                                    <option>7 Days</option>
+                                    <option>30 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="h-56 sm:h-72 md:h-100">
+                            <Bar data={barData} options={barOptions} />
+                        </div>
+                    </div>
+
+                    <div className="md:hidden bg-white rounded-xl border border-gray-400 p-4">
+                        <TransactionList user={user} />
+                    </div>
+                </main>
+
+                
+                <div className="hidden md:block w-2/8 shrink-0 border-l border-gray-400 bg-white p-4">
+                    <TransactionList user={user} />
+                </div>
+
+            </div>
+        </div>
+    );
+}
+
+function TransactionList({ user }) {
+    return (
+        <>
+            <div className="flex items-center justify-between mb-4">
+                <p className="text-sm font-medium">Transaction History</p>
+                <p className="text-sm text-blue-600 cursor-pointer">See All</p>
+            </div>
+
+            {!user?.history?.length && (
+                <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
+            )}
+
+            {user?.history?.map((item) => (
+                <div key={item.id} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
+                    <img src={user?.photoProfile} alt="user" className="w-9 h-9 rounded-full shrink-0 object-cover" />
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{item.name}</p>
+                        <p className="text-xs text-gray-500">{item.type}</p>
+                    </div>
+                    <p className={`text-sm font-medium shrink-0 ${
+                        item.type === "Top Up" || item.type === "Receive"
+                            ? "text-green-600"
+                            : "text-red-600"
+                    }`}>
+                        {item.type === "Top Up" || item.type === "Receive" ? "+" : "-"}
+                        Rp{item.amount.toLocaleString("id-ID")}
+                    </p>
+                </div>
+            ))}
+        </>
+    );
 }
