@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 export const registerUser = createAsyncThunk("users/register",
     async (data, thunkAPI) => {
@@ -63,34 +64,20 @@ const userSlice = createSlice({
             }
         },
         transfer: (state, action) => {
-            const { fromEmail, toEmail, amount } = action.payload;
+            const { email, amount, targetName, targetImg, targetPhone } = action.payload;
 
-            const sender = state.users.find(u => u.email === fromEmail);
-            const receiver = state.users.find(u => u.email === toEmail);
+            const user = state.users.find(u => u.email === email);
 
-            if (!sender || !receiver) return;
+            user.balance -= amount;
+            user.expense += amount;
 
-            if (sender.balance < amount) return;
-
-            sender.balance -= amount;
-            sender.expense += amount;
-
-            sender.history.unshift({
+            user.history.unshift({
                 id: Date.now(),
-                type: "Send",
+                type: "Transfer",
                 amount,
-                name: receiver.fullName || receiver.email,
-                date: new Date().toISOString()
-            });
-
-            receiver.balance += amount;
-            receiver.income += amount;
-
-            receiver.history.unshift({
-                id: Date.now(),
-                type: "Receive",
-                amount,
-                name: sender.fullName || sender.email,
+                name: targetName,
+                img: targetImg,
+                phone: targetPhone,
                 date: new Date().toISOString()
             });
         }
@@ -111,5 +98,5 @@ const userSlice = createSlice({
     }
 })
 
-export const { updatePin, updatePassword, updateProfile, topUp, transfer, } = userSlice.actions
+export const { updatePin, updatePassword, updateProfile, topUp, transfer } = userSlice.actions
 export default userSlice.reducer
