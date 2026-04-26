@@ -17,7 +17,7 @@ export const Modal = ({className,isOpen, onClose, children,inner}) => {
     return (
         <section>
             <section onClick={onClose} className={`${defaultClass} ${className}`}>
-                <section onClick={(e) => e.stopPropagation()} className={`${inner}${defaulInner}`}>
+                <section onClick={(e) => e.stopPropagation()} className={`${inner} ${defaulInner}`}>
                     {children}
                 </section>
             </section>
