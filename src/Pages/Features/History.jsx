@@ -4,6 +4,7 @@ import { SideBar } from "../../Components/Atoms/SideBar";
 import { useState } from "react";
 import { Modal } from "../../Components/Atoms/Modal";
 import { useSearchParams } from "react-router";
+import { useSelector } from "react-redux";
 
 /**
  * a component that shows the history of transactions, with a search bar to filter the transactions by name or phone number. The data is hardcoded for now, but it can be replaced with real data from an API in the future.
@@ -13,6 +14,7 @@ import { useSearchParams } from "react-router";
  */
 
 export const History = () => {
+    const user = useSelector((state) => state.auth.currentUser)
     const [searchParams, setSearchParams] = useSearchParams();
     const [isOpen, setIsOpen] = useState(false);
     const [selectData, setSelectData] = useState(null);
@@ -20,150 +22,153 @@ export const History = () => {
     const query = searchParams.get("search") || "";
     const currentPage = parseInt(searchParams.get("page") || "1")
     const itemsPerPage = 5;
-    const data = [
-        {
-            id: 1,
-            name: "Ghaluh 1",
-            phone: "082134348877",
-            img: "/icons/Table cell.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 2,
-            name: "Jhon Cena",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-1.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 3,
-            name: "Young Lex",
-            phone: "(239) 453-7432",
-            img: "/icons/Table cell-2.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 4,
-            name: "Bruno Mars",
-            phone: "(239) 009-9231",
-            img: "/icons/Table cell-3.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 5,
-            name: "Bruno Pluto",
-            phone: "(239) 555-2000",
-            img: "/icons/Table cell-4.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 6,
-            name: "Bruno Bogor",
-            phone: "081524249988",
-            img: "/icons/Table cell-5.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 7,
-            name: "Bruno G Putri",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 8,
-            name: "Bruno wanher",
-            phone: "(239) 555-2000",
-            img: "/icons/Table cell-4.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 9,
-            name: "Bruno D Garut",
-            phone: "081524249988",
-            img: "/icons/Table cell-5.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 10,
-            name: "Bruno G Mau",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 11,
-            name: "Bruno Dulu",
-            phone: "(239) 555-2000",
-            img: "/icons/Table cell-4.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 12,
-            name: "Bruno Asin",
-            phone: "081524249988",
-            img: "/icons/Table cell-5.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 13,
-            name: "Bruno D Luar",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 14,
-            name: "Luffy D depan",
-            phone: "(239) 555-2000",
-            img: "/icons/Table cell-4.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 15,
-            name: "Bruno Tegal",
-            phone: "081524249988",
-            img: "/icons/Table cell-5.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 16,
-            name: "Bruno Jombang",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 17,
-            name: "Ali D Luar",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 18,
-            name: "Pando D depan",
-            phone: "(239) 555-2000",
-            img: "/icons/Table cell-4.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 19,
-            name: "Vina Tegal",
-            phone: "081524249988",
-            img: "/icons/Table cell-5.svg",
-            amount: "Rp.50.000"
-        },
-        {
-            id: 20,
-            name: "Siska Jombang",
-            phone: "(239) 555-0108",
-            img: "/icons/Table cell-6.svg",
-            amount: "Rp.50.000"
-        }
-    ];
+    
+    const data = user?.history || []
+    
+    // [
+    //     {
+    //         id: 1,
+    //         name: "Ghaluh 1",
+    //         phone: "082134348877",
+    //         img: "/icons/Table cell.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Jhon Cena",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-1.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Young Lex",
+    //         phone: "(239) 453-7432",
+    //         img: "/icons/Table cell-2.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 4,
+    //         name: "Bruno Mars",
+    //         phone: "(239) 009-9231",
+    //         img: "/icons/Table cell-3.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 5,
+    //         name: "Bruno Pluto",
+    //         phone: "(239) 555-2000",
+    //         img: "/icons/Table cell-4.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 6,
+    //         name: "Bruno Bogor",
+    //         phone: "081524249988",
+    //         img: "/icons/Table cell-5.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 7,
+    //         name: "Bruno G Putri",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 8,
+    //         name: "Bruno wanher",
+    //         phone: "(239) 555-2000",
+    //         img: "/icons/Table cell-4.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 9,
+    //         name: "Bruno D Garut",
+    //         phone: "081524249988",
+    //         img: "/icons/Table cell-5.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 10,
+    //         name: "Bruno G Mau",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 11,
+    //         name: "Bruno Dulu",
+    //         phone: "(239) 555-2000",
+    //         img: "/icons/Table cell-4.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 12,
+    //         name: "Bruno Asin",
+    //         phone: "081524249988",
+    //         img: "/icons/Table cell-5.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 13,
+    //         name: "Bruno D Luar",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 14,
+    //         name: "Luffy D depan",
+    //         phone: "(239) 555-2000",
+    //         img: "/icons/Table cell-4.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 15,
+    //         name: "Bruno Tegal",
+    //         phone: "081524249988",
+    //         img: "/icons/Table cell-5.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 16,
+    //         name: "Bruno Jombang",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 17,
+    //         name: "Ali D Luar",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 18,
+    //         name: "Pando D depan",
+    //         phone: "(239) 555-2000",
+    //         img: "/icons/Table cell-4.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 19,
+    //         name: "Vina Tegal",
+    //         phone: "081524249988",
+    //         img: "/icons/Table cell-5.svg",
+    //         amount: "Rp.50.000"
+    //     },
+    //     {
+    //         id: 20,
+    //         name: "Siska Jombang",
+    //         phone: "(239) 555-0108",
+    //         img: "/icons/Table cell-6.svg",
+    //         amount: "Rp.50.000"
+    //     }
+    // ];
     const filteredData = data.filter((row) => {
-        return row.name.toLowerCase().includes(query.toLowerCase()) || row.phone.includes(query);
+        return row.name?.toLowerCase().includes(query.toLowerCase())
     });
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -242,10 +247,11 @@ export const History = () => {
 
                             {currentItems.map((row) => (
                                 <tr onClick={() => handleRowClick(row)} key={row.id} className="table-layout w-full text-xs">
-                                    <td><img src={row.img} alt={row.name} /></td>
-                                    <td>{row.name}</td>
-                                    <td>{row.phone}</td>
-                                    <td {...(row.id % 2 !== 0 ? { className: "text-green-500" } : { className: "text-red-500" })}>
+                                    <td><img className={row.type === "Top Up" ? "w-10 m-auto" : "w-15 m-auto"} src={row.type === "Top Up" ? user?.photoProfile : row.img} alt={row.name} /></td>
+                                    
+                                    <td>{row.type === "Top Up" ? user?.fullName : row.name}</td>
+                                    <td>{row.type === "Top Up" ? user?.phone : row.phone}</td>
+                                    <td {...(row.type === "Top Up" ? { className: "text-green-500" } : { className: "text-red-500" })}>
                                         {row.amount}
                                     </td>
                                     <td><img src="/icons/Trash.svg" alt="trash" /></td>
