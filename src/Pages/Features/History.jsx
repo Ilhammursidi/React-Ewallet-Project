@@ -249,7 +249,7 @@ export const History = () => {
                                 <tr onClick={() => handleRowClick(row)} key={row.id} className="table-layout w-full text-xs">
                                     <td><img className={row.type === "Top Up" ? "w-10 m-auto" : "w-15 m-auto"} src={row.type === "Top Up" ? user?.photoProfile : row.img} alt={row.name} /></td>
                                     
-                                    <td>{row.type === "Top Up" ? user?.fullName : row.name}</td>
+                                    <td>{row.type === "Top Up" ? user?.fullName || user?.email.split("@")[0] : row.name}</td>
                                     <td>{row.type === "Top Up" ? user?.phone : row.phone}</td>
                                     <td {...(row.type === "Top Up" ? { className: "text-green-500" } : { className: "text-red-500" })}>
                                         {row.amount}
