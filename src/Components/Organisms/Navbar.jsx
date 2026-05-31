@@ -7,9 +7,8 @@ export const Navbar = ({className,isActive, mobile = false }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate("");
     
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate("/auth/login")
+    const handleLogout = async () => {
+        await dispatch(logout());
     }
 
     return (
