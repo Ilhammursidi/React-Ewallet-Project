@@ -34,31 +34,29 @@ function Login() {
     const navigate = useNavigate();
 
     const { isLoading } = useSelector((state) => state.auth);
-
+console.log("waht this", isLoading)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-
+        e.preventDefault()
         if (!email || !password) {
             toast.error("Email & password wajib diisi")
             return
         }
-
-        const resultAction = await dispatch(loginUser({
+        const data = {
             email: email.trim().toLowerCase(),
             password,
-            userPin: null,
-        }))
-
+        }
+        const resultAction = await dispatch(loginUser(data))
+        
+        
         if (loginUser.fulfilled.match(resultAction)) {
             const user = resultAction.payload
-
             toast.success("Success login")
 
-            if (!user.userPin) {
+            if (!resultAction.payload.has_pin) {
                 navigate("/auth/enter-pin")
             } else {
                 navigate("/dashboard")
