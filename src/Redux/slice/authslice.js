@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { forgotPassword, resetPassword, verifyResetToken } from "../thunks/forgotPassword";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -24,7 +25,6 @@ export const loginUser = createAsyncThunk("auth/login",
                 localStorage.setItem("user_token", result.data.token);
             }
             return result.data
-            console.log(result)
         } catch(error) {
             return thunkAPI.rejectWithValue(error.message || "Connection error");
         }
@@ -65,6 +65,32 @@ export const setPin = createAsyncThunk("auth/enter-pin",
     }
 )
 
+export const logout = createAsyncThunk("auth/logout",
+    async (token, thunkAPI) => {
+        try {
+            const token = localStorage.getItem("user_token")
+            const response = await fetch(`${API_URL}/auth/logout`, {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                    "X-koda-X":"true",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({ token })
+            });
+            const result = await response.json();
+
+            if(!response.ok) {
+                return thunkAPI.rejectWithValue(result.error || "Failed to logout");
+            }
+            return result;
+            
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message || "Connection error");
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -74,11 +100,11 @@ const authSlice = createSlice({
         error: null
     },
     reducers: {
-        logout: (state) => { state.currentUser = null
-            localStorage.removeItem("user_token");
-            state.currentUser = null;
-            state.isLogin = false;
-        },
+        // logout: (state) => { state.currentUser = null
+        //     localStorage.removeItem("user_token");
+        //     state.currentUser = null;
+        //     state.isLogin = false;
+        // },
         // setPin: (state, action) => {
         //     if (state.currentUser) {
         //         state.currentUser.userPin = action.payload;
@@ -119,6 +145,7 @@ const authSlice = createSlice({
                 state.isLoading = false
                 state.isLogin = false
             })
+            // set pin
             .addCase(setPin.fulfilled, (state) => {
                 state.has_pin = true;
                 state.isLoading = false
@@ -130,8 +157,54 @@ const authSlice = createSlice({
                 state.error = action.payload;
                 state.isLoading = false;
             })
+            // logout
+            .addCase(logout.fulfilled, (state) => {
+                state.isLogin = false;
+                state.token = null;
+                localStorage.removeItem("user_token");
+                window.location.reload();
+            })
+
+            // forgot password
+            .addCase(forgotPassword.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.message = action.payload.message
+            })
+            .addCase(forgotPassword.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(forgotPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+
+            // verify reset token
+            .addCase(verifyResetToken.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.message = action.payload.message
+            })
+            .addCase(verifyResetToken.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(verifyResetToken.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload
+            })
+
+            // reset password
+            .addCase(resetPassword.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.message = action.payload.message
+            })
+            .addCase(resetPassword.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(resetPassword.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload
+            })
     }
 })
 
-export const { logout,updateCurrentUser,updateBalance } = authSlice.actions
+export const {updateCurrentUser,updateBalance } = authSlice.actions
 export default authSlice.reducer
