@@ -1,10 +1,8 @@
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router";
 
 const ProtectedRoute = () => {
     const navigate = useNavigate()
-// const users = useSelector((state)=> state.auth.currentUser)
     const users = localStorage.getItem("user_token")
 
 if (!users) {
