@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
+import { getProfile } from "../thunks/profile";
+import { getBalance } from "../thunks/balance";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -106,6 +108,37 @@ const userSlice = createSlice({
         .addCase(registerUser.rejected, (state, action) => {
             state.error = action.payload
         })
+
+        // profile
+        .addCase(getProfile.fulfilled, (state, action) => {
+            state.error = null;
+            state.data = action.payload.data;
+            state.isLoading = false;
+        })
+        .addCase(getProfile.pending, (state) =>{
+            state.isLoading = true;
+            state.error = null;
+        })
+        .addCase(getProfile.rejected, (state, action) => {
+            state.error = action.payload.data;
+            state.data = null;
+            state.isLoading = false;
+        })
+
+        // dashboard info
+        .addCase(getBalance.fulfilled, (state, action) => {
+            state.error = null;
+            state.dataBalance = action.payload;
+        })
+        .addCase(getBalance.pending, (state) =>{
+            state.isLoading = true;
+            state.error = null;
+        })
+        .addCase(getBalance.rejected, (state, action) => {
+            state.error = action.payload
+            state.dataBalance = null;
+        })
+
     }
 })
 
