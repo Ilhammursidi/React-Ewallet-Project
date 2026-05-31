@@ -34,25 +34,20 @@ export function EnterPin() {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         const pinStr = pinInput.join("");
-
         if (pinStr.length !== PIN_LENGTH) {
-            toast.error("Lengkapi PIN!");
-            return;
+                toast.error("Lengkapi PIN!");
+                return;
+            }
+        const result = await dispatch(setPin(pinStr))
+        if (setPin.fulfilled.match(result)) {
+            toast.success("Save PIN Success!");
+            navigate("/dashboard");
+        } else {
+            toast.error(result.payload || "Failed to set PIN")
         }
-
-        dispatch(updatePin({email: currentUser.email,
-            newPin: pinStr,
-        }));
-
-        dispatch(setPin(pinStr));
-
-        toast.success("Save PIN Success!");
-        setPinInput(Array(PIN_LENGTH).fill(""));
-        navigate("/dashboard");
     };
 
     return (
