@@ -26,7 +26,8 @@ export function AppHeader({className}) {
         dispatch(getProfile())
     },[dispatch])
 
-    const userLogin = data.data
+    const userLogin = data
+    // console.log(data)
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
@@ -37,11 +38,10 @@ export function AppHeader({className}) {
                     <Logo color="blue" className="hidden sm:hidden md:flex"></Logo>
             <section className="flex gap-2 py-2 items-center md:flex-row-reverse md:ml-auto">
                 <UserNavbar></UserNavbar>
-                {/* {data.map()} */}
-                <img className="w-10 rounded-full" src={userLogin.photoProfile} alt="photo-profile" />
+                <img className="w-10 rounded-full" src={userLogin?.photo || null } alt="photo-profile" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin.fullName || userLogin.email?.split("@")[0]}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin?.fullName || userLogin?.email?.split("@")[0]}</p>
                 </section>
             </section>
             
