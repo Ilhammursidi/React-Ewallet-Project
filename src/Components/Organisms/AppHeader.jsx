@@ -3,9 +3,10 @@ import { UserNavbar } from "../Atoms/UserNavbar";
 import { useState,useEffect } from "react";
 import { Logo } from "../Atoms/Logo";
 import { HamburgerButton } from "../Atoms/HamburgerButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "../Atoms/Modal";
 import { SideBar } from "../Atoms/SideBar";
+import { getProfile } from "../../Redux/thunks/profile";
 
 /**
  * @typedef {Object} AppHeaderProps
@@ -14,8 +15,21 @@ import { SideBar } from "../Atoms/SideBar";
  */
 
 export function AppHeader({className}) {
-    const userLogin = useSelector((state) => state.auth.currentUser||[])
+    // const currentUser = useSelector((state) => state.auth.currentUser);
+    // const userLogin = currentUser || []
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector((state)=> state.users)
+
     const [open, setOpen] = useState(false);
+
+    useEffect(()=>{
+        dispatch(getProfile())
+    },[dispatch])
+
+    const userLogin = data.data
+
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
 
     return (
         <header className={`w-full sticky top-0 z-50 bg-blue-600 border-b border-white md:border-gray-400 ${className}`}>
@@ -23,14 +37,14 @@ export function AppHeader({className}) {
                     <Logo color="blue" className="hidden sm:hidden md:flex"></Logo>
             <section className="flex gap-2 py-2 items-center md:flex-row-reverse md:ml-auto">
                 <UserNavbar></UserNavbar>
+                {/* {data.map()} */}
                 <img className="w-10 rounded-full" src={userLogin.photoProfile} alt="photo-profile" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin.fullName || userLogin.email.split("@")[0]}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin.fullName || userLogin.email?.split("@")[0]}</p>
                 </section>
             </section>
             
-
             <HamburgerButton className="sm:block md:hidden" onClick={()=> setOpen(!open)}>
                 <img src="/icons/gg_menu-right-alt.svg" alt="hamburger icon" />
             </HamburgerButton>
