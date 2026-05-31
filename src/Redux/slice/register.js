@@ -1,16 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const registerUser = createAsyncThunk("users/register",
     async (data, thunkAPI) => {
-        const { users } = thunkAPI.getState().users
-
-        const exist = users.find(u => u.email === data.email)
-
-        if (exist) {
-            return thunkAPI.rejectWithValue("email already exists")
+        try {
+            const response = await fetch(`${API_URL}/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type":"application/json",
+                    "X-koda-X":"true"
+                },
+                body: JSON.stringify(data)
+            })
+            const result = await response.json();
+            if(!response.ok) {
+                return thunkAPI.rejectWithValue(result.message || "failed to register")
+            }
+            console.log(result)
+            return result;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.message || "Connection error");
         }
-        return data
     })
 
 const userSlice = createSlice({
@@ -83,18 +95,17 @@ const userSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(registerUser.fulfilled, (state, action) => {
-            state.users.push({
-                ...action.payload,
-                balance: 0,
-                income: 0,
-                expense: 0,
-                history: []
-            })
+        builder
+        .addCase(registerUser.fulfilled, (state) => {
+            state.error = null
         })
-            .addCase(registerUser.rejected, (state, action) => {
-                state.error = action.payload
-            })
+        .addCase(registerUser.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+        })  
+        .addCase(registerUser.rejected, (state, action) => {
+            state.error = action.payload
+        })
     }
 })
 
