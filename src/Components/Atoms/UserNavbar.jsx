@@ -17,9 +17,8 @@ export const UserNavbar = ({className}) => {
         setOpen(false)
     }
 
-    const toLogout = (e) => {
-        e.preventDefault()
-        dispatch(logout())
+    const toLogout = async () => {
+        await dispatch(logout())
     }
 
     return (
@@ -28,7 +27,7 @@ export const UserNavbar = ({className}) => {
                 <img src="/icons/down.svg" alt="dropdown" />
             </button>
 
-        <Modal isOpen={open2} className="top-14">
+        <Modal isOpen={open2} onClose={() => setOpen2(!open2)} className="top-14">
             <section className="w-80 h-30 m-auto rounded-md p-6 bg-white">
             <p className="text-center font-medium">Anda Ingin Keluar ?</p>
             <section className="justify-between gap-2 flex">
