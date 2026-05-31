@@ -4,9 +4,10 @@ import { Outlet, useNavigate } from "react-router";
 
 const ProtectedRoute = () => {
     const navigate = useNavigate()
-const users = useSelector((state)=> state.auth.currentUser)
+// const users = useSelector((state)=> state.auth.currentUser)
+    const users = localStorage.getItem("user_token")
 
-    if (!users) {
+if (!users) {
     const timeout = setTimeout(() => {
         navigate("/auth/login")
     }, 3000);
