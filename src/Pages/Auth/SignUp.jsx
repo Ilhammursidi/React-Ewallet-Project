@@ -103,7 +103,7 @@ function SignUp() {
     const handleSubmit = async (e) => {
   e.preventDefault()
 
-  if (!email || !password || !confirm) {
+  if (!email.trim() || !password || !confirm) {
     toast.error("Semua field wajib diisi")
     return
   }
