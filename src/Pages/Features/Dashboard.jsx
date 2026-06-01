@@ -4,8 +4,11 @@ import { Bar } from "react-chartjs-2";
 import { AppHeader } from "../../Components/Organisms/AppHeader";
 import { SideBar } from "../../Components/Atoms/SideBar";
 import { NavLink } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import { getBalance } from "../../Redux/thunks/balance";
+import { getHistory } from "../../Redux/thunks/history";
 
 const barData = {
     labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
@@ -34,8 +37,23 @@ const barOptions = {
 };
 
 export function Dashboard() {
-    const user = useSelector((state) => state.auth.currentUser);
-    const target = location.state?.userData
+    // const user = useSelector((state) => state.auth.currentUser);
+    // const target = location.state?.userData
+
+    const dispatch = useDispatch();
+
+    const {dataBalance, loading, error} = useSelector((state) => state.users)
+    
+    useEffect(()=>{
+        dispatch(getBalance())
+        dispatch(getHistory())
+    },[dispatch])
+    
+    // console.log(dataBalance)
+    const user = dataBalance?.data
+    
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
 
     return (
         <div className="min-h-screen bg-white   ">
@@ -58,7 +76,7 @@ export function Dashboard() {
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.balance?.toLocaleString("id-ID") ?? 0}</span>
                             </p>
-                            <p className="text-xs text-gray-400">0%</p>
+                            {/* <p className="text-xs text-gray-400">0%</p> */}
                         </div>
                         <div className="bg-white md:col-span-1 rounded-xl border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
@@ -68,7 +86,7 @@ export function Dashboard() {
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.income?.toLocaleString("id-ID") ?? 0}</span>
                             </p>
-                            <p className="text-xs text-green-700 font-medium">+11,01%</p>
+                            {/* <p className="text-xs text-green-700 font-medium">+11,01%</p> */}
                         </div>
                         <div className="bg-white rounded-xl md:col-span-1 border border-gray-400 p-4 space-y-1">
                             <div className="flex gap-2 items-center">
@@ -78,7 +96,7 @@ export function Dashboard() {
                             <p className="text-base sm:text-lg font-medium">
                                 Rp <span>{user?.expense?.toLocaleString("id-ID") ?? 0}</span>
                             </p>
-                            <p className="text-xs text-red-600 font-medium">-5,06%</p>
+                            {/* <p className="text-xs text-red-600 font-medium">-5,06%</p> */}
                         </div>
                     </div>
 
@@ -133,32 +151,91 @@ export function Dashboard() {
     );
 }
 
-function TransactionList({ user }) {
+// function TransactionList() {
+//     const API_URL = import.meta.env.VITE_API_URL;
+//     const {dataHistory, isLoading, isError} = useSelector((state) => state.users)
+//     const history = dataHistory
+//     console.log(history)
+    
+//     return (
+//         <section>
+
+//             <div className="flex max-h-screen items-center justify-between mb-4">
+//                 <p className="text-sm font-medium">Transaction History</p>
+//                 <p className="text-sm text-blue-600 cursor-pointer">See All</p>
+//             </div>
+
+//             {!history?.length && (
+//                 <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
+//             )}
+
+//             {history?.map((p) => 
+//                 <div key={p.transaction_id} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
+//                     <img alt={p.receiver_name} src={p.receiver_photo} className="w-9 h-9 rounded-full" />
+//                     <div className="flex-1 min-w-0">
+//                         <p className="text-sm font-medium truncate"></p>
+//                         <p className="text-xs text-gray-500"></p>
+//                     </div>
+//                 </div>
+//             )}
+//         </section>
+//     )
+// }
+
+function TransactionList() {
+    const API_URL = import.meta.env.VITE_API_URL;
+    const {dataHistory, isLoading, isError} = useSelector((state) => state.users)
+    const history = dataHistory
+    const defaultAvatar = "/public/icons/userone.svg"
     return (
         <>
-            <div className="flex max-h-screen items-center justify-between mb-4">
-                <p className="text-sm font-medium">Transaction History</p>
-                <p className="text-sm text-blue-600 cursor-pointer">See All</p>
+            <div className="flex items-center justify-between mb-4">
+                <p className="text-sm font-medium text-gray-800">Transaction History</p>
+                <p className="text-sm text-blue-600 cursor-pointer hover:underline">See All</p>
             </div>
 
-            {!user?.history?.length && (
+            {history.length === 0 && (
                 <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
             )}
 
-            {user?.history?.map((item) => (
-                <div key={item.id} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
-                    <img src={item.type === "Top Up" ? user?.photoProfile : item.img} alt="user" className="w-9 h-9 rounded-full shrink-0 object-cover" />
-                    <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{item.name}</p>
-                        <p className="text-xs text-gray-500">{item.type}</p>
-                    </div>
-                    <p className={`text-sm font-medium shrink-0 ${item.type === "Top Up" ? "text-green-600" : "text-red-600"
-                        }`}>
-                        {item.type === "Top Up" ? "+" : "-"}
-                        Rp{item.amount.toLocaleString("id-ID")}
-                    </p>
-                </div>
-            ))}
+            <div className="flex flex-col gap-1">
+                {history.map((item) => {
+                    const isTopUp = item.type === "TOPUP";
+                    const photoPath = isTopUp ? item.receiver_photo : item.receiver_photo;
+                    const imageSrc = photoPath ? `${API_URL}/${photoPath}` : defaultAvatar;
+
+                    const displayName = isTopUp 
+                        ? (item.receiver_name || item.payment_method_name || "Top Up Saldo") 
+                        : (item.receiver_name || "Transfer");
+
+                    return (
+                        <div 
+                            key={item.transaction_id} 
+                            className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0"
+                        >
+                            <img 
+                                alt={displayName} 
+                                src={imageSrc} 
+                                className="w-9 h-9 rounded-full object-cover bg-gray-100"
+                                onError={(e) => { e.target.src = defaultAvatar; }} 
+                            />
+
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-gray-900 truncate">
+                                    {displayName}
+                                </p>
+                                <p className="text-xs text-gray-500 truncate">
+                                    {item.type} • {item.payment_method_name || "E-Wallet"}
+                                </p>
+                            </div>
+
+                            <p className={`text-sm font-semibold shrink-0 ${isTopUp ? "text-green-600" : "text-red-600"}`}>
+                                {isTopUp ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
+                            </p>
+                        </div>
+                    );
+                })}
+            </div>
         </>
     );
 }
