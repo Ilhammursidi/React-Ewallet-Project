@@ -2,79 +2,94 @@ import { SideBar } from "../Atoms/SideBar";
 import { AppHeader } from "./AppHeader";
 import { InputChange } from "../Form/ChangePwd";
 import { Button } from "../Atoms/Button";
-import { updatePassword } from "../../Redux/slice/register";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCurrentUser } from "../../Redux/slice/authslice";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { resetProfileStatus } from "../../Redux/slice/register";
+import { editPassword } from "../../Redux/thunks/changePassword";
 
 export function ChangePassword() {
-    const userLogin = useSelector((state) => state.auth.currentUser)
-    const [oldPassword, setOldPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+    const [OldPassword, setOldPassword] = useState("");
+    const [NewPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
+    const { isLoading, isSuccess, error } = useSelector((state) => state.users);
 
-const handleResetPassword = () => {
-    if (!oldPassword || !newPassword || !confirmPassword) {
-        toast.error("Isi semua field!");
-        return;
-    }
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("Password berhasil diubah!");
+            setOldPassword("");
+            setNewPassword("");
+            setConfirmPassword("");
+            dispatch(resetProfileStatus());
+            navigate("/profile");
+            console.log("halo")
+        }
 
-    if (oldPassword !== userLogin.password) {
-        toast.error("Password lama salah!");
-        return;
-    }
+        if (error) {
+            toast.error(error); 
+            dispatch(resetProfileStatus());
+        }
+    }, [isSuccess, error, dispatch, navigate]);
 
-    if (newPassword !== confirmPassword) {
-        toast.error("Password tidak sama!");
-        return;
-    }
+    const handleResetPassword = (e) => {
+        e.preventDefault();
 
-    dispatch(updatePassword({
-        email: userLogin.email,
-        newPassword
-    }));
+        if (!OldPassword || !NewPassword || !confirmPassword) {
+            toast.error("Isi semua field!");
+            return;
+        }
 
-    dispatch(updateCurrentUser({
-        password: newPassword
-    }));
+        if (NewPassword !== confirmPassword) {
+            toast.error("Konfirmasi password baru tidak sama!");
+            return;
+        }
 
-    toast.success("Password berhasil diubah!");
-    navigate("/profile")
-
-    setOldPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-};
-
+        dispatch(editPassword({ OldPassword, NewPassword }));
+    };
 
     return (
         <section>
-            <AppHeader className="md:bg-white"></AppHeader>
-            <SideBar></SideBar>
-                <section className="p-5">
-                    <p className="hidden md:block md:ml-70 md:mb-2 font-medium">Profile</p>
-                    <section className="md:w-4/6 md:ml-70 md:border md:p-5">
-                        <p className="font-medium">Change Password</p>
-                        <form onSubmit={handleResetPassword}>
+            <AppHeader className="md:bg-white" />
+            <SideBar />
+            <section className="p-5">
+                <p className="hidden md:block md:ml-70 md:mb-2 font-medium">Profile</p>
+                <section className="md:w-4/6 md:ml-70 md:border md:p-5">
+                    <p className="font-medium">Change Password</p>
+                    <form onSubmit={handleResetPassword}>
                         <InputChange
-                        value={oldPassword}
-                        onChange={(e)=>setOldPassword(e.target.value)} 
-                        label="Existing Password"></InputChange>    
-                        <InputChange label="New Password"
-                        value={newPassword}
-                        onChange={(e)=>setNewPassword(e.target.value)}></InputChange>    
-                        <InputChange label="Confirm New Password"
-                        value={confirmPassword}
-                        onChange={(e)=>setConfirmPassword(e.target.value)}></InputChange>
-                        <Button className="mt-2 w-full" color="blue" type="submit"
-                        >Submit</Button>    
-                        </form>
-                    </section>
+                            type="password"
+                            value={OldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)} 
+                            label="Existing Password"
+                        />    
+                        <InputChange 
+                            type="password"
+                            label="New Password"
+                            value={NewPassword}
+                            onChange={(e) => setNewPassword(e.target.value)} 
+                        />    
+                        <InputChange 
+                            type="password"
+                            label="Confirm New Password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)} 
+                        />
+                        <Button 
+                            className="mt-2 w-full" 
+                            color="blue" 
+                            type="submit"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Processing..." : "Submit"}
+                        </Button>    
+                    </form>
                 </section>
+            </section>
         </section>
-    )
+    );
 }
