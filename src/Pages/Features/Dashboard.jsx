@@ -9,16 +9,55 @@ import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { getBalance } from "../../Redux/thunks/balance";
 import { getHistory } from "../../Redux/thunks/history";
+import { getChart } from "../../Redux/thunks/graph";
+
+export function Dashboard() {
+    const {dataChart, chartLoading, chartError} = useSelector((state) => state.users)
+    const dispatch = useDispatch();
+    const {dataBalance, loading, error} = useSelector((state) => state.users)
+    
+    useEffect(()=>{
+        dispatch(getBalance())
+        dispatch(getHistory())
+        dispatch(getChart())
+    },[dispatch])
+
+    console.log(dataChart)
+    
+    const user = dataBalance?.data
+    
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
+const DAYS_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const dynamicLabels = dataChart.map(item => {
+    const date = new Date(item.Period);
+    return DAYS_NAME[date.getDay()]; 
+});
+
+const dynamicIncomeData = dataChart.map(item => item.Income || 0);
+const dynamicExpenseData = dataChart.map(item => item.Expense || 0);
 
 const barData = {
-    labels: ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"],
-    datasets: [{
-        data: [12000, 2000, 95000, 28000, 42000, 21000, 14000],
+    labels: dynamicLabels.length > 0 ? dynamicLabels : ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"], // fallback jika data belum masuk
+    datasets: [
+        {
+        label : "income",
+        data: dynamicIncomeData.length > 0 ? dynamicIncomeData : [0, 0, 0, 0, 0, 0, 0],
         backgroundColor: "oklch(54.6% 0.245 262.881)",
         borderColor: "oklch(54.6% 0.245 262.881)",
         borderWidth: 1,
         borderRadius: 4,
-    }]
+    },
+    {
+    label : "expense",
+        data: dynamicExpenseData.length > 0 ? dynamicExpenseData : [0, 0, 0, 0, 0, 0, 0],
+        backgroundColor: "oklch(58.32% 0.229 27.53)",
+        borderColor: "oklch(58.32% 0.229 27.53)",
+        borderWidth: 1,
+        borderRadius: 4,
+    }
+]
 };
 
 const barOptions = {
@@ -35,25 +74,6 @@ const barOptions = {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
 };
-
-export function Dashboard() {
-    // const user = useSelector((state) => state.auth.currentUser);
-    // const target = location.state?.userData
-
-    const dispatch = useDispatch();
-
-    const {dataBalance, loading, error} = useSelector((state) => state.users)
-    
-    useEffect(()=>{
-        dispatch(getBalance())
-        dispatch(getHistory())
-    },[dispatch])
-    
-    // console.log(dataBalance)
-    const user = dataBalance?.data
-    
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error: {error}</p>
 
     return (
         <div className="min-h-screen bg-white   ">
@@ -150,37 +170,6 @@ export function Dashboard() {
         </div>
     );
 }
-
-// function TransactionList() {
-//     const API_URL = import.meta.env.VITE_API_URL;
-//     const {dataHistory, isLoading, isError} = useSelector((state) => state.users)
-//     const history = dataHistory
-//     console.log(history)
-    
-//     return (
-//         <section>
-
-//             <div className="flex max-h-screen items-center justify-between mb-4">
-//                 <p className="text-sm font-medium">Transaction History</p>
-//                 <p className="text-sm text-blue-600 cursor-pointer">See All</p>
-//             </div>
-
-//             {!history?.length && (
-//                 <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
-//             )}
-
-//             {history?.map((p) => 
-//                 <div key={p.transaction_id} className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0">
-//                     <img alt={p.receiver_name} src={p.receiver_photo} className="w-9 h-9 rounded-full" />
-//                     <div className="flex-1 min-w-0">
-//                         <p className="text-sm font-medium truncate"></p>
-//                         <p className="text-xs text-gray-500"></p>
-//                     </div>
-//                 </div>
-//             )}
-//         </section>
-//     )
-// }
 
 function TransactionList() {
     const API_URL = import.meta.env.VITE_API_URL;
