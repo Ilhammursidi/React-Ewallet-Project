@@ -14,6 +14,8 @@ import { Profile } from "./Pages/Features/Profile"
 import { ChangePassword } from "./Components/Organisms/ChangePassword"
 import { ChangePin } from "./Components/Organisms/ChangePin"
 import ProtectedRoute from "./Pages/ProtectRoute"
+import { VerifyToken } from "./Pages/Auth/VerifyToken"
+import { ResetPassword } from "./Pages/Auth/ResetPassword"
 
 function AppRouter() {
   return (
@@ -24,6 +26,8 @@ function AppRouter() {
     <Route path="login" element={<Login/>}></Route>
     <Route path="signup" element={<SignUp/>}></Route>
     <Route path="forgot-password" element={<ForgotPassword/>}></Route>
+    <Route path="verify-token" element={<VerifyToken/>}></Route>
+    <Route path="reset-password" element={<ResetPassword/>}></Route>
     <Route path="enter-pin" element={<EnterPin/>}></Route>
     </Route>
 

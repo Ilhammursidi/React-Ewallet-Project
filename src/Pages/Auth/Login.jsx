@@ -34,7 +34,6 @@ function Login() {
     const navigate = useNavigate();
 
     const { isLoading } = useSelector((state) => state.auth);
-console.log("waht this", isLoading)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     

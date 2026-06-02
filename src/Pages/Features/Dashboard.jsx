@@ -16,6 +16,9 @@ export function Dashboard() {
     const dispatch = useDispatch();
     const {dataBalance, loading, error} = useSelector((state) => state.users)
     
+    const safeDataChart = dataChart || [];
+    const safeDataBalance = dataBalance || [];
+
     useEffect(()=>{
         dispatch(getBalance())
         dispatch(getHistory())
@@ -24,19 +27,19 @@ export function Dashboard() {
 
     console.log(dataChart)
     
-    const user = dataBalance?.data
+    const user = safeDataBalance?.data 
     
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
 const DAYS_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const dynamicLabels = dataChart.map(item => {
+const dynamicLabels = safeDataChart?.map(item => {
     const date = new Date(item.Period);
-    return DAYS_NAME[date.getDay()]; 
+    return DAYS_NAME[date.getDay()];
 });
 
-const dynamicIncomeData = dataChart.map(item => item.Income || 0);
-const dynamicExpenseData = dataChart.map(item => item.Expense || 0);
+const dynamicIncomeData = safeDataChart?.map(item => item.Income || 0);
+const dynamicExpenseData = safeDataChart?.map(item => item.Expense || 0);
 
 const barData = {
     labels: dynamicLabels.length > 0 ? dynamicLabels : ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"], // fallback jika data belum masuk
@@ -66,7 +69,7 @@ const barOptions = {
         y: {
             beginAtZero: true,
             min: 0,
-            max: 100000,
+            max: 200000,
             ticks: { stepSize: 25000, autoSkip: false }
         }
     },
@@ -139,20 +142,24 @@ const barOptions = {
 
                     <div className="bg-white rounded-xl border border-gray-400 p-4">
                         <div className="flex items-center justify-between mb-4">
-                            <p className="text-sm font-medium">Income Chart</p>
+                            <p className="text-sm font-medium">Financial Chart</p>
                             <div className="flex gap-2">
-                                <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
+                                {/* <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
                                     <option>Income</option>
                                     <option>Expense</option>
-                                </select>
+                                </select> */}
                                 <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
                                     <option>7 Days</option>
-                                    <option>30 Days</option>
+                                    {/* <option>30 Days</option> */}
                                 </select>
                             </div>
                         </div>
                         <div className="h-56 sm:h-72 md:h-100">
                             <Bar data={barData} options={barOptions} />
+                        </div>
+                        <div className="flex justify-center gap-5 mt-3">
+                            <div className="flex gap-2"><img src="/public/icons/Ellipse 186.svg" alt="" /><p>Income</p></div>
+                            <div className="flex gap-2"><img src="/public/icons/Ellipse 187.svg" alt="" /><p>Expense</p></div>
                         </div>
                     </div>
 
@@ -173,9 +180,12 @@ const barOptions = {
 
 function TransactionList() {
     const API_URL = import.meta.env.VITE_API_URL;
-    const {dataHistory, isLoading, isError} = useSelector((state) => state.users)
-    const history = dataHistory
-    const defaultAvatar = "/public/icons/userone.svg"
+    const { dataHistory, isLoading, isError } = useSelector((state) => state.users);
+    const { dataBalance } = useSelector((state) => state.users);
+    const walletId = dataBalance?.data?.wallet_id; // sesuaikan field-nya
+    const history = dataHistory;
+    const defaultAvatar = "/public/icons/userone.svg";
+
     return (
         <>
             <div className="flex items-center justify-between mb-4">
@@ -183,30 +193,34 @@ function TransactionList() {
                 <p className="text-sm text-blue-600 cursor-pointer hover:underline">See All</p>
             </div>
 
-            {history.length === 0 && (
+            {history?.length === 0 && (
                 <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
             )}
 
             <div className="flex flex-col gap-1">
-                {history.map((item) => {
+                {history?.map((item) => {
                     const isTopUp = item.type === "TOPUP";
-                    const photoPath = isTopUp ? item.receiver_photo : item.receiver_photo;
+                    const isIncoming = isTopUp || (item.type === "TRANSFER" && item.receiver_wallet_id === walletId);
+
+                    const photoPath = isIncoming ? item.sender_photo : item.receiver_photo;
                     const imageSrc = photoPath ? `${API_URL}/${photoPath}` : defaultAvatar;
 
-                    const displayName = isTopUp 
-                        ? (item.receiver_name || item.payment_method_name || "Top Up Saldo") 
-                        : (item.receiver_name || "Transfer");
+                    const displayName = isTopUp
+                        ? (item.payment_method_name || "Top Up Saldo")
+                        : isIncoming
+                            ? (item.sender_name || "Transfer Masuk")
+                            : (item.receiver_name || "Transfer");
 
                     return (
-                        <div 
-                            key={item.transaction_id} 
+                        <div
+                            key={item.transaction_id}
                             className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0"
                         >
-                            <img 
-                                alt={displayName} 
-                                src={imageSrc} 
+                            <img
+                                alt={displayName}
+                                src={imageSrc}
                                 className="w-9 h-9 rounded-full object-cover bg-gray-100"
-                                onError={(e) => { e.target.src = defaultAvatar; }} 
+                                onError={(e) => { e.target.src = defaultAvatar; }}
                             />
 
                             <div className="flex-1 min-w-0">
@@ -218,8 +232,8 @@ function TransactionList() {
                                 </p>
                             </div>
 
-                            <p className={`text-sm font-semibold shrink-0 ${isTopUp ? "text-green-600" : "text-red-600"}`}>
-                                {isTopUp ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
+                            <p className={`text-sm font-semibold shrink-0 ${isIncoming ? "text-green-600" : "text-red-600"}`}>
+                                {isIncoming ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
                             </p>
                         </div>
                     );
@@ -228,3 +242,61 @@ function TransactionList() {
         </>
     );
 }
+
+// function TransactionList() {
+//     const API_URL = import.meta.env.VITE_API_URL;
+//     const {dataHistory, isLoading, isError} = useSelector((state) => state.users)
+//     const history = dataHistory
+//     const defaultAvatar = "/public/icons/userone.svg"
+//     return (
+//         <>
+//             <div className="flex items-center justify-between mb-4">
+//                 <p className="text-sm font-medium text-gray-800">Transaction History</p>
+//                 <p className="text-sm text-blue-600 cursor-pointer hover:underline">See All</p>
+//             </div>
+
+//             {history?.length === 0 && (
+//                 <p className="text-gray-400 text-sm text-center py-6">No transaction yet</p>
+//             )}
+
+//             <div className="flex flex-col gap-1">
+//                 {history?.map((item) => {
+//                     const isTopUp = item.type === "TOPUP";
+//                     const photoPath = isTopUp ? item.receiver_photo : item.receiver_photo;
+//                     const imageSrc = photoPath ? `${API_URL}/${photoPath}` : defaultAvatar;
+
+//                     const displayName = isTopUp 
+//                         ? (item.receiver_name || item.payment_method_name || "Top Up Saldo") 
+//                         : (item.receiver_name || "Transfer");
+
+//                     return (
+//                         <div 
+//                             key={item.transaction_id} 
+//                             className="flex items-center gap-3 py-3 border-b border-gray-100 last:border-0"
+//                         >
+//                             <img 
+//                                 alt={displayName} 
+//                                 src={imageSrc} 
+//                                 className="w-9 h-9 rounded-full object-cover bg-gray-100"
+//                                 onError={(e) => { e.target.src = defaultAvatar; }} 
+//                             />
+
+//                             <div className="flex-1 min-w-0">
+//                                 <p className="text-sm font-medium text-gray-900 truncate">
+//                                     {displayName}
+//                                 </p>
+//                                 <p className="text-xs text-gray-500 truncate">
+//                                     {item.type} • {item.payment_method_name || "E-Wallet"}
+//                                 </p>
+//                             </div>
+
+//                             <p className={`text-sm font-semibold shrink-0 ${isTopUp ? "text-green-600" : "text-red-600"}`}>
+//                                 {isTopUp ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
+//                             </p>
+//                         </div>
+//                     );
+//                 })}
+//             </div>
+//         </>
+//     );
+// }

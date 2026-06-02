@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { forgotPassword, resetPassword, verifyResetToken } from "../thunks/forgotPassword";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8081";
 
 export const loginUser = createAsyncThunk("auth/login",
     async (data, thunkAPI) => {
@@ -28,15 +28,6 @@ export const loginUser = createAsyncThunk("auth/login",
         } catch(error) {
             return thunkAPI.rejectWithValue(error.message || "Connection error");
         }
-        // const { users } = thunkAPI.getState().users
-
-        // const user = users.find(u => u.email === data.email && u.password === data.password)
-
-        // if (!user) {
-        //     return thunkAPI.rejectWithValue("wrong email or password")
-        // }
-
-        // return user
     })
 
 export const setPin = createAsyncThunk("auth/enter-pin",
@@ -68,7 +59,14 @@ export const setPin = createAsyncThunk("auth/enter-pin",
 export const logout = createAsyncThunk("auth/logout",
     async (token, thunkAPI) => {
         try {
-            const token = localStorage.getItem("user_token")
+            const token = localStorage.getItem("user_token");
+
+            // KUNCI PENGAMAN: Jika token kosong atau berupa string "null" / "undefined"
+            if (!token || token === "null" || token === "undefined") {
+                console.log("Token kosong, langsung bersihkan tanpa tembak backend");
+                return { success: true, message: "Sesi lokal dibersihkan" };
+            }
+
             const response = await fetch(`${API_URL}/auth/logout`, {
                 method: "POST",
                 headers: {
@@ -87,6 +85,9 @@ export const logout = createAsyncThunk("auth/logout",
             
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message || "Connection error");
+        } finally {
+            localStorage.removeItem("user_token")
+            window.location.href = "/auth/login"
         }
     }
 )
@@ -203,6 +204,8 @@ const authSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.payload
             })
+
+            // 
     }
 })
 
