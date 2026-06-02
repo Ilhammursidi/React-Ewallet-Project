@@ -12,9 +12,8 @@ import { getHistory } from "../../Redux/thunks/history";
 import { getChart } from "../../Redux/thunks/graph";
 
 export function Dashboard() {
-    const {dataChart, chartLoading, chartError} = useSelector((state) => state.users)
     const dispatch = useDispatch();
-    const {dataBalance, loading, error} = useSelector((state) => state.users)
+    const { dataChart, chartLoading, chartError, dataBalance, loading, error, dataHistory } = useSelector((state) => state.users);
     
     const safeDataChart = dataChart || [];
     const safeDataBalance = dataBalance || [];
@@ -170,7 +169,7 @@ const barOptions = {
 
 
                 <div className="hidden md:block w-2/8 shrink-0 border-l border-gray-400 bg-white p-4">
-                    <TransactionList user={user} />
+                    <TransactionList walletId={user?.wallet_id} />
                 </div>
 
             </div>
@@ -178,13 +177,11 @@ const barOptions = {
     );
 }
 
-function TransactionList() {
+function TransactionList({ walletId }) {
     const API_URL = import.meta.env.VITE_API_URL;
-    const { dataHistory, isLoading, isError } = useSelector((state) => state.users);
-    const { dataBalance } = useSelector((state) => state.users);
-    const walletId = dataBalance?.data?.wallet_id; // sesuaikan field-nya
+    const { dataHistory } = useSelector((state) => state.users);
     const history = dataHistory;
-    const defaultAvatar = "/public/icons/userone.svg";
+    const defaultAvatar = "/icons/userone.svg"; // hapus /public/
 
     return (
         <>
@@ -222,16 +219,12 @@ function TransactionList() {
                                 className="w-9 h-9 rounded-full object-cover bg-gray-100"
                                 onError={(e) => { e.target.src = defaultAvatar; }}
                             />
-
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-900 truncate">
-                                    {displayName}
-                                </p>
+                                <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
                                 <p className="text-xs text-gray-500 truncate">
                                     {item.type} • {item.payment_method_name || "E-Wallet"}
                                 </p>
                             </div>
-
                             <p className={`text-sm font-semibold shrink-0 ${isIncoming ? "text-green-600" : "text-red-600"}`}>
                                 {isIncoming ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
                             </p>
