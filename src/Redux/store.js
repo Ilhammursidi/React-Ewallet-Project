@@ -14,6 +14,7 @@ import storage from "redux-persist/es/storage";
 import env from "../utils/environment"      
 import authReducer from '../Redux/slice/authslice'
 import userReducer from './slice/register'
+import chartReducer from './thunks/graph'
 
 const persistConfig = {
     key: "im28",
@@ -23,7 +24,8 @@ const persistConfig = {
 
 const persistedReducer = persistCombineReducers(persistConfig,{
     users : userReducer,
-    auth : authReducer
+    auth : authReducer,
+    chart : chartReducer,
 })
 
 const store = configureStore({
