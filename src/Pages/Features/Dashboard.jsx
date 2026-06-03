@@ -10,72 +10,94 @@ import { useEffect, useState } from "react";
 import { getBalance } from "../../Redux/thunks/balance";
 import { getHistory } from "../../Redux/thunks/history";
 import { getChart } from "../../Redux/thunks/graph";
+import { fetchDashboardData } from "../../Redux/thunks/dashboard";
 
 export function Dashboard() {
     const dispatch = useDispatch();
-    const { dataChart, chartLoading, chartError, dataBalance, loading, error, dataHistory } = useSelector((state) => state.users);
-    
-    const safeDataChart = dataChart || [];
-    const safeDataBalance = dataBalance || [];
+    const { data, dataBalance, loading, error, dataHistory } = useSelector((state) => state.users);
+    const { data: chartData, status: chartStatus } = useSelector((state) => state.chart);
 
-    useEffect(()=>{
-        dispatch(getBalance())
-        dispatch(getHistory())
-        dispatch(getChart())
-    },[dispatch])
+    const [period, setPeriod] = useState('week');
 
-    console.log(dataChart)
-    
-    const user = safeDataBalance?.data 
-    
+    const safeDataChart = chartData?.[period] || [];
+    const user = dataBalance.data || [];
+    const isLogin = data
+
+
+    useEffect(() => {
+        dispatch(fetchDashboardData());
+        dispatch(getChart({ period }));
+    }, [dispatch, period]);
+
+    // Tombol period
+    const periods = [
+        { key: 'week', label: '7 Days' },
+        { key: 'month', label: '30 Days' },
+        { key: 'year', label: 'Yearly' },
+    ];
+
+
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
-const DAYS_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const dynamicLabels = safeDataChart?.map(item => {
-    const date = new Date(item.Period);
-    return DAYS_NAME[date.getDay()];
-});
+    const DAYS_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const MONTH_NAME = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-const dynamicIncomeData = safeDataChart?.map(item => item.Income || 0);
-const dynamicExpenseData = safeDataChart?.map(item => item.Expense || 0);
+    const dynamicLabels = safeDataChart?.map(item => {
+        const date = new Date(item.Period);
+        if (period === 'week') return DAYS_NAME[date.getDay()];
+        if (period === 'month') return date.getDate();
+        if (period === 'year') return MONTH_NAME[date.getMonth()];
+        return item.Period;
+    });
 
-const barData = {
-    labels: dynamicLabels.length > 0 ? dynamicLabels : ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"], // fallback jika data belum masuk
-    datasets: [
-        {
-        label : "income",
-        data: dynamicIncomeData.length > 0 ? dynamicIncomeData : [0, 0, 0, 0, 0, 0, 0],
-        backgroundColor: "oklch(54.6% 0.245 262.881)",
-        borderColor: "oklch(54.6% 0.245 262.881)",
-        borderWidth: 1,
-        borderRadius: 4,
-    },
-    {
-    label : "expense",
-        data: dynamicExpenseData.length > 0 ? dynamicExpenseData : [0, 0, 0, 0, 0, 0, 0],
-        backgroundColor: "oklch(58.32% 0.229 27.53)",
-        borderColor: "oklch(58.32% 0.229 27.53)",
-        borderWidth: 1,
-        borderRadius: 4,
-    }
-]
-};
+    const dynamicIncomeData = safeDataChart?.map(item => item.Income || 0);
+    const dynamicExpenseData = safeDataChart?.map(item => item.Expense || 0);
 
-const barOptions = {
-    scales: {
-        x: { display: true, grid: { display: false } },
-        y: {
-            beginAtZero: true,
-            min: 0,
-            max: 200000,
-            ticks: { stepSize: 25000, autoSkip: false }
-        }
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-};
+    const allValues = [...dynamicIncomeData, ...dynamicExpenseData];
+    const maxValue = allValues.length > 0 ? Math.max(...allValues) : 200000;
+    const yMax = Math.ceil(maxValue * 1.3 / 50000) * 50000;
+
+    const barData = {
+        labels: dynamicLabels.length > 0 ? dynamicLabels : [],
+        datasets: [
+            {
+                label: "income",
+                data: dynamicIncomeData,
+                backgroundColor: "oklch(54.6% 0.245 262.881)",
+                borderColor: "oklch(54.6% 0.245 262.881)",
+                borderWidth: 1,
+                borderRadius: 4,
+            },
+            {
+                label: "expense",
+                data: dynamicExpenseData,
+                backgroundColor: "oklch(58.32% 0.229 27.53)",
+                borderColor: "oklch(58.32% 0.229 27.53)",
+                borderWidth: 1,
+                borderRadius: 4,
+            }
+        ]
+    };
+
+    const barOptions = {
+        scales: {
+            x: { display: true, grid: { display: false } },
+            y: {
+                beginAtZero: true,
+                min: 0,
+                max: yMax,
+                ticks: {
+                    stepSize: Math.ceil(yMax / 8 / 10000) * 10000,
+                    autoSkip: false,
+                    callback: (val) => `${(val / 1000).toFixed(0)}k`
+                }
+            }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+    };
 
     return (
         <div className="min-h-screen bg-white   ">
@@ -143,13 +165,14 @@ const barOptions = {
                         <div className="flex items-center justify-between mb-4">
                             <p className="text-sm font-medium">Financial Chart</p>
                             <div className="flex gap-2">
-                                {/* <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
-                                    <option>Income</option>
-                                    <option>Expense</option>
-                                </select> */}
-                                <select className="text-xs bg-gray-100 rounded-md px-3 py-2 border-none outline-none">
-                                    <option>7 Days</option>
-                                    {/* <option>30 Days</option> */}
+                                <select
+                                    value={period}
+                                    onChange={(e) => setPeriod(e.target.value)}
+                                    className="text-md bg-gray-100 text-gray-600 px-3 py-2 rounded-md border-none outline-none cursor-pointer hover:bg-gray-200 transition-colors"
+                                >
+                                    {periods.map(({ key, label }) => (
+                                        <option key={key} value={key}>{label}</option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -163,13 +186,13 @@ const barOptions = {
                     </div>
 
                     <div className="md:hidden bg-white rounded-xl border border-gray-400 p-4">
-                        <TransactionList user={user} />
+                        <TransactionList userLogin={data} />
                     </div>
                 </main>
 
 
                 <div className="hidden md:block w-2/8 shrink-0 border-l border-gray-400 bg-white p-4">
-                    <TransactionList walletId={user?.wallet_id} />
+                    <TransactionList userLogin={data} />
                 </div>
 
             </div>
@@ -177,17 +200,16 @@ const barOptions = {
     );
 }
 
-function TransactionList({ walletId }) {
+function TransactionList({ userLogin }) {
     const API_URL = import.meta.env.VITE_API_URL;
     const { dataHistory } = useSelector((state) => state.users);
     const history = dataHistory;
-    const defaultAvatar = "/icons/userone.svg"; // hapus /public/
 
     return (
         <>
             <div className="flex items-center justify-between mb-4">
                 <p className="text-sm font-medium text-gray-800">Transaction History</p>
-                <p className="text-sm text-blue-600 cursor-pointer hover:underline">See All</p>
+                <p className="text-sm text-blue-600 cursor-pointer hover:underline"><a href="/history">See All</a></p>
             </div>
 
             {history?.length === 0 && (
@@ -196,17 +218,17 @@ function TransactionList({ walletId }) {
 
             <div className="flex flex-col gap-1">
                 {history?.map((item) => {
-                    const isTopUp = item.type === "TOPUP";
-                    const isIncoming = isTopUp || (item.type === "TRANSFER" && item.receiver_wallet_id === walletId);
-
-                    const photoPath = isIncoming ? item.sender_photo : item.receiver_photo;
-                    const imageSrc = photoPath ? `${API_URL}/${photoPath}` : defaultAvatar;
+                    const isTopUp = item.type === "TOPUP"
+                    const isTransferIn = item.type === "TRANSFER" && item.receiver_id === userLogin.id
+                    const isTransferOut = item.type === "TRANSFER" && item.sender_id === userLogin.id
 
                     const displayName = isTopUp
-                        ? (item.payment_method_name || "Top Up Saldo")
-                        : isIncoming
-                            ? (item.sender_name || "Transfer Masuk")
-                            : (item.receiver_name || "Transfer");
+                        ? userLogin.fullname
+                        : isTransferIn
+                            ? item.sender_name
+                            : item.receiver_name
+
+                    const isIncome = isTopUp || isTransferIn
 
                     return (
                         <div
@@ -215,18 +237,19 @@ function TransactionList({ walletId }) {
                         >
                             <img
                                 alt={displayName}
-                                src={imageSrc}
+                                src={"/icons/userone.svg"}
                                 className="w-9 h-9 rounded-full object-cover bg-gray-100"
-                                onError={(e) => { e.target.src = defaultAvatar; }}
                             />
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium text-gray-900 truncate">{displayName}</p>
+                                <p className="text-sm font-medium text-gray-900 truncate">
+                                    {displayName}
+                                </p>
                                 <p className="text-xs text-gray-500 truncate">
                                     {item.type} • {item.payment_method_name || "E-Wallet"}
                                 </p>
                             </div>
-                            <p className={`text-sm font-semibold shrink-0 ${isIncoming ? "text-green-600" : "text-red-600"}`}>
-                                {isIncoming ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
+                            <p className={`text-sm font-semibold shrink-0 ${isIncome ? "text-green-600" : "text-red-600"}`}>
+                                {isIncome ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
                             </p>
                         </div>
                     );
