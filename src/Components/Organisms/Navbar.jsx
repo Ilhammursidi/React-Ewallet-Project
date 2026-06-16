@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router";
 import { logout } from "../../Redux/slice/authslice";
 import { Modal } from "../Atoms/Modal";
+import { clearCharData } from "../../Redux/slice/graph";
 
 export const Navbar = ({className,isActive, mobile = false }) => {
     const dispatch = useDispatch();
@@ -9,6 +10,7 @@ export const Navbar = ({className,isActive, mobile = false }) => {
     
     const handleLogout = async () => {
         await dispatch(logout());
+        await dispatch(clearCharData());
     }
 
     return (

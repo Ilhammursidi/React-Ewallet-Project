@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/slice/authslice";
 import { Modal } from "./Modal";
 import { Button } from "./Button";
+import { clearCharData } from "../../Redux/slice/graph";
 
 export const UserNavbar = ({className}) => {
     const [open, setOpen] = useState(false);
@@ -19,6 +20,7 @@ export const UserNavbar = ({className}) => {
 
     const toLogout = async () => {
         await dispatch(logout())
+        await dispatch(clearCharData())
     }
 
     return (
