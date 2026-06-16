@@ -61,9 +61,7 @@ export const logout = createAsyncThunk("auth/logout",
         try {
             const token = localStorage.getItem("user_token");
 
-            // KUNCI PENGAMAN: Jika token kosong atau berupa string "null" / "undefined"
             if (!token || token === "null" || token === "undefined") {
-                console.log("Token kosong, langsung bersihkan tanpa tembak backend");
                 return { success: true, message: "Sesi lokal dibersihkan" };
             }
 
