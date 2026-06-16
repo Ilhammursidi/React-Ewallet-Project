@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getBalance } from "./balance";
-import { getChart } from "./graph";
+import { getChart } from "../slice/graph";
 import { getHistory } from "./history";
 
 

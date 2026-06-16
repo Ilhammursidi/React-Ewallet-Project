@@ -3,12 +3,13 @@ import toast from "react-hot-toast";
 import { getProfile } from "../thunks/profile";
 import { getBalance } from "../thunks/balance";
 import { getHistory } from "../thunks/history";
-import { getChart } from "../thunks/graph";
+import { getChart } from "./graph";
 import { editProfile } from "../thunks/editProfile";
 import { editPassword } from "../thunks/changePassword";
 import { editUserPin } from "../thunks/changePin";
 import { getReceivers } from "../thunks/findReceiver";
 import { getTransactionHistory } from "../thunks/findHistory";
+import { makeTransfer } from "../thunks/transfer";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -27,7 +28,7 @@ export const registerUser = createAsyncThunk("users/register",
             if (!response.ok) {
                 return thunkAPI.rejectWithValue(result.message || "failed to register")
             }
-            console.log(result)
+            
             return result;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message || "Connection error");
@@ -165,20 +166,6 @@ const userSlice = createSlice({
                 state.dataHistory = null;
             })
 
-            // transaction history graph
-            .addCase(getChart.fulfilled, (state, action) => {
-                state.error = null;
-                state.dataChart = action.payload.data;
-            })
-            .addCase(getChart.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(getChart.rejected, (state, action) => {
-                state.error = action.payload
-                state.dataChart = null;
-            })
-
             // edit Profile
             .addCase(editProfile.pending, (state) => {
                 state.isLoading = true; 
@@ -250,6 +237,20 @@ const userSlice = createSlice({
                 state.error = null;
             })
             .addCase(getTransactionHistory.rejected, (state, action) => {
+                state.error = action.payload;
+                state.history = null;
+            })
+
+            // make transfer
+            .addCase(makeTransfer.fulfilled, (state, action) => {
+                state.error = null;
+                state.history = action.payload;
+            })
+            .addCase(makeTransfer.pending, (state) => {
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(makeTransfer.rejected, (state, action) => {
                 state.error = action.payload;
                 state.history = null;
             });
