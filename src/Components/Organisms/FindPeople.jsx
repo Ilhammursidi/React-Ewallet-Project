@@ -19,7 +19,7 @@ export function FindPeople() {
         dispatch(getReceivers({ page: 1, limit: 100 }));
     }, [dispatch]);
 
-    const filteredData = receivers.filter((row) => {
+    const filteredData = receivers?.filter((row) => {
         const receiverName = row.receiver ? row.receiver.toLowerCase() : "";
         const phoneNumber = row.phone_number ? row.phone_number : ""; 
         
@@ -29,8 +29,8 @@ export function FindPeople() {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     
-    const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+    const currentItems = filteredData?.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
 
     const paginate = (pageNumber) => {
         setSearchParams({ search: query, page: pageNumber.toString() });
@@ -82,14 +82,14 @@ export function FindPeople() {
                     ) : (
                         <table className="w-full [&_tr:nth-child(2n+1)]:bg-gray-50">
                             <tbody>
-                                {currentItems.length === 0 ? (
+                                {currentItems?.length === 0 ? (
                                     <tr>
                                         <td colSpan="4" className="text-center py-10 text-gray-400">
-                                            Data tidak ditemukan
+                                            Data Not Found
                                         </td>
                                     </tr>
                                 ) : (
-                                    currentItems.map((row) => (
+                                    currentItems?.map((row) => (
                                         <tr 
                                             onClick={() => handleRowClick(row)} 
                                             key={row.id} 
