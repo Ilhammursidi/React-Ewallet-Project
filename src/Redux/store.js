@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, isImmutableDefault } from "@reduxjs/toolkit";
 import {
     persistStore,
     persistCombineReducers,
@@ -14,7 +14,7 @@ import storage from "redux-persist/es/storage";
 import env from "../utils/environment"      
 import authReducer from '../Redux/slice/authslice'
 import userReducer from './slice/register'
-import chartReducer from './thunks/graph'
+import chartReducer from './slice/graph'
 
 const persistConfig = {
     key: "im28",
@@ -30,7 +30,7 @@ const persistedReducer = persistCombineReducers(persistConfig,{
 
 const store = configureStore({
     reducer: persistedReducer,
-    devTools: env.environment === "development",
+    // devTools: env.environment === "development",
     middleware: (defaultMiddleware) => {
         return defaultMiddleware({
             serializableCheck: {
