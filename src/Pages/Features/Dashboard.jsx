@@ -9,7 +9,7 @@ import { useLocation } from "react-router";
 import { useEffect, useState } from "react";
 import { getBalance } from "../../Redux/thunks/balance";
 import { getHistory } from "../../Redux/thunks/history";
-import { getChart } from "../../Redux/thunks/graph";
+import { getChart } from "../../Redux/slice/graph";
 import { fetchDashboardData } from "../../Redux/thunks/dashboard";
 
 export function Dashboard() {
@@ -19,17 +19,15 @@ export function Dashboard() {
 
     const [period, setPeriod] = useState('week');
 
-    const safeDataChart = chartData?.[period] || [];
-    const user = dataBalance.data || [];
+    const safeDataChart = chartData || [];
+    const user = dataBalance?.data || [];
     const isLogin = data
-
 
     useEffect(() => {
         dispatch(fetchDashboardData());
         dispatch(getChart({ period }));
     }, [dispatch, period]);
 
-    // Tombol period
     const periods = [
         { key: 'week', label: '7 Days' },
         { key: 'month', label: '30 Days' },
@@ -50,9 +48,9 @@ export function Dashboard() {
         if (period === 'year') return MONTH_NAME[date.getMonth()];
         return item.Period;
     });
-
-    const dynamicIncomeData = safeDataChart?.map(item => item.Income || 0);
-    const dynamicExpenseData = safeDataChart?.map(item => item.Expense || 0);
+    
+    const dynamicIncomeData = safeDataChart.map(item => item.Income || 0);
+    const dynamicExpenseData = safeDataChart.map(item => item.Expense || 0);
 
     const allValues = [...dynamicIncomeData, ...dynamicExpenseData];
     const maxValue = allValues.length > 0 ? Math.max(...allValues) : 200000;
