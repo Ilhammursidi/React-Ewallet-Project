@@ -16,8 +16,6 @@ import { getProfile } from "../../Redux/thunks/profile";
 
 export function AppHeader({className}) {
     const API_URL = import.meta.env.VITE_API_URL;
-    // const currentUser = useSelector((state) => state.auth.currentUser);
-    // const userLogin = currentUser || []
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector((state)=> state.users)
 
@@ -28,7 +26,6 @@ export function AppHeader({className}) {
     },[dispatch])
 
     const userLogin = data
-    // console.log(data)
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
@@ -39,10 +36,10 @@ export function AppHeader({className}) {
                     <Logo color="blue" className="hidden sm:hidden md:flex"></Logo>
             <section className="flex gap-2 py-2 items-center md:flex-row-reverse md:ml-auto">
                 <UserNavbar></UserNavbar>
-                <img className="w-10 h-10 rounded-full" src={`${API_URL}/${userLogin?.photo}` || "icons/userone.svg" } alt="photo-profile" />
+                <img className="w-10 h-10 rounded-full" src={userLogin?.photo === "" ? "icons/userone.svg" : `${API_URL}/${userLogin?.photo}`} alt="photo-profile" />
                 <section className="text-white">
                     <p className="text-xs md:hidden">Hello,</p>
-                    <p className="font-medium text-sm md:text-gray-500">{userLogin?.fullName || userLogin?.email?.split("@")[0]}</p>
+                    <p className="font-medium text-sm md:text-gray-500">{userLogin?.fullname || userLogin?.email?.split("@")[0]}</p>
                 </section>
             </section>
             
