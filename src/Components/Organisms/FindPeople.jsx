@@ -8,10 +8,10 @@ export function FindPeople() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    
+    const BACKEND_URL = import.meta.env.VITE_API_URL
     const query = searchParams.get("search") || "";
     const currentPage = parseInt(searchParams.get("page") || "1");
-    const itemsPerPage = 5;
+    const itemsPerPage = 10;
     
     const { receivers, isLoading, isError } = useSelector((state) => state.users);
 
@@ -95,7 +95,7 @@ export function FindPeople() {
                                             key={row.id} 
                                             className="table-layout w-full text-xs md:text-base cursor-pointer hover:bg-blue-50 transition-colors"
                                         >
-                                            <td className="p-2"><img src={row.photo || "/icons/userone.svg"} alt={row.receiver} className="w-9 h-9 rounded-full object-cover" /></td>
+                                            <td className="p-2"><img src={`${BACKEND_URL}/${row.photo || "img/profiles/user_1781943518142517600.svg"}`} alt={row.receiver} className="w-9 h-9 rounded-full object-cover" /></td>
                                             <td className="p-2 font-medium">{row.receiver ? row.receiver.split("@")[0] : "-"}</td>
                                             <td className="p-2 text-gray-600">{row.phone_number || "-"}</td>
                                             <td className="p-2"><img src="/icons/Star.svg" alt="star" className="w-5 h-5" /></td>
