@@ -57,38 +57,47 @@ export const setPin = createAsyncThunk("auth/enter-pin",
 )
 
 export const logout = createAsyncThunk("auth/logout",
-    async (token, thunkAPI) => {
+    async (_, thunkAPI) => { 
         try {
             const token = localStorage.getItem("user_token");
 
             if (!token || token === "null" || token === "undefined") {
+                localStorage.removeItem("user_token");
+                window.location.href = "/auth/login";
                 return { success: true, message: "Sesi lokal dibersihkan" };
             }
 
             const response = await fetch(`${API_URL}/auth/logout`, {
                 method: "POST",
                 headers: {
-                    "Content-Type":"application/json",
-                    "X-koda-X":"true",
+                    "Content-Type": "application/json",
+                    "X-koda-X": "true",
                     "Authorization": `Bearer ${token}`,
                 },
-                body: JSON.stringify({ token })
+                body: JSON.stringify({ token }) 
             });
+            
             const result = await response.json();
 
-            if(!response.ok) {
+            if (!response.ok) {
+                localStorage.removeItem("user_token");
+                window.location.href = "/auth/login";
                 return thunkAPI.rejectWithValue(result.error || "Failed to logout");
             }
+
+            localStorage.removeItem("user_token");
+            window.location.href = "/auth/login";
+            
             return result;
             
         } catch (error) {
+            localStorage.removeItem("user_token");
+            window.location.href = "/auth/login";
             return thunkAPI.rejectWithValue(error.message || "Connection error");
-        } finally {
-            localStorage.removeItem("user_token")
-            window.location.href = "/auth/login"
         }
     }
-)
+);
+
 
 const authSlice = createSlice({
     name: "auth",
