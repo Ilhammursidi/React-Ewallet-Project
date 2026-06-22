@@ -27,8 +27,8 @@ export const Profile = () => {
 
     useEffect(() => {
         if (userProfile) {
-            setFullName(userProfile.fullname || "");
-            setPhone(userProfile.phone_number || "");
+            setFullName(userProfile.fullname || "" );
+            setPhone(userProfile.phone_number || "" );
             if (userProfile.photo) {
                 setPhotoPreview(`${API_URL}/${userProfile.photo}`);
             } else {
