@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "../Atoms/Modal";
 import { SideBar } from "../Atoms/SideBar";
 import { getProfile } from "../../Redux/thunks/profile";
+import toast from "react-hot-toast";
 
 /**
  * @typedef {Object} AppHeaderProps
@@ -28,7 +29,6 @@ export function AppHeader({className}) {
     const userLogin = data
 
     if (loading) return <p>Loading...</p>
-    if (error) return <p>Error: {error}</p>
 
     return (
         <header className={`w-full sticky top-0 z-50 bg-blue-600 border-b border-white md:border-gray-400 ${className}`}>
