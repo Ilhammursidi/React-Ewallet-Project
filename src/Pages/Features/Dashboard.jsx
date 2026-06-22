@@ -16,31 +16,30 @@ export function Dashboard() {
     const dispatch = useDispatch();
     const { data, dataBalance, loading, error, dataHistory } = useSelector((state) => state.users);
     const { data: chartData, status: chartStatus } = useSelector((state) => state.chart);
-
     const [period, setPeriod] = useState('week');
-
+    
     const safeDataChart = chartData || [];
     const user = dataBalance?.data || [];
     const isLogin = data
-
+    
     useEffect(() => {
         dispatch(fetchDashboardData());
         dispatch(getChart({ period }));
     }, [dispatch, period]);
-
+    
     const periods = [
         { key: 'week', label: '7 Days' },
         { key: 'month', label: '30 Days' },
         { key: 'year', label: 'Yearly' },
     ];
-
-
+    
+    
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
-
+    
     const DAYS_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const MONTH_NAME = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
+    
     const dynamicLabels = safeDataChart?.map(item => {
         const date = new Date(item.Period);
         if (period === 'week') return DAYS_NAME[date.getDay()];
@@ -51,11 +50,11 @@ export function Dashboard() {
     
     const dynamicIncomeData = safeDataChart.map(item => item.Income || 0);
     const dynamicExpenseData = safeDataChart.map(item => item.Expense || 0);
-
+    
     const allValues = [...dynamicIncomeData, ...dynamicExpenseData];
     const maxValue = allValues.length > 0 ? Math.max(...allValues) : 200000;
     const yMax = Math.ceil(maxValue * 1.3 / 50000) * 50000;
-
+    
     const barData = {
         labels: dynamicLabels.length > 0 ? dynamicLabels : [],
         datasets: [
@@ -96,7 +95,7 @@ export function Dashboard() {
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
     };
-
+    
     return (
         <div className="min-h-screen bg-white   ">
             <AppHeader className=" md:bg-white border-b border-gray-400 sticky top-0 z-10" />
@@ -199,15 +198,17 @@ export function Dashboard() {
 }
 
 function TransactionList({ userLogin }) {
-    const API_URL = import.meta.env.VITE_API_URL;
     const { dataHistory } = useSelector((state) => state.users);
     const history = dataHistory;
+    const BACKEND_URL = import.meta.env.VITE_API_URL
 
     return (
         <>
             <div className="flex items-center justify-between mb-4">
                 <p className="text-sm font-medium text-gray-800">Transaction History</p>
-                <p className="text-sm text-blue-600 cursor-pointer hover:underline"><a href="/history">See All</a></p>
+                <p className="text-sm text-blue-600 cursor-pointer hover:underline">
+                    <a href="/history">See All</a>
+                </p>
             </div>
 
             {history?.length === 0 && (
@@ -216,17 +217,29 @@ function TransactionList({ userLogin }) {
 
             <div className="flex flex-col gap-1">
                 {history?.map((item) => {
-                    const isTopUp = item.type === "TOPUP"
-                    const isTransferIn = item.type === "TRANSFER" && item.receiver_id === userLogin.id
-                    const isTransferOut = item.type === "TRANSFER" && item.sender_id === userLogin.id
+                    const isTopUp = item.type === "TOPUP";
+                    const isTransferIn = item.type === "TRANSFER" && item.receiver_id === userLogin?.id;
+                    const isTransferOut = item.type === "TRANSFER" && item.sender_id === userLogin?.id;
 
-                    const displayName = isTopUp
-                        ? userLogin.fullname
-                        : isTransferIn
-                            ? item.sender_name
-                            : item.receiver_name
+                    const getFallbackName = (emailStr) => {
+                        return emailStr ? emailStr.split("@")[0] : "User";
+                    };
 
-                    const isIncome = isTopUp || isTransferIn
+                    let displayName = "User";
+                    let displayPhoto = "img/profiles/user_1781943518142517600.svg"; 
+
+                    if (isTopUp) {
+                        displayName = userLogin?.fullname || getFallbackName(userLogin?.email);
+                        displayPhoto = item.receiver_photo || "img/profiles/user_1781943518142517600.svg";
+                    } else if (isTransferIn) {
+                        displayName = item.sender_name || getFallbackName(item.sender_email);
+                        displayPhoto = item.sender_photo || "img/profiles/user_1781943518142517600.svg";
+                    } else if (isTransferOut) {
+                        displayName = item.receiver_name || getFallbackName(item.receiver_email);
+                        displayPhoto = item.receiver_photo || "img/profiles/user_1781943518142517600.svg";
+                    }
+
+                    const isIncome = isTopUp || isTransferIn;
 
                     return (
                         <div
@@ -235,7 +248,7 @@ function TransactionList({ userLogin }) {
                         >
                             <img
                                 alt={displayName}
-                                src={"/icons/userone.svg"}
+                                src={`${BACKEND_URL}/${displayPhoto}`}
                                 className="w-9 h-9 rounded-full object-cover bg-gray-100"
                             />
                             <div className="flex-1 min-w-0">
@@ -243,11 +256,11 @@ function TransactionList({ userLogin }) {
                                     {displayName}
                                 </p>
                                 <p className="text-xs text-gray-500 truncate">
-                                    {item.type} • {item.payment_method_name || "E-Wallet"}
+                                    {isTransferOut ? "SEND" : item.type} • {item.payment_method_name || "E-Wallet"}
                                 </p>
                             </div>
                             <p className={`text-sm font-semibold shrink-0 ${isIncome ? "text-green-600" : "text-red-600"}`}>
-                                {isIncome ? "+" : "-"} Rp{item.amount.toLocaleString("id-ID")}
+                                {isIncome ? "+" : "-"} Rp {item.amount.toLocaleString("id-ID")}
                             </p>
                         </div>
                     );
