@@ -21,7 +21,7 @@ export const editUserPin = createAsyncThunk("users/profile/change-pin",
 
             const result = await response.json();
             if (!response.ok) {
-                return thunkAPI.rejectWithValue(result.message || "Failed to edit password");
+                return thunkAPI.rejectWithValue(result.message || "Failed to edit PIN");
             }
             return result;
         } catch (error) {
