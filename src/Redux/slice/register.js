@@ -231,28 +231,30 @@ const userSlice = createSlice({
             .addCase(getTransactionHistory.fulfilled, (state, action) => {
                 state.error = null;
                 state.history = action.payload.data;
+                state.isLoading = false;
             })
             .addCase(getTransactionHistory.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
             .addCase(getTransactionHistory.rejected, (state, action) => {
-                state.error = action.payload;
+                state.isLoading = false;
                 state.history = null;
+                state.error = action.payload;
             })
 
             // make transfer
             .addCase(makeTransfer.fulfilled, (state, action) => {
                 state.error = null;
-                state.history = action.payload;
+                // state.history = action.payload;
             })
             .addCase(makeTransfer.pending, (state) => {
-                state.isLoading = true;
+                // state.isLoading = true;
                 state.error = null;
             })
             .addCase(makeTransfer.rejected, (state, action) => {
                 state.error = action.payload;
-                state.history = null;
+                // state.history = null;
             });
 
     }
