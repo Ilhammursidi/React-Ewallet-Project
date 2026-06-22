@@ -12,16 +12,18 @@ import { FindPeople } from "./Components/Organisms/FindPeople"
 import { TopUp } from "./Pages/Features/TopUp"
 import { Profile } from "./Pages/Features/Profile"
 import { ChangePassword } from "./Components/Organisms/ChangePassword"
-import { ChangePin } from "./Components/Organisms/ChangePin"
 import ProtectedRoute from "./Pages/ProtectRoute"
 import { VerifyToken } from "./Pages/Auth/VerifyToken"
 import { ResetPassword } from "./Pages/Auth/ResetPassword"
+import { ChangePinPage } from "./Components/Organisms/ChangePin"
+import GuestRoute from "./Pages/GuestRoute"
 
 function AppRouter() {
   return (
     <Routes>
-    <Route index element={<LandingPage/>}></Route>
 
+    <Route element={<GuestRoute/>}>
+    <Route index element={<LandingPage/>}></Route>
     <Route path="auth/">
     <Route path="login" element={<Login/>}></Route>
     <Route path="signup" element={<SignUp/>}></Route>
@@ -29,6 +31,7 @@ function AppRouter() {
     <Route path="verify-token" element={<VerifyToken/>}></Route>
     <Route path="reset-password" element={<ResetPassword/>}></Route>
     <Route path="enter-pin" element={<EnterPin/>}></Route>
+    </Route>
     </Route>
 
     <Route element={<ProtectedRoute/>}>
@@ -42,8 +45,8 @@ function AppRouter() {
     <Route path="profile">
         <Route index element={<Profile/>}></Route>
         <Route path="change-password" element={<ChangePassword/>}></Route>
-        <Route path="change-pin" element={<ChangePin/>}></Route>
-    </Route>
+    <Route path="change-pin" element={<ChangePinPage />}></Route>  
+  </Route>
     </Route>
     
     </Routes>
