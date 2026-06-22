@@ -13,8 +13,8 @@ createRoot(document.getElementById('root')).render(
       <PersistGate loading={<h1>Loading...</h1>} persistor={persistor}>
   {/* <StrictMode> */}
     <BrowserRouter>
-    <AppRouter />
     <Toaster/>
+    <AppRouter />
     </BrowserRouter>
   {/* </StrictMode> */}
       </PersistGate>
