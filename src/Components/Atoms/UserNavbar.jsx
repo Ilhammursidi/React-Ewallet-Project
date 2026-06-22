@@ -19,7 +19,10 @@ export const UserNavbar = ({className}) => {
     }
 
     const toLogout = async () => {
-        await dispatch(logout())
+        localStorage.setItem("intentional_logout", "true")
+        await dispatch(logout()).then(()=>{
+            navigate("/auth/login");
+        })
         await dispatch(clearCharData())
     }
 
