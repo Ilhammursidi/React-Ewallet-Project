@@ -9,7 +9,10 @@ export const Navbar = ({className,isActive, mobile = false }) => {
     const navigate = useNavigate("");
     
     const handleLogout = async () => {
-        await dispatch(logout());
+        localStorage.setItem("intentional_logout", "true")
+        await dispatch(logout()).then(()=>{
+            navigate("/auth/login");
+        })
         await dispatch(clearCharData());
     }
 
