@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 
 export const PinInput = ({
     pin,
+    wide,
     setPin,
     onComplete,
     onEnter,
@@ -46,7 +47,7 @@ export const PinInput = ({
     };
 
     return (
-        <section className="flex justify-between gap-1 w-80 md:w-120 mb-4 px-2 py-10 border-gray-300">
+        <section className={`${wide} ${"flex justify-between gap-1 w-80 md:w-120 mb-4 px-2 py-10 border-gray-300"}`}>
             {pin.map((digit, i) => (
                 <input
                     key={i}
