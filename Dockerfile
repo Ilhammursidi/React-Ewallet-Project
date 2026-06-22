@@ -1,19 +1,19 @@
-FROM node:alpine3.23 AS builder
+FROM node:24.16.0-alpine AS builder
 
 WORKDIR /app
 
-ARG VITE_API_URL
+ARG VITE_API_URL=/api
 ENV VITE_API_URL=$VITE_API_URL
 
 COPY package.json package-lock.json ./
 
-RUN npm ci  
+RUN npm install
 
 COPY . .
 
 RUN npm run build
 
-FROM nginx:alpine3.23
+FROM nginx:1.31.0-alpine3.23-slim
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
