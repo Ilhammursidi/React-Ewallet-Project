@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { makeTransfer } from "../../Redux/thunks/transfer"; 
 import { fetchDashboardData } from "../../Redux/thunks/dashboard";
+import { getTransactionHistory } from "../../Redux/thunks/findHistory";
 
 /**
  * a user transfer component
@@ -28,6 +29,7 @@ export const UserTransfer = () => {
     const [isSubmitting, setIsSubmitting] = useState(false); 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const BACKEND_URL = import.meta.env.VITE_API_URL
 
     const nameTemplate = useMemo(() => {
         return user?.receiver ? user.receiver.split('@')[0] : user?.name || "";
@@ -99,7 +101,8 @@ export const UserTransfer = () => {
                 setIsOpen(false);
                 setIsOpen2(true); 
                 
-                dispatch(fetchDashboardData()); 
+                dispatch(fetchDashboardData());
+                dispatch(getTransactionHistory({page: 1, search: ""})) 
             } else {
                 const errorMessage = resultAction.payload || "Wrong PIN or transaction failed";
                 toast.error(errorMessage);
@@ -187,8 +190,8 @@ export const UserTransfer = () => {
             <section className="information border border-gray-300 p-5">
                 <p className="font-medium">People Information</p>
                 <section className="user bg-gray-100/50 flex justify-between pr-5">
-                    <section className="detail flex w-full">
-                        <img src={user.photo || "/icons/userone.svg"} alt={nameTemplate} />
+                    <section className="detail flex pl-2 w-full items-center">
+                        <img className="w-12 h-12" src={`${BACKEND_URL}/${user.photo}` || "img/profiles/user_1781943518142517600.svg"} alt={nameTemplate} />
                         <section className="grid p-2">
                             <p className="text-xs font-medium">{nameTemplate}</p>
                             <p className="text-xs">{user.phone_number || "-"}</p>
