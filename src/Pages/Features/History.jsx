@@ -25,24 +25,24 @@ export const History = () => {
 
     const [searchInput, setSearchInput] = useState(query);
 
-useEffect(() => {
-    const timer = setTimeout(() => {
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const trimmed = searchInput.trim();
+            if (trimmed !== query) {
+                setSearchParams({ search: trimmed, page: "1" });
+            }
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchInput]);
+
+    useEffect(() => {
+        setSearchInput(query);
+    }, [query]);
+
+    const triggerSearchNow = () => {
         const trimmed = searchInput.trim();
-        if (trimmed !== query) {
-            setSearchParams({ search: trimmed, page: "1" });
-        }
-    }, 500);
-    return () => clearTimeout(timer);
-}, [searchInput]);
-
-useEffect(() => {
-    setSearchInput(query);
-}, [query]);
-
-const triggerSearchNow = () => {
-    const trimmed = searchInput.trim();
-    setSearchParams({ search: trimmed, page: "1" });
-};
+        setSearchParams({ search: trimmed, page: "1" });
+    };
 
 
     const paginate = (pageNumber) => {
@@ -68,14 +68,14 @@ const triggerSearchNow = () => {
     } else if (isModalTransferOut) {
         otherPhoto = selectData?.receiver_photo || "img/profiles/user_1781943518142517600.svg";
     }
-    
+
     let displayName = "-"
     if (isModalTopUp) {
         displayName = "Top Up";
     } else if (isModalTransferIn) {
-        displayName = selectData?.sender_name;
+        displayName = selectData?.sender_name || selectData?.sender_email.split("@")[0];
     } else if (isModalTransferOut) {
-        displayName = selectData?.receiver_name;
+        displayName = selectData?.receiver_name || selectData?.receiver_email.split('@')[0];
     }
 
     let status = "-"
@@ -101,14 +101,14 @@ const triggerSearchNow = () => {
             {/* MODAL DETAIL */}
             <Modal isOpen={isOpen} value="Back" onClose={() => setIsOpen(false)}>
                 {selectData && (
-                            <section className="flex bg-white flex-col w-80 p-2 md:h-115 rounded-md h-fit">
+                    <section className="flex bg-white flex-col w-80 p-2 md:h-115 rounded-md h-fit">
                         <p className="text-sm font-semibold mb-2">DETAIL TRANSACTION</p>
                         <hr className="border border-gray-200" />
                         <img
                             className="w-20 h-20 rounded-full mx-auto my-3 object-cover"
-                            src={isModalTopUp ? `${BACKEND_URL}/${userPhoto}` : `${BACKEND_URL}/${otherPhoto}`}
+                            src={isModalTopUp ? `${BACKEND_URL}/${userPhoto}` : `${BACKEND_URL}/${otherPhoto}` || `"img/profiles/user_1781943518142517600.svg"`}
                             alt={selectData.name || "Transaction"}
-                            />
+                        />
 
                         <p className="font-semibold text-xs text-gray-500 mt-1">Name :</p>
                         <p className="text-sm font-medium">{displayName}</p>
@@ -152,9 +152,9 @@ const triggerSearchNow = () => {
                                 <input
                                     type="text"
                                     value={searchInput}
-                                    onChange={(e)=> setSearchInput(e.target.value)}
-                                    onKeyDown={(e)=>{
-                                        if(e.key === "Enter") triggerSearchNow();
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter") triggerSearchNow();
                                     }}
                                     placeholder="Enter Number Or Fullname"
                                     className="focus:outline-none bg-transparent"
@@ -203,19 +203,20 @@ const triggerSearchNow = () => {
 
                                                 let displayName = "-"
                                                 if (isRowTopUp) {
-                                                    displayName = "Top Up"
+                                                    displayName = "Top Up";
                                                 } else if (isRowTransferIn) {
-                                                    displayName = row.sender_name;
+                                                    displayName = row.sender_name || row.sender_email.split("@")[0];
                                                 } else if (isRowTransferOut) {
-                                                    displayName = row.receiver_name;
+                                                    displayName = row.receiver_name || row.receiver_email.split('@')[0];
                                                 }
+
 
                                                 return (
                                                     <tr key={row.transaction_id} className="table-layout w-full text-xs cursor-pointer hover:bg-gray-100 transition-colors">
                                                         <td className="p-2" onClick={() => handleRowClick(row)}>
                                                             <img
                                                                 className="w-10 h-10 rounded-full object-cover m-auto"
-                                                                src={`${BACKEND_URL}/${displayPhoto}`}
+                                                                src={`${BACKEND_URL}/${displayPhoto || "img/profiles/user_1781943518142517600.svg"}`}
                                                                 alt={row.name}
                                                             />
                                                         </td>
@@ -223,7 +224,7 @@ const triggerSearchNow = () => {
                                                             {displayName}
                                                         </td>
                                                         <td className="p-2 text-center" onClick={() => handleRowClick(row)}>
-                                                            {isRowTopUp ? row.payment_method_name : "E-Wallet" }
+                                                            {isRowTopUp ? row.payment_method_name : "E-Wallet"}
                                                         </td>
                                                         <td className="p-2 text-center" onClick={() => handleRowClick(row)}>
                                                             {displayPhone}
@@ -238,9 +239,9 @@ const triggerSearchNow = () => {
                                                         </td>
                                                     </tr>
                                                 );
-                                              })
+                                            })
                                         )}
-                            
+
                                     </tbody>
                                 </table>
                             )}
@@ -250,7 +251,7 @@ const triggerSearchNow = () => {
             </section>
 
             {/* PAGINATION */}
-            {!isLoading && (
+            {!isLoading && !isOpen && (
                 <section className="flex justify-center items-center gap-4 mt-6">
                     <button
                         disabled={currentPage === 1}
